@@ -1,0 +1,135 @@
+# =====================================================================
+# AR Entertainment (.htaccess) - Clean SEO Routing & Performance
+# Target: arentertainment.bd (Dual Support: XAMPP / Laragon / Production)
+# =====================================================================
+
+# 1. Server Security & Directory Options
+Options -Indexes +FollowSymLinks
+ServerSignature Off
+
+# 2. Block Direct Access to Sensitive Files
+<FilesMatch "(^\.|\.sql$|\.log$|\.env$|\.git|composer\.(json|lock)|package\.(json|lock))">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# 3. URL Rewriting & Routing Engine
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /ar-entertainment/
+
+    # Fallback RewriteBase detection if running on Virtual Host root
+    <If "%{HTTP_HOST} =~ /^(www\.)?arentertainment\.bd$/ || %{HTTP_HOST} == 'ar-entertainment.test'">
+        RewriteBase /
+    </If>
+
+    # -----------------------------------------------------------------
+    # 3.1. 301 Permanent Redirects for Legacy .html Extensions
+    # -----------------------------------------------------------------
+    # Redirect /index.html to /
+    RewriteCond %{THE_REQUEST} \s/+(?:ar-entertainment/)?index\.html[\s?] [NC]
+    RewriteRule ^index\.html$ ./ [R=301,L,NE]
+
+    # Strip .html extension from direct requests to preserve SEO equity
+    RewriteCond %{THE_REQUEST} \s/+(?:ar-entertainment/)?([^\s?]+)\.html[\s?] [NC]
+    RewriteRule ^(.+)\.html$ $1 [R=301,L,NE]
+
+    # -----------------------------------------------------------------
+    # 3.2. Pass-through Real Files, Directories & Admin Panel
+    # -----------------------------------------------------------------
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    RewriteRule ^admin(/.*)?$ - [L]
+    RewriteRule ^uploads(/.*)?$ - [L]
+    RewriteRule ^inc(/.*)?$ - [L]
+    RewriteRule ^images(/.*)?$ - [L]
+
+    # -----------------------------------------------------------------
+    # 3.3. Clean SEO Frontend Routes
+    # -----------------------------------------------------------------
+    # Homepage
+    RewriteRule ^$ index.php [L,QSA]
+
+    # XML Sitemap
+    RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+    # Blog Routes
+    RewriteRule ^blog/?$ blog.php [L,QSA]
+    RewriteRule ^blog/([^/]+)/?$ blog-single.php?slug=$1 [L,QSA]
+
+    # Services Routes (Single & Nested Categories)
+    RewriteRule ^services/?$ services.php [L,QSA]
+    RewriteRule ^services/([^/]+)/([^/]+)/?$ service-single.php?category=$1&slug=$2 [L,QSA]
+    RewriteRule ^services/([^/]+)/?$ service-single.php?slug=$1 [L,QSA]
+
+    # AI Production Hub Routes
+    RewriteRule ^ai/?$ ai.php [L,QSA]
+    RewriteRule ^ai/([^/]+)/?$ ai-single.php?slug=$1 [L,QSA]
+
+    # Portfolio Routes
+    RewriteRule ^portfolio/?$ portfolio.php [L,QSA]
+    RewriteRule ^portfolio/([^/]+)/?$ portfolio-single.php?slug=$1 [L,QSA]
+
+    # District Service Area Guides (All 64 Districts)
+    RewriteRule ^service-area/?$ service-area.php [L,QSA]
+    RewriteRule ^service-area/([^/]+)/?$ service-area-single.php?district=$1 [L,QSA]
+
+    # Brands & Clients
+    RewriteRule ^brands/?$ brands.php [L,QSA]
+    RewriteRule ^brands/([^/]+)/?$ brand-single.php?slug=$1 [L,QSA]
+
+    # About Us & Subpages
+    RewriteRule ^about-us/?$ about-us.php [L,QSA]
+    RewriteRule ^about-us/why-choose-us/?$ why-choose-us.php [L,QSA]
+    RewriteRule ^about-us/careers/?$ careers.php [L,QSA]
+    RewriteRule ^about-us/partners/?$ partners.php [L,QSA]
+    RewriteRule ^about-us/contact-us/?$ contact-us.php [L,QSA]
+
+    # Standalone Shortcuts
+    RewriteRule ^meet-the-team/?$ meet-the-team.php [L,QSA]
+    RewriteRule ^meet-the-team/([^/]+)/?$ team-single.php?slug=$1 [L,QSA]
+    RewriteRule ^reviews/?$ reviews.php [L,QSA]
+    RewriteRule ^contact-us/?$ contact-us.php [L,QSA]
+    RewriteRule ^privacy/?$ privacy.php [L,QSA]
+
+    # Automatic fallback for any other .php file
+    RewriteCond %{REQUEST_FILENAME}.php -f
+    RewriteRule ^([^/]+)/?$ $1.php [L,QSA]
+</IfModule>
+
+# 4. Gzip / Deflate Compression for Speed
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+    AddOutputFilterByType DEFLATE application/javascript application/x-javascript application/json
+    AddOutputFilterByType DEFLATE application/xml application/xhtml+xml application/rss+xml
+    AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# 5. Browser Caching Headers (mod_expires)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+    ExpiresByType text/html "access plus 0 seconds"
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# 6. Security Headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

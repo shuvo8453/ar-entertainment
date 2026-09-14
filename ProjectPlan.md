@@ -42,9 +42,9 @@ Following a comprehensive audit of the 150+ static pages, the content strategy i
 
 ```mermaid
 flowchart LR
-    P1["Phase 1:\nDatabase & Config\n[COMPLETED ✅]"] --> P2["Phase 2:\nFrontend Templating\n[PENDING ⏳]"]
+    P1["Phase 1:\nDatabase & Config\n[COMPLETED ✅]"] --> P2["Phase 2:\nFrontend Templating\n[COMPLETED ✅]"]
     P1 --> P3["Phase 3:\nAdmin Foundation\n[COMPLETED ✅]"]
-    P3 --> P4["Phase 4:\nAdmin CRUDs\n[PENDING ⏳]"]
+    P3 --> P4["Phase 4:\nAdmin CRUDs\n[NEXT UP 🎯]"]
     P2 --> P5["Phase 5:\nDynamic Frontend\n[PENDING ⏳]"]
     P4 --> P5
     P5 --> P6["Phase 6:\nData Migration\n[PENDING ⏳]"]
@@ -57,25 +57,25 @@ flowchart LR
 
 - **Status:** `[COMPLETED ✅]` _(Finished: 2026-09-13)_
 
-* [x] Create centralized configuration [`config/config.php`](file:///c:/laragon/www/ar-entertainment/config/config.php) (environment detection, Laragon base URL resolver, brand constants).
-* [x] Create PDO singleton wrapper [`config/db.php`](file:///c:/laragon/www/ar-entertainment/config/db.php) (prepared statements, `utf8mb4_unicode_ci`).
-* [x] Create utility functions [`config/helpers.php`](file:///c:/laragon/www/ar-entertainment/config/helpers.php) (`get_setting()`, `update_setting()`, `slugify()`, `sanitize()`, CSRF, flash alerts).
-* [x] Design 11 normalized tables in [`database/schema.sql`](file:///c:/laragon/www/ar-entertainment/database/schema.sql) (`users`, `site_settings`, `categories`, `blogs`, `services`, `service_areas`, `portfolio`, `team_members`, `brands`, `reviews`, `inquiries`).
-* [x] Create seed data [`database/seed.sql`](file:///c:/laragon/www/ar-entertainment/database/seed.sql) (superadmin `admin@arentertainment.bd`, 24 AR Entertainment site settings, 12 categories).
-* [x] Build and run automated installer [`database/setup.php`](file:///c:/laragon/www/ar-entertainment/database/setup.php).
+* [x] Create centralized configuration [`config/config.php`](file:///c:/xampp/htdocs/ar-entertainment/config/config.php) (environment detection, Laragon/XAMPP base URL resolver, brand constants).
+* [x] Create PDO singleton wrapper [`config/db.php`](file:///c:/xampp/htdocs/ar-entertainment/config/db.php) (prepared statements, `utf8mb4_unicode_ci`).
+* [x] Create utility functions [`config/helpers.php`](file:///c:/xampp/htdocs/ar-entertainment/config/helpers.php) (`get_setting()`, `update_setting()`, `slugify()`, `sanitize()`, CSRF, flash alerts).
+* [x] Design 11 normalized tables in [`database/schema.sql`](file:///c:/xampp/htdocs/ar-entertainment/database/schema.sql) (`users`, `site_settings`, `categories`, `blogs`, `services`, `service_areas`, `portfolio`, `team_members`, `brands`, `reviews`, `inquiries`).
+* [x] Create seed data [`database/seed.sql`](file:///c:/xampp/htdocs/ar-entertainment/database/seed.sql) (superadmin `admin@arentertainment.bd`, 24 AR Entertainment site settings, 12 categories).
+* [x] Build and run automated installer [`database/setup.php`](file:///c:/xampp/htdocs/ar-entertainment/database/setup.php).
 
 ---
 
 ### Phase 2: Frontend Templating & SEO Routing
 
-- **Status:** `[PENDING ⏳]`
+- **Status:** `[COMPLETED ✅]` _(Finished: 2026-09-14)_
 
-* [ ] Extract reusable partial `includes/header.php` (dynamic `<title>`, `<meta description>`, OpenGraph, GA4/Meta Pixel, JSON-LD Schema).
-* [ ] Extract reusable partial `includes/navbar.php` (responsive nav, active state indicators, contact triggers).
-* [ ] Extract reusable partial `includes/footer.php` (dynamic brand info, quick links, newsletter, social links, copyright).
-* [ ] Create reusable components `includes/cta.php` and `includes/faq-accordion.php`.
-* [ ] Configure `.htaccess` for clean, extensionless SEO URLs (e.g. `/blog/slug`, `/services/slug`, `/service-area/city`).
-* [ ] Implement 301 redirect rules for legacy `.html` requests to ensure zero broken links.
+* [x] Extract reusable partial [`includes/header.php`](file:///c:/xampp/htdocs/ar-entertainment/includes/header.php) (dynamic `<title>`, `<meta description>`, OpenGraph, GA4/Meta Pixel, JSON-LD Schema).
+* [x] Extract reusable partial [`includes/navbar.php`](file:///c:/xampp/htdocs/ar-entertainment/includes/navbar.php) (responsive nav, active state indicators, contact triggers, mobile sliding drawer).
+* [x] Extract reusable partial [`includes/footer.php`](file:///c:/xampp/htdocs/ar-entertainment/includes/footer.php) (dynamic brand info, quick links, newsletter, social links, copyright, scripts).
+* [x] Create reusable components [`includes/cta.php`](file:///c:/xampp/htdocs/ar-entertainment/includes/cta.php) and [`includes/faq-accordion.php`](file:///c:/xampp/htdocs/ar-entertainment/includes/faq-accordion.php).
+* [x] Configure [`.htaccess`](file:///c:/xampp/htdocs/ar-entertainment/.htaccess) for clean, extensionless SEO URLs (e.g. `/blog/slug`, `/services/slug`, `/service-area/city`).
+* [x] Implement 301 redirect rules for legacy `.html` requests to ensure zero broken links.
 
 ---
 
@@ -83,17 +83,17 @@ flowchart LR
 
 - **Status:** `[COMPLETED ✅]` _(Finished: 2026-09-13)_
 
-* [x] Create authentication guard middleware [`admin/auth_check.php`](file:///c:/laragon/www/ar-entertainment/admin/auth_check.php).
-* [x] Create secure branded login screen [`admin/login.php`](file:///c:/laragon/www/ar-entertainment/admin/login.php) with CSRF and bcrypt verification.
-* [x] Create logout handler [`admin/logout.php`](file:///c:/laragon/www/ar-entertainment/admin/logout.php).
-* [x] Build admin layout templates [`admin/includes/header.php`](file:///c:/laragon/www/ar-entertainment/admin/includes/header.php), [`sidebar.php`](file:///c:/laragon/www/ar-entertainment/admin/includes/sidebar.php) (with live unread leads badge), [`navbar.php`](file:///c:/laragon/www/ar-entertainment/admin/includes/navbar.php), [`footer.php`](file:///c:/laragon/www/ar-entertainment/admin/includes/footer.php).
-* [x] Build dynamic dashboard overview [`admin/index.php`](file:///c:/laragon/www/ar-entertainment/admin/index.php) with real-time stat cards, recent leads preview, quick actions, and server health monitor.
+* [x] Create authentication guard middleware [`admin/auth_check.php`](file:///c:/xampp/htdocs/ar-entertainment/admin/auth_check.php).
+* [x] Create secure branded login screen [`admin/login.php`](file:///c:/xampp/htdocs/ar-entertainment/admin/login.php) with CSRF and bcrypt verification.
+* [x] Create logout handler [`admin/logout.php`](file:///c:/xampp/htdocs/ar-entertainment/admin/logout.php).
+* [x] Build admin layout templates [`admin/includes/header.php`](file:///c:/xampp/htdocs/ar-entertainment/admin/includes/header.php), [`sidebar.php`](file:///c:/xampp/htdocs/ar-entertainment/admin/includes/sidebar.php) (with live unread leads badge), [`navbar.php`](file:///c:/xampp/htdocs/ar-entertainment/admin/includes/navbar.php), [`footer.php`](file:///c:/xampp/htdocs/ar-entertainment/admin/includes/footer.php).
+* [x] Build dynamic dashboard overview [`admin/index.php`](file:///c:/xampp/htdocs/ar-entertainment/admin/index.php) with real-time stat cards, recent leads preview, quick actions, and server health monitor.
 
 ---
 
 ### Phase 4: Admin CRUD Management Modules
 
-- **Status:** `[PENDING ⏳]`
+- **Status:** `[NEXT UP 🎯]`
 
 * [ ] **Blog Manager (`admin/blogs/`):**
   - [ ] Article list table with search, category filtering, draft/published status toggle, and pagination.
