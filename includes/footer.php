@@ -31,7 +31,7 @@ $footer_scripts  = get_setting('footer_scripts', '');
     <!-- Global Footer -->
     <footer class="footer order-12">
         <div class="footer-upper">
-            <div class="container-fluid">
+            <div class="container-fluid px-3 px-lg-4">
                 <div class="row justify-content-between">
                     <!-- Brand & Summary Column -->
                     <div class="col-12 col-lg-3 mb-5 mb-lg-0">
@@ -49,7 +49,7 @@ $footer_scripts  = get_setting('footer_scripts', '');
                     <div class="col-12 col-md-5 col-lg-3 mb-5 mb-md-0 d-flex flex-column align-items-center align-items-lg-start">
                         <div class="footer-widget links-widget">
                             <div class="widget-title text-center text-lg-left" style="color: #ffffff; font-weight: 700; font-size: 18px; margin-bottom: 20px;">Connect With Us</div>
-                            <div class="linkIcons d-flex flex-wrap align-items-center gap-2">
+                            <div class="linkIcons d-flex flex-wrap align-items-center">
                                 <?php if (!empty($social_linkedin)): ?>
                                     <div id="linkedin">
                                         <a href="<?= htmlspecialchars($social_linkedin) ?>" title="LinkedIn" target="_blank" rel="noopener noreferrer">
