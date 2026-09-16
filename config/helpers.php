@@ -288,3 +288,64 @@ function truncate_text(string $text, int $limit = 150, string $ellipsis = '...')
     }
     return $cut . $ellipsis;
 }
+
+/**
+ * Upload an image file securely with MIME and size validation.
+ *
+ * @param array $file $_FILES['key']
+ * @param string $folder Destination folder inside /uploads/ (e.g. 'blogs', 'team', 'portfolio')
+ * @param array $allowed_types Allowed MIME types
+ * @param int $max_size Maximum file size in bytes (default 5MB)
+ * @return array ['success' => bool, 'path' => string, 'filename' => string, 'error' => string]
+ */
+function upload_image(array $file, string $folder = 'blogs', array $allowed_types = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml'], int $max_size = 5242880): array
+{
+    if (empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
+        return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'No file was uploaded or upload failed.'];
+    }
+
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'File upload error code: ' . $file['error']];
+    }
+
+    if ($file['size'] > $max_size) {
+        return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'File size exceeds maximum limit (' . round($max_size / 1048576, 1) . 'MB).'];
+    }
+
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mime = finfo_file($finfo, $file['tmp_name']);
+    finfo_close($finfo);
+
+    if (!in_array($mime, $allowed_types, true)) {
+        return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Invalid image format. Allowed: JPG, PNG, WEBP, GIF, SVG.'];
+    }
+
+    $ext_map = [
+        'image/jpeg' => 'jpg',
+        'image/png'  => 'png',
+        'image/webp' => 'webp',
+        'image/gif'  => 'gif',
+        'image/svg+xml' => 'svg'
+    ];
+    $ext = $ext_map[$mime] ?? pathinfo($file['name'], PATHINFO_EXTENSION);
+    $ext = strtolower($ext);
+
+    $target_dir = UPLOADS_PATH . DIRECTORY_SEPARATOR . trim($folder, '/\\');
+    if (!is_dir($target_dir)) {
+        mkdir($target_dir, 0755, true);
+    }
+
+    $clean_orig_name = slugify(pathinfo($file['name'], PATHINFO_FILENAME));
+    if (empty($clean_orig_name)) {
+        $clean_orig_name = 'image';
+    }
+    $filename = $clean_orig_name . '-' . uniqid() . '.' . $ext;
+    $target_file = $target_dir . DIRECTORY_SEPARATOR . $filename;
+
+    if (move_uploaded_file($file['tmp_name'], $target_file)) {
+        $relative_path = $folder . '/' . $filename;
+        return ['success' => true, 'path' => $relative_path, 'filename' => $filename, 'error' => ''];
+    }
+
+    return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Failed to save uploaded file to storage directory.'];
+}

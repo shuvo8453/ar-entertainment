@@ -26,6 +26,10 @@ $current_user = current_user();
 
     <style>
         :root {
+            --bs-secondary-color: #a0a6be;
+            --bs-body-color: #f1f2f6;
+            --bs-body-bg: #0f1016;
+            --bs-tertiary-color: #8c92aa;
             --ar-primary: #e50914;
             --ar-primary-rgb: 229, 9, 20;
             --ar-primary-hover: #b80710;
@@ -33,8 +37,34 @@ $current_user = current_user();
             --ar-sidebar-bg: #14151f;
             --ar-card-bg: #181924;
             --ar-border-color: #242638;
-            --ar-text-muted: #8c90a4;
+            --ar-text-muted: #a0a6be;
             --ar-text-light: #f1f2f6;
+        }
+
+        .text-muted {
+            color: #a0a6be !important;
+        }
+
+        .text-secondary {
+            color: #a0a6be !important;
+        }
+
+        .form-text, .form-label .text-muted, p.text-muted, span.text-muted {
+            color: #a0a6be !important;
+        }
+
+        .badge.bg-dark {
+            background-color: #1e202f !important;
+            color: #c2c7dc !important;
+            border-color: #34384f !important;
+        }
+
+        .badge.text-muted {
+            color: #c2c7dc !important;
+        }
+
+        .border-secondary {
+            border-color: #2e3247 !important;
         }
 
         body {

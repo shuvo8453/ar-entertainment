@@ -93,15 +93,15 @@ flowchart LR
 
 ### Phase 4: Admin CRUD Management Modules
 
-- **Overall Status:** `[NEXT UP 🎯]`
+- **Overall Status:** `[IN PROGRESS 🔄]`
 
 #### Phase 4.1: Blog Manager (`admin/blogs/`)
-- **Status:** `[NEXT UP 🎯]`
-* [ ] Article list table with search, category filtering, draft/published status toggle, and pagination.
-* [ ] Add/Edit article screen with TinyMCE WYSIWYG editor, SEO meta tags, and image uploader.
+- **Status:** `[DONE ✅]`
+* [x] Article list table with search, category filtering, draft/published status toggle, and pagination.
+* [x] Add/Edit article screen with TinyMCE WYSIWYG editor, SEO meta tags, and image uploader.
 
 #### Phase 4.2: Services & Service Areas Manager (`admin/services/` & `admin/service-areas/`)
-- **Status:** `[PENDING ⏳]`
+- **Status:** `[NEXT UP 🎯]`
 * [ ] Manage 42+ service offerings with icon selector and structured FAQ JSON builder.
 * [ ] Manage 64 district filming location guides.
 
