@@ -349,3 +349,71 @@ function upload_image(array $file, string $folder = 'blogs', array $allowed_type
 
     return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Failed to save uploaded file to storage directory.'];
 }
+
+/**
+ * Parse a video URL or embed code (YouTube / Vimeo) and extract platform, video ID, and embed details.
+ *
+ * @param string $input Video URL (YouTube, Vimeo, or iframe embed code)
+ * @return array ['platform' => string, 'video_id' => string, 'embed_url' => string, 'thumbnail_url' => string, 'watch_url' => string]
+ */
+function parse_video_url(string $input): array
+{
+    $input = trim($input);
+    $result = [
+        'platform'      => 'custom',
+        'video_id'      => '',
+        'embed_url'     => $input,
+        'thumbnail_url' => '',
+        'watch_url'     => $input
+    ];
+
+    if (empty($input)) {
+        return $result;
+    }
+
+    // Check if iframe embed code was pasted
+    if (preg_match('/src=["\']([^"\']+)["\']/i', $input, $src_matches)) {
+        $input = $src_matches[1];
+    }
+
+    // 1. YouTube Matches (watch, youtu.be, embed, shorts)
+    if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i', $input, $yt_matches)) {
+        $video_id = $yt_matches[1];
+        return [
+            'platform'      => 'youtube',
+            'video_id'      => $video_id,
+            'embed_url'     => "https://www.youtube-nocookie.com/embed/{$video_id}?rel=0",
+            'thumbnail_url' => "https://img.youtube.com/vi/{$video_id}/maxresdefault.jpg",
+            'watch_url'     => "https://www.youtube.com/watch?v={$video_id}"
+        ];
+    }
+
+    // 2. Vimeo Matches (vimeo.com/XXXXX or player.vimeo.com/video/XXXXX)
+    if (preg_match('/(?:vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/[^\/]*\/videos\/|video\/|)|player\.vimeo\.com\/video\/)(\d+)/i', $input, $vimeo_matches)) {
+        $video_id = $vimeo_matches[1];
+        return [
+            'platform'      => 'vimeo',
+            'video_id'      => $video_id,
+            'embed_url'     => "https://player.vimeo.com/video/{$video_id}",
+            'thumbnail_url' => "https://vumbnail.com/{$video_id}.jpg",
+            'watch_url'     => "https://vimeo.com/{$video_id}"
+        ];
+    }
+
+    return $result;
+}
+
+/**
+ * Return responsive iframe HTML for a video URL or embed code.
+ */
+function render_video_embed(string $video_url, string $title = 'Video Player', string $extra_classes = ''): string
+{
+    $parsed = parse_video_url($video_url);
+    $embed_url = htmlspecialchars($parsed['embed_url']);
+    $title_attr = htmlspecialchars($title);
+
+    return '<div class="ratio ratio-16x9 ' . htmlspecialchars($extra_classes) . '">'
+        . '<iframe src="' . $embed_url . '" title="' . $title_attr . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>'
+        . '</div>';
+}
+

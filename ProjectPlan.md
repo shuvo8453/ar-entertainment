@@ -106,11 +106,12 @@ flowchart LR
 * [x] Manage 64 district filming location guides with Bangladesh district datalist, auto-title/slug generation, rich guides, and SEO meta.
 
 #### Phase 4.3: Portfolio & Video Manager (`admin/portfolio/`)
-- **Status:** `[NEXT UP 🎯]`
-* [ ] Add/Edit video projects (YouTube/Vimeo embed parser, category selection, client tags, year).
+- **Status:** `[DONE ✅]`
+* [x] Add/Edit video projects (YouTube/Vimeo auto embed parser, interactive live preview player, custom thumbnail uploader, client tags, release year, homepage featured toggle).
+* [x] Video Categories CRUD manager with live project counters per category.
 
 #### Phase 4.4: Team Members Manager (`admin/team/`)
-- **Status:** `[PENDING ⏳]`
+- **Status:** `[NEXT UP 🎯]`
 * [ ] Add/Edit staff profiles, designations, bios, photos, and social profiles.
 
 #### Phase 4.5: Brands, Clients & Awards Manager (`admin/brands/`)
