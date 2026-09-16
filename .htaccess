@@ -29,7 +29,12 @@ ServerSignature Off
     </If>
 
     # -----------------------------------------------------------------
-    # 3.1. 301 Permanent Redirects for Clean URLs (Strip index.php & .html)
+    # 3.1. Directory Index Order
+    # -----------------------------------------------------------------
+    DirectoryIndex index.php index.html
+
+    # -----------------------------------------------------------------
+    # 3.2. 301 Permanent Redirects for Clean URLs (Strip index.php & .html)
     # -----------------------------------------------------------------
     # Redirect root /index.html and /index.php to ./
     RewriteCond %{THE_REQUEST} \s/+(?:ar-entertainment/)?index\.(html|php)[\s?] [NC]
@@ -44,7 +49,7 @@ ServerSignature Off
     RewriteRule ^(.+)\.html$ $1 [R=301,L,NE]
 
     # -----------------------------------------------------------------
-    # 3.2. Pass-through Real Files and Static Directories
+    # 3.3. Pass-through Real Files and Static Directories
     # -----------------------------------------------------------------
     RewriteRule ^uploads(/.*)?$ - [L]
     RewriteRule ^inc(/.*)?$ - [L]
@@ -55,68 +60,100 @@ ServerSignature Off
     RewriteRule ^ - [L]
 
     # -----------------------------------------------------------------
-    # 3.3. Clean SEO Frontend Routes
+    # 3.4. Clean SEO Frontend Routes (PHP dynamic with HTML fallback)
     # -----------------------------------------------------------------
     # Homepage
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/index.php -f [OR]
+    RewriteCond index.php -f
     RewriteRule ^$ index.php [L,QSA]
 
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/index.html -f [OR]
+    RewriteCond index.html -f
+    RewriteRule ^$ index.html [L,QSA]
+
     # XML Sitemap
+    RewriteCond sitemap.php -f
     RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
     # Blog Routes
+    RewriteCond blog.php -f
     RewriteRule ^blog/?$ blog.php [L,QSA]
+    RewriteCond blog-single.php -f
     RewriteRule ^blog/([^/]+)/?$ blog-single.php?slug=$1 [L,QSA]
 
-    # Services Routes (Single & Nested Categories)
+    # Services Routes
+    RewriteCond services.php -f
     RewriteRule ^services/?$ services.php [L,QSA]
+    RewriteCond service-single.php -f
     RewriteRule ^services/([^/]+)/([^/]+)/?$ service-single.php?category=$1&slug=$2 [L,QSA]
+    RewriteCond service-single.php -f
     RewriteRule ^services/([^/]+)/?$ service-single.php?slug=$1 [L,QSA]
 
     # AI Production Hub Routes
+    RewriteCond ai.php -f
     RewriteRule ^ai/?$ ai.php [L,QSA]
+    RewriteCond ai-single.php -f
     RewriteRule ^ai/([^/]+)/?$ ai-single.php?slug=$1 [L,QSA]
 
     # Portfolio Routes
+    RewriteCond portfolio.php -f
     RewriteRule ^portfolio/?$ portfolio.php [L,QSA]
+    RewriteCond portfolio-single.php -f
     RewriteRule ^portfolio/([^/]+)/?$ portfolio-single.php?slug=$1 [L,QSA]
 
-    # District Service Area Guides (All 64 Districts)
+    # District Service Area Guides
+    RewriteCond service-area.php -f
     RewriteRule ^service-area/?$ service-area.php [L,QSA]
+    RewriteCond service-area-single.php -f
     RewriteRule ^service-area/([^/]+)/?$ service-area-single.php?district=$1 [L,QSA]
 
     # Brands & Clients
+    RewriteCond brands.php -f
     RewriteRule ^brands/?$ brands.php [L,QSA]
+    RewriteCond brand-single.php -f
     RewriteRule ^brands/([^/]+)/?$ brand-single.php?slug=$1 [L,QSA]
 
     # About Us & Subpages
+    RewriteCond about-us.php -f
     RewriteRule ^about-us/?$ about-us.php [L,QSA]
+    RewriteCond why-choose-us.php -f
     RewriteRule ^about-us/why-choose-us/?$ why-choose-us.php [L,QSA]
+    RewriteCond careers.php -f
     RewriteRule ^about-us/careers/?$ careers.php [L,QSA]
+    RewriteCond partners.php -f
     RewriteRule ^about-us/partners/?$ partners.php [L,QSA]
+    RewriteCond contact-us.php -f
     RewriteRule ^about-us/contact-us/?$ contact-us.php [L,QSA]
 
-    # Standalone Shortcuts
-    RewriteRule ^meet-the-team/?$ meet-the-team.php [L,QSA]
-    RewriteRule ^meet-the-team/([^/]+)/?$ team-single.php?slug=$1 [L,QSA]
-    RewriteRule ^reviews/?$ reviews.php [L,QSA]
-    RewriteRule ^contact-us/?$ contact-us.php [L,QSA]
-    RewriteRule ^privacy/?$ privacy.php [L,QSA]
+    # Fallback to corresponding .html templates when dynamic .php does not exist yet
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/$1.php !-f
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/$1.html -f
+    RewriteRule ^(about-us|services|portfolio|ai|brands|service-area|blog)/?$ $1.html [L,QSA]
+
+    # Sub-pages in about-us/
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/about-us/$1.php !-f
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/about-us/$1.html -f
+    RewriteRule ^about-us/([^/]+)/?$ about-us/$1.html [L,QSA]
 
     # -----------------------------------------------------------------
-    # 3.4. Multi-level Clean URL Route Resolution (Admin & Modules)
+    # 3.5. Multi-level Clean URL Route Resolution (Admin & Static Fallbacks)
     # -----------------------------------------------------------------
     # If directory without trailing slash, redirect to trailing slash
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteCond %{REQUEST_URI} !/$
     RewriteRule ^(.*)$ $1/ [R=301,L]
 
-    # If directory exists, let DirectoryIndex serve index.php
+    # If directory exists, let DirectoryIndex serve index.php or index.html
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
 
     # If extensionless .php file exists in current path or subdirectories
     RewriteCond %{REQUEST_FILENAME}.php -f
     RewriteRule ^(.+?)/?$ $1.php [L,QSA]
+
+    # If extensionless .html file exists in current path (template fallback before Phase 5)
+    RewriteCond %{REQUEST_FILENAME}.html -f
+    RewriteRule ^(.+?)/?$ $1.html [L,QSA]
 </IfModule>
 
 # 4. Gzip / Deflate Compression for Speed
