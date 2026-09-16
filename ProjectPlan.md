@@ -93,59 +93,102 @@ flowchart LR
 
 ### Phase 4: Admin CRUD Management Modules
 
-- **Status:** `[NEXT UP 🎯]`
+- **Overall Status:** `[NEXT UP 🎯]`
 
-* [ ] **Blog Manager (`admin/blogs/`):**
-  - [ ] Article list table with search, category filtering, draft/published status toggle, and pagination.
-  - [ ] Add/Edit article screen with TinyMCE WYSIWYG editor, SEO meta tags, and image uploader.
-* [ ] **Services & Service Areas Manager (`admin/services/` & `admin/service-areas/`):**
-  - [ ] Manage 42+ service offerings with icon selector and structured FAQ JSON builder.
-  - [ ] Manage 64 district filming location guides.
-* [ ] **Portfolio & Video Manager (`admin/portfolio/`):**
-  - [ ] Add/Edit video projects (YouTube/Vimeo embed parser, category selection, client tags, year).
-* [ ] **Team Members Manager (`admin/team/`):**
-  - [ ] Add/Edit staff profiles, designations, bios, photos, and social profiles.
-* [ ] **Brands, Clients & Awards Manager (`admin/brands/`):**
-  - [ ] Logo upload and sort ordering for clients, partners, and awards.
-* [ ] **Reviews & Testimonials Manager (`admin/reviews/`):**
-  - [ ] Manage client feedback, star ratings (e.g. 5.0), and featured flags.
-* [ ] **Inquiries / Leads Inbox (`admin/inquiries/`):**
-  - [ ] View submissions (Contact, Quote, Careers, Survey), mark read/unread, filter by form type, CSV export.
-* [ ] **Global Site Settings Manager (`admin/settings/`):**
-  - [ ] Live editor for phone, email, office address, social links, GA4 ID, Meta Pixel ID, and custom scripts.
+#### Phase 4.1: Blog Manager (`admin/blogs/`)
+- **Status:** `[NEXT UP 🎯]`
+* [ ] Article list table with search, category filtering, draft/published status toggle, and pagination.
+* [ ] Add/Edit article screen with TinyMCE WYSIWYG editor, SEO meta tags, and image uploader.
+
+#### Phase 4.2: Services & Service Areas Manager (`admin/services/` & `admin/service-areas/`)
+- **Status:** `[PENDING ⏳]`
+* [ ] Manage 42+ service offerings with icon selector and structured FAQ JSON builder.
+* [ ] Manage 64 district filming location guides.
+
+#### Phase 4.3: Portfolio & Video Manager (`admin/portfolio/`)
+- **Status:** `[PENDING ⏳]`
+* [ ] Add/Edit video projects (YouTube/Vimeo embed parser, category selection, client tags, year).
+
+#### Phase 4.4: Team Members Manager (`admin/team/`)
+- **Status:** `[PENDING ⏳]`
+* [ ] Add/Edit staff profiles, designations, bios, photos, and social profiles.
+
+#### Phase 4.5: Brands, Clients & Awards Manager (`admin/brands/`)
+- **Status:** `[PENDING ⏳]`
+* [ ] Logo upload and sort ordering for clients, partners, and awards.
+
+#### Phase 4.6: Reviews & Testimonials Manager (`admin/reviews/`)
+- **Status:** `[PENDING ⏳]`
+* [ ] Manage client feedback, star ratings (e.g. 5.0), and featured flags.
+
+#### Phase 4.7: Inquiries / Leads Inbox (`admin/inquiries/`)
+- **Status:** `[PENDING ⏳]`
+* [ ] View submissions (Contact, Quote, Careers, Survey), mark read/unread, filter by form type, CSV export.
+
+#### Phase 4.8: Global Site Settings Manager (`admin/settings/`)
+- **Status:** `[PENDING ⏳]`
+* [ ] Live editor for phone, email, office address, social links, GA4 ID, Meta Pixel ID, and custom scripts.
 
 ---
 
 ### Phase 5: Dynamic Frontend Integration
 
-- **Status:** `[PENDING ⏳]`
+- **Overall Status:** `[PENDING ⏳]`
 
+#### Phase 5.1: Dynamic Homepage (`index.php`)
+- **Status:** `[PENDING ⏳]`
 * [ ] Convert `index.php` to dynamically fetch latest portfolio videos, featured services, client logos, testimonials, and recent blog posts.
+
+#### Phase 5.2: Dynamic Blog System (`blog.php` & `blog-single.php`)
+- **Status:** `[PENDING ⏳]`
 * [ ] Build dynamic `blog.php` listing with category filter, search bar, and clean pagination (`/blog?page=2`).
 * [ ] Build dynamic `blog-single.php` with article body, author info, related posts, and auto-generated Schema JSON-LD.
+
+#### Phase 5.3: Dynamic Services Catalogue & Single Service Views (`services.php` & `service-single.php`)
+- **Status:** `[PENDING ⏳]`
 * [ ] Build dynamic `services.php` & `service-single.php` with interactive FAQ accordions.
+
+#### Phase 5.4: Dynamic Video Portfolio Showcase (`portfolio.php`)
+- **Status:** `[PENDING ⏳]`
 * [ ] Build dynamic `portfolio.php` with real-time category filter tabs.
+
+#### Phase 5.5: Dynamic Service Areas / District Guides (`service-area.php`)
+- **Status:** `[PENDING ⏳]`
 * [ ] Build dynamic `service-area.php` for all 64 district pages.
+
+#### Phase 5.6: Supporting Brand Pages (`about-us.php`, `meet-the-team.php`, `reviews.php`, `contact-us.php`)
+- **Status:** `[PENDING ⏳]`
 * [ ] Build `about-us.php`, `meet-the-team.php`, `reviews.php`, `contact-us.php`.
 
 ---
 
 ### Phase 6: Data Rewriting, Migration & SEO Continuity
 
-- **Status:** `[PENDING ⏳]`
+- **Overall Status:** `[PENDING ⏳]`
 
+#### Phase 6.1: Content Migration Automation Script (`database/migrate_content.php`)
+- **Status:** `[PENDING ⏳]`
 * [ ] Build automated parser script (`database/migrate_content.php`).
+
+#### Phase 6.2: Blog Articles Rewriting & Media Ingestion
+- **Status:** `[PENDING ⏳]`
 * [ ] Extract and rewrite all 85+ blog articles with fresh phrasing, customized for AR Entertainment.
 * [ ] Generate and attach new AI featured images for all blog posts.
+
+#### Phase 6.3: Services & District Data Ingestion
+- **Status:** `[PENDING ⏳]`
 * [ ] Migrate 42+ service descriptions and FAQ datasets into MySQL.
 * [ ] Migrate 64 district filming guides into MySQL.
+
+#### Phase 6.4: Dynamic XML Sitemap & RSS Feed Generation
+- **Status:** `[PENDING ⏳]`
 * [ ] Generate dynamic, automated `sitemap.xml` and RSS feeds from database records.
 
 ---
 
 ### Phase 7: Forms, Security Hardening & Launch Testing
 
-- **Status:** `[PENDING ⏳]`
+- **Overall Status:** `[PENDING ⏳]`
 
 * [ ] Create universal backend form processor (`process-inquiry.php`) with CSRF protection, invisible anti-spam honeypot, and database logging.
 * [ ] Integrate Google reCAPTCHA v3 spam protection (Configurable Site Key/Secret Key via Settings, localhost bypass during dev, and backend token verification on form submission).
