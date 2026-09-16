@@ -36,12 +36,12 @@ $current_user = current_user();
                 <li>
                     <hr class="dropdown-divider" style="border-color: var(--ar-border-color);">
                 </li>
-                <li><a class="dropdown-item" href="<?= site_url('admin/settings/index.php') ?>"><i class="fa-solid fa-sliders me-2"></i> Settings</a></li>
+                <li><a class="dropdown-item" href="<?= site_url('admin/settings') ?>"><i class="fa-solid fa-sliders me-2"></i> Settings</a></li>
                 <li><a class="dropdown-item" href="<?= site_url('') ?>" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square me-2"></i> View Site</a></li>
                 <li>
                     <hr class="dropdown-divider" style="border-color: var(--ar-border-color);">
                 </li>
-                <li><a class="dropdown-item text-danger" href="<?= site_url('admin/logout.php') ?>"><i class="fa-solid fa-power-off me-2"></i> Logout</a></li>
+                <li><a class="dropdown-item text-danger" href="<?= site_url('admin/logout') ?>"><i class="fa-solid fa-power-off me-2"></i> Logout</a></li>
             </ul>
         </div>
     </div>

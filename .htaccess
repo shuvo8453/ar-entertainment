@@ -29,27 +29,30 @@ ServerSignature Off
     </If>
 
     # -----------------------------------------------------------------
-    # 3.1. 301 Permanent Redirects for Legacy .html Extensions
+    # 3.1. 301 Permanent Redirects for Clean URLs (Strip index.php & .html)
     # -----------------------------------------------------------------
-    # Redirect /index.html to /
-    RewriteCond %{THE_REQUEST} \s/+(?:ar-entertainment/)?index\.html[\s?] [NC]
-    RewriteRule ^index\.html$ ./ [R=301,L,NE]
+    # Redirect root /index.html and /index.php to ./
+    RewriteCond %{THE_REQUEST} \s/+(?:ar-entertainment/)?index\.(html|php)[\s?] [NC]
+    RewriteRule ^index\.(html|php)$ ./ [R=301,L,NE]
+
+    # Redirect subfolder /index.php to subfolder / (e.g. /admin/blogs/index.php -> /admin/blogs/)
+    RewriteCond %{THE_REQUEST} \s/+(?:ar-entertainment/)?(.+?)/index\.php[\s?] [NC]
+    RewriteRule ^(.+?)/index\.php$ $1/ [R=301,L,NE]
 
     # Strip .html extension from direct requests to preserve SEO equity
     RewriteCond %{THE_REQUEST} \s/+(?:ar-entertainment/)?([^\s?]+)\.html[\s?] [NC]
     RewriteRule ^(.+)\.html$ $1 [R=301,L,NE]
 
     # -----------------------------------------------------------------
-    # 3.2. Pass-through Real Files, Directories & Admin Panel
+    # 3.2. Pass-through Real Files and Static Directories
     # -----------------------------------------------------------------
-    RewriteCond %{REQUEST_FILENAME} -f [OR]
-    RewriteCond %{REQUEST_FILENAME} -d
-    RewriteRule ^ - [L]
-
-    RewriteRule ^admin(/.*)?$ - [L]
     RewriteRule ^uploads(/.*)?$ - [L]
     RewriteRule ^inc(/.*)?$ - [L]
     RewriteRule ^images(/.*)?$ - [L]
+
+    # Pass-through real static files (css, js, images, fonts)
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ - [L]
 
     # -----------------------------------------------------------------
     # 3.3. Clean SEO Frontend Routes
@@ -99,9 +102,21 @@ ServerSignature Off
     RewriteRule ^contact-us/?$ contact-us.php [L,QSA]
     RewriteRule ^privacy/?$ privacy.php [L,QSA]
 
-    # Automatic fallback for any other .php file
+    # -----------------------------------------------------------------
+    # 3.4. Multi-level Clean URL Route Resolution (Admin & Modules)
+    # -----------------------------------------------------------------
+    # If directory without trailing slash, redirect to trailing slash
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteCond %{REQUEST_URI} !/$
+    RewriteRule ^(.*)$ $1/ [R=301,L]
+
+    # If directory exists, let DirectoryIndex serve index.php
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # If extensionless .php file exists in current path or subdirectories
     RewriteCond %{REQUEST_FILENAME}.php -f
-    RewriteRule ^([^/]+)/?$ $1.php [L,QSA]
+    RewriteRule ^(.+?)/?$ $1.php [L,QSA]
 </IfModule>
 
 # 4. Gzip / Deflate Compression for Speed

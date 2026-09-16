@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 set_flash('error', 'Failed to create category: ' . $e->getMessage());
             }
         }
-        redirect('admin/blogs/categories.php');
+        redirect('admin/blogs/categories');
     }
 
     if ($action === 'update') {
@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 set_flash('error', 'Failed to update category: ' . $e->getMessage());
             }
         }
-        redirect('admin/blogs/categories.php');
+        redirect('admin/blogs/categories');
     }
 
     if ($action === 'delete') {
@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 set_flash('error', 'Failed to delete category: ' . $e->getMessage());
             }
         }
-        redirect('admin/blogs/categories.php');
+        redirect('admin/blogs/categories');
     }
 }
 
@@ -144,15 +144,15 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
             <div>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-1 small text-muted">
-                        <li class="breadcrumb-item"><a href="<?= site_url('admin/index.php') ?>" class="text-muted text-decoration-none">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="<?= site_url('admin/blogs/index.php') ?>" class="text-muted text-decoration-none">Blog Articles</a></li>
+                        <li class="breadcrumb-item"><a href="<?= site_url('admin') ?>" class="text-muted text-decoration-none">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="<?= site_url('admin/blogs') ?>" class="text-muted text-decoration-none">Blog Articles</a></li>
                         <li class="breadcrumb-item active text-white" aria-current="page">Categories</li>
                     </ol>
                 </nav>
                 <h3 class="fw-bold mb-0 text-white">Blog Categories</h3>
             </div>
             <div class="d-flex gap-2">
-                <a href="<?= site_url('admin/blogs/index.php') ?>" class="btn btn-ar-secondary">
+                <a href="<?= site_url('admin/blogs') ?>" class="btn btn-ar-secondary">
                     <i class="fa-solid fa-arrow-left me-1"></i> Back to Articles
                 </a>
             </div>
@@ -168,7 +168,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                         <i class="fa-solid fa-plus text-danger me-2"></i> Add New Category
                     </h5>
 
-                    <form method="POST" action="<?= site_url('admin/blogs/categories.php') ?>">
+                    <form method="POST" action="<?= site_url('admin/blogs/categories') ?>">
                         <?= csrf_field() ?>
                         <input type="hidden" name="action" value="create">
 
@@ -251,7 +251,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                                                 </span>
                                             </td>
                                             <td class="text-center">
-                                                <a href="<?= site_url('admin/blogs/index.php?category=' . $cat['id']) ?>" class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-50 text-decoration-none">
+                                                <a href="<?= site_url('admin/blogs?category=' . $cat['id']) ?>" class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-50 text-decoration-none">
                                                     <?= number_format($cat['articles_count']) ?> articles
                                                 </a>
                                             </td>
@@ -280,7 +280,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
     <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="background-color: var(--ar-card-bg); border: 1px solid var(--ar-border-color); color: #fff;">
-                <form method="POST" action="<?= site_url('admin/blogs/categories.php') ?>">
+                <form method="POST" action="<?= site_url('admin/blogs/categories') ?>">
                     <?= csrf_field() ?>
                     <input type="hidden" name="action" value="update">
                     <input type="hidden" name="id" id="editCatId" value="">
@@ -320,7 +320,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
     <div class="modal fade" id="deleteCatModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="background-color: var(--ar-card-bg); border: 1px solid var(--ar-border-color); color: #fff;">
-                <form method="POST" action="<?= site_url('admin/blogs/categories.php') ?>">
+                <form method="POST" action="<?= site_url('admin/blogs/categories') ?>">
                     <?= csrf_field() ?>
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="id" id="deleteCatId" value="">

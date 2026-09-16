@@ -10,5 +10,5 @@ require_once dirname(__DIR__) . '/config/helpers.php';
 
 if (!is_logged_in()) {
     set_flash('error', 'Please log in to access the AR Entertainment admin panel.');
-    redirect('admin/login.php');
+    redirect('admin/login');
 }

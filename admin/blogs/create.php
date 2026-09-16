@@ -140,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $new_id = db()->lastInsertId();
                 set_flash('success', "Article '<strong>" . htmlspecialchars($title) . "</strong>' created successfully!");
-                redirect('admin/blogs/index.php');
+                redirect('admin/blogs');
             } catch (PDOException $e) {
                 $errors[] = 'Failed to save article: ' . $e->getMessage();
             }
@@ -161,15 +161,15 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
             <div>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-1 small text-muted">
-                        <li class="breadcrumb-item"><a href="<?= site_url('admin/index.php') ?>" class="text-muted text-decoration-none">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="<?= site_url('admin/blogs/index.php') ?>" class="text-muted text-decoration-none">Blog Articles</a></li>
+                        <li class="breadcrumb-item"><a href="<?= site_url('admin') ?>" class="text-muted text-decoration-none">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="<?= site_url('admin/blogs') ?>" class="text-muted text-decoration-none">Blog Articles</a></li>
                         <li class="breadcrumb-item active text-white" aria-current="page">New Article</li>
                     </ol>
                 </nav>
                 <h3 class="fw-bold mb-0 text-white">Create New Blog Article</h3>
             </div>
             <div>
-                <a href="<?= site_url('admin/blogs/index.php') ?>" class="btn btn-ar-secondary">
+                <a href="<?= site_url('admin/blogs') ?>" class="btn btn-ar-secondary">
                     <i class="fa-solid fa-arrow-left me-1"></i> Back to Articles
                 </a>
             </div>
@@ -187,7 +187,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
             </div>
         <?php endif; ?>
 
-        <form method="POST" action="<?= site_url('admin/blogs/create.php') ?>" enctype="multipart/form-data" id="articleForm">
+        <form method="POST" action="<?= site_url('admin/blogs/create') ?>" enctype="multipart/form-data" id="articleForm">
             <?= csrf_field() ?>
 
             <div class="row g-4">
@@ -308,7 +308,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                             <button type="submit" class="btn btn-ar-primary btn-lg">
                                 <i class="fa-solid fa-cloud-arrow-up me-1"></i> Save &amp; Publish Article
                             </button>
-                            <a href="<?= site_url('admin/blogs/index.php') ?>" class="btn btn-ar-secondary">
+                            <a href="<?= site_url('admin/blogs') ?>" class="btn btn-ar-secondary">
                                 Cancel
                             </a>
                         </div>
@@ -320,7 +320,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                             <h6 class="fw-bold text-white mb-0">
                                 <i class="fa-solid fa-folder-open text-danger me-2"></i> Category
                             </h6>
-                            <a href="<?= site_url('admin/blogs/categories.php') ?>" target="_blank" class="small text-info text-decoration-none">
+                            <a href="<?= site_url('admin/blogs/categories') ?>" target="_blank" class="small text-info text-decoration-none">
                                 + New Category
                             </a>
                         </div>
@@ -384,14 +384,14 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
             content_css: 'dark',
             plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount',
             toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media table | removeformat code fullscreen',
-            images_upload_url: '<?= site_url('admin/blogs/upload_editor_image.php') ?>',
+            images_upload_url: '<?= site_url('admin/blogs/upload_editor_image') ?>',
             automatic_uploads: true,
             images_reuse_filename: false,
             images_upload_handler: function(blobInfo, progress) {
                 return new Promise((resolve, reject) => {
                     const xhr = new XMLHttpRequest();
                     xhr.withCredentials = false;
-                    xhr.open('POST', '<?= site_url('admin/blogs/upload_editor_image.php') ?>');
+                    xhr.open('POST', '<?= site_url('admin/blogs/upload_editor_image') ?>');
                     xhr.setRequestHeader('X-CSRF-TOKEN', '<?= csrf_token() ?>');
 
                     xhr.upload.onprogress = (e) => {

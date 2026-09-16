@@ -99,17 +99,17 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
             <div>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-1 small text-muted">
-                        <li class="breadcrumb-item"><a href="<?= site_url('admin/index.php') ?>" class="text-muted text-decoration-none">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="<?= site_url('admin') ?>" class="text-muted text-decoration-none">Dashboard</a></li>
                         <li class="breadcrumb-item active text-white" aria-current="page">Blog Articles</li>
                     </ol>
                 </nav>
                 <h3 class="fw-bold mb-0 text-white">Blog &amp; Article Manager</h3>
             </div>
             <div class="d-flex gap-2">
-                <a href="<?= site_url('admin/blogs/categories.php') ?>" class="btn btn-ar-secondary">
+                <a href="<?= site_url('admin/blogs/categories') ?>" class="btn btn-ar-secondary">
                     <i class="fa-solid fa-tags me-1"></i> Manage Categories
                 </a>
-                <a href="<?= site_url('admin/blogs/create.php') ?>" class="btn btn-ar-primary">
+                <a href="<?= site_url('admin/blogs/create') ?>" class="btn btn-ar-primary">
                     <i class="fa-solid fa-plus me-1"></i> Write New Article
                 </a>
             </div>
@@ -167,7 +167,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
 
         <!-- Filter & Search Toolbar -->
         <div class="card-ar p-3 mb-4">
-            <form method="GET" action="<?= site_url('admin/blogs/index.php') ?>" class="row g-3 align-items-center">
+            <form method="GET" action="<?= site_url('admin/blogs') ?>" class="row g-3 align-items-center">
                 <div class="col-12 col-md-5">
                     <div class="input-group">
                         <span class="input-group-text bg-dark border-secondary text-muted"><i class="fa-solid fa-magnifying-glass"></i></span>
@@ -197,7 +197,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                         <i class="fa-solid fa-filter me-1"></i> Filter
                     </button>
                     <?php if ($search !== '' || $category > 0 || $status !== ''): ?>
-                        <a href="<?= site_url('admin/blogs/index.php') ?>" class="btn btn-ar-secondary" title="Clear Filters">
+                        <a href="<?= site_url('admin/blogs') ?>" class="btn btn-ar-secondary" title="Clear Filters">
                             <i class="fa-solid fa-rotate-left"></i>
                         </a>
                     <?php endif; ?>
@@ -236,7 +236,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                                         <i class="fa-solid fa-newspaper fs-1 opacity-25"></i>
                                     </div>
                                     <p class="mb-2">No blog articles found matching your criteria.</p>
-                                    <a href="<?= site_url('admin/blogs/create.php') ?>" class="btn btn-sm btn-ar-primary">
+                                    <a href="<?= site_url('admin/blogs/create') ?>" class="btn btn-sm btn-ar-primary">
                                         <i class="fa-solid fa-plus me-1"></i> Write First Article
                                     </a>
                                 </td>
@@ -258,7 +258,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                                     <!-- Title & Slug -->
                                     <td>
                                         <div class="fw-bold text-white mb-1">
-                                            <a href="<?= site_url('admin/blogs/edit.php?id=' . $post['id']) ?>" class="text-white text-decoration-none">
+                                            <a href="<?= site_url('admin/blogs/edit?id=' . $post['id']) ?>" class="text-white text-decoration-none">
                                                 <?= htmlspecialchars($post['title']) ?>
                                             </a>
                                         </div>
@@ -294,7 +294,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
 
                                     <!-- Status Toggle -->
                                     <td class="text-center">
-                                        <form method="POST" action="<?= site_url('admin/blogs/action.php') ?>" class="d-inline">
+                                        <form method="POST" action="<?= site_url('admin/blogs/action') ?>" class="d-inline">
                                             <?= csrf_field() ?>
                                             <input type="hidden" name="action" value="toggle_status">
                                             <input type="hidden" name="id" value="<?= $post['id'] ?>">
@@ -316,7 +316,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
 
                                     <!-- Featured Toggle -->
                                     <td class="text-center">
-                                        <form method="POST" action="<?= site_url('admin/blogs/action.php') ?>" class="d-inline">
+                                        <form method="POST" action="<?= site_url('admin/blogs/action') ?>" class="d-inline">
                                             <?= csrf_field() ?>
                                             <input type="hidden" name="action" value="toggle_featured">
                                             <input type="hidden" name="id" value="<?= $post['id'] ?>">
@@ -339,10 +339,10 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                                     <!-- Actions -->
                                     <td class="text-end">
                                         <div class="btn-group btn-group-sm">
-                                            <a href="<?= site_url('admin/blogs/edit.php?id=' . $post['id']) ?>" class="btn btn-ar-secondary" title="Edit Article">
+                                            <a href="<?= site_url('admin/blogs/edit?id=' . $post['id']) ?>" class="btn btn-ar-secondary" title="Edit Article">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
-                                            <a href="<?= site_url('blog-single.php?slug=' . urlencode($post['slug'])) ?>" target="_blank" class="btn btn-ar-secondary text-info" title="Preview Frontend">
+                                            <a href="<?= site_url('blog/' . urlencode($post['slug'])) ?>" target="_blank" class="btn btn-ar-secondary text-info" title="Preview Frontend">
                                                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                             </a>
                                             <button type="button" class="btn btn-ar-secondary text-danger" title="Delete Article" onclick="confirmDelete(<?= $post['id'] ?>, '<?= htmlspecialchars(addslashes($post['title'])) ?>')">
@@ -401,7 +401,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="background-color: var(--ar-card-bg); border: 1px solid var(--ar-border-color); color: #fff;">
-                <form method="POST" action="<?= site_url('admin/blogs/action.php') ?>">
+                <form method="POST" action="<?= site_url('admin/blogs/action') ?>">
                     <?= csrf_field() ?>
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="id" id="deletePostId" value="">

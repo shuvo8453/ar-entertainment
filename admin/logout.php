@@ -32,4 +32,4 @@ if (session_status() === PHP_SESSION_ACTIVE) {
 // Start fresh session for flash message
 session_start();
 set_flash('success', 'You have been successfully logged out.');
-redirect('admin/login.php');
+redirect('admin/login');

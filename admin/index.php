@@ -52,10 +52,10 @@ require_once __DIR__ . '/includes/sidebar.php';
                     </p>
                 </div>
                 <div class="d-flex gap-2">
-                    <a href="<?= site_url('admin/blogs/create.php') ?>" class="btn btn-ar-primary btn-sm">
+                    <a href="<?= site_url('admin/blogs/create') ?>" class="btn btn-ar-primary btn-sm">
                         <i class="fa-solid fa-plus me-1"></i> New Article
                     </a>
-                    <a href="<?= site_url('admin/portfolio/create.php') ?>" class="btn btn-ar-secondary btn-sm">
+                    <a href="<?= site_url('admin/portfolio/create') ?>" class="btn btn-ar-secondary btn-sm">
                         <i class="fa-solid fa-video me-1"></i> Add Work
                     </a>
                 </div>
@@ -68,7 +68,7 @@ require_once __DIR__ . '/includes/sidebar.php';
                 <div class="stat-card">
                     <div>
                         <div class="stat-number"><?= $total_blogs ?></div>
-                        <div class="stat-label">Published Articles</div>
+                        <div class="stat-label">Total Articles</div>
                     </div>
                     <div class="stat-icon icon-blue">
                         <i class="fa-solid fa-newspaper"></i>
@@ -80,21 +80,9 @@ require_once __DIR__ . '/includes/sidebar.php';
                 <div class="stat-card">
                     <div>
                         <div class="stat-number"><?= $total_portfolio ?></div>
-                        <div class="stat-label">Portfolio Videos</div>
+                        <div class="stat-label">Portfolio Works</div>
                     </div>
                     <div class="stat-icon icon-red">
-                        <i class="fa-solid fa-clapperboard"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-sm-6">
-                <div class="stat-card">
-                    <div>
-                        <div class="stat-number"><?= $total_services ?></div>
-                        <div class="stat-label">Active Services</div>
-                    </div>
-                    <div class="stat-icon icon-green">
                         <i class="fa-solid fa-film"></i>
                     </div>
                 </div>
@@ -103,26 +91,38 @@ require_once __DIR__ . '/includes/sidebar.php';
             <div class="col-xl-3 col-sm-6">
                 <div class="stat-card">
                     <div>
-                        <div class="stat-number <?= ($unread_inquiries > 0) ? 'text-danger' : '' ?>"><?= $unread_inquiries ?></div>
-                        <div class="stat-label">Unread Leads</div>
+                        <div class="stat-number"><?= $total_services ?></div>
+                        <div class="stat-label">Services Offered</div>
+                    </div>
+                    <div class="stat-icon icon-green">
+                        <i class="fa-solid fa-clapperboard"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-sm-6">
+                <div class="stat-card">
+                    <div>
+                        <div class="stat-number text-warning"><?= $unread_inquiries ?></div>
+                        <div class="stat-label">New Inquiries</div>
                     </div>
                     <div class="stat-icon icon-orange">
-                        <i class="fa-solid fa-inbox"></i>
+                        <i class="fa-solid fa-envelope"></i>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 2-Column Content Grid -->
-        <div class="row g-4">
-            <!-- Recent Inquiries -->
+        <!-- Second Row: Recent Inquiries & Quick Actions -->
+        <div class="row g-4 mb-4">
+            <!-- Recent Inquiries Table -->
             <div class="col-lg-7">
                 <div class="card-ar h-100">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h6 class="fw-bold text-white mb-0">
                             <i class="fa-solid fa-envelope-open-text text-warning me-2"></i> Recent Inquiries &amp; Leads
                         </h6>
-                        <a href="<?= site_url('admin/inquiries/index.php') ?>" class="btn btn-ar-secondary btn-sm py-1 px-2 small">
+                        <a href="<?= site_url('admin/inquiries') ?>" class="btn btn-ar-secondary btn-sm py-1 px-2 small">
                             View All <i class="fa-solid fa-arrow-right ms-1"></i>
                         </a>
                     </div>
@@ -161,7 +161,7 @@ require_once __DIR__ . '/includes/sidebar.php';
                                                 <?= format_date($inq['created_at'], 'M d, H:i') ?>
                                             </td>
                                             <td>
-                                                <a href="<?= site_url('admin/inquiries/view.php?id=' . $inq['id']) ?>" class="btn btn-outline-light btn-sm py-0 px-2">
+                                                <a href="<?= site_url('admin/inquiries/view?id=' . $inq['id']) ?>" class="btn btn-outline-light btn-sm py-0 px-2">
                                                     View
                                                 </a>
                                             </td>
@@ -181,19 +181,19 @@ require_once __DIR__ . '/includes/sidebar.php';
                         <i class="fa-solid fa-bolt text-danger me-2"></i> Quick Management
                     </h6>
                     <div class="d-grid gap-2">
-                        <a href="<?= site_url('admin/blogs/create.php') ?>" class="btn btn-ar-secondary text-start d-flex align-items-center justify-content-between">
+                        <a href="<?= site_url('admin/blogs/create') ?>" class="btn btn-ar-secondary text-start d-flex align-items-center justify-content-between">
                             <span><i class="fa-solid fa-file-circle-plus text-primary me-2"></i> Write New Blog Post</span>
                             <i class="fa-solid fa-chevron-right text-muted small"></i>
                         </a>
-                        <a href="<?= site_url('admin/portfolio/create.php') ?>" class="btn btn-ar-secondary text-start d-flex align-items-center justify-content-between">
+                        <a href="<?= site_url('admin/portfolio/create') ?>" class="btn btn-ar-secondary text-start d-flex align-items-center justify-content-between">
                             <span><i class="fa-solid fa-circle-play text-danger me-2"></i> Upload Portfolio Video</span>
                             <i class="fa-solid fa-chevron-right text-muted small"></i>
                         </a>
-                        <a href="<?= site_url('admin/services/create.php') ?>" class="btn btn-ar-secondary text-start d-flex align-items-center justify-content-between">
+                        <a href="<?= site_url('admin/services/create') ?>" class="btn btn-ar-secondary text-start d-flex align-items-center justify-content-between">
                             <span><i class="fa-solid fa-plus-circle text-success me-2"></i> Add New Service</span>
                             <i class="fa-solid fa-chevron-right text-muted small"></i>
                         </a>
-                        <a href="<?= site_url('admin/settings/index.php') ?>" class="btn btn-ar-secondary text-start d-flex align-items-center justify-content-between">
+                        <a href="<?= site_url('admin/settings') ?>" class="btn btn-ar-secondary text-start d-flex align-items-center justify-content-between">
                             <span><i class="fa-solid fa-sliders text-warning me-2"></i> Edit Site Settings &amp; SEO</span>
                             <i class="fa-solid fa-chevron-right text-muted small"></i>
                         </a>

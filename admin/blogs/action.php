@@ -10,12 +10,12 @@ require_once dirname(__DIR__) . '/auth_check.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     set_flash('error', 'Invalid request method.');
-    redirect('admin/blogs/index.php');
+    redirect('admin/blogs');
 }
 
 if (!verify_csrf()) {
     set_flash('error', 'Security token expired (CSRF failure). Please try again.');
-    redirect('admin/blogs/index.php');
+    redirect('admin/blogs');
 }
 
 $action = trim($_POST['action'] ?? '');
@@ -23,7 +23,7 @@ $id     = (int) ($_POST['id'] ?? 0);
 
 if ($id <= 0) {
     set_flash('error', 'Invalid article ID provided.');
-    redirect('admin/blogs/index.php');
+    redirect('admin/blogs');
 }
 
 // Fetch target article
@@ -34,11 +34,11 @@ try {
 
     if (!$article) {
         set_flash('error', 'Article not found.');
-        redirect('admin/blogs/index.php');
+        redirect('admin/blogs');
     }
 } catch (PDOException $e) {
     set_flash('error', 'Database error: ' . $e->getMessage());
-    redirect('admin/blogs/index.php');
+    redirect('admin/blogs');
 }
 
 switch ($action) {
@@ -90,4 +90,4 @@ switch ($action) {
         break;
 }
 
-redirect('admin/blogs/index.php');
+redirect('admin/blogs');

@@ -10,7 +10,7 @@ require_once dirname(__DIR__) . '/config/helpers.php';
 
 // If already logged in, redirect to dashboard
 if (is_logged_in()) {
-    redirect('admin/index.php');
+    redirect('admin');
 }
 
 $error_msg = '';
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $update_stmt->execute([$user['id']]);
 
                     set_flash('success', 'Welcome back, ' . htmlspecialchars($user['name']) . '!');
-                    redirect('admin/index.php');
+                    redirect('admin');
                 } else {
                     $error_msg = 'Invalid email address or password.';
                 }
