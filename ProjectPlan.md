@@ -101,12 +101,12 @@ flowchart LR
 * [x] Add/Edit article screen with TinyMCE WYSIWYG editor, SEO meta tags, and image uploader.
 
 #### Phase 4.2: Services & Service Areas Manager (`admin/services/` & `admin/service-areas/`)
-- **Status:** `[NEXT UP 🎯]`
-* [ ] Manage 42+ service offerings with icon selector and structured FAQ JSON builder.
-* [ ] Manage 64 district filming location guides.
+- **Status:** `[DONE ✅]`
+* [x] Manage 42+ service offerings with visual icon picker, TinyMCE editor, dynamic FAQ repeater (structured JSON), and SEO SERP preview.
+* [x] Manage 64 district filming location guides with Bangladesh district datalist, auto-title/slug generation, rich guides, and SEO meta.
 
 #### Phase 4.3: Portfolio & Video Manager (`admin/portfolio/`)
-- **Status:** `[PENDING ⏳]`
+- **Status:** `[NEXT UP 🎯]`
 * [ ] Add/Edit video projects (YouTube/Vimeo embed parser, category selection, client tags, year).
 
 #### Phase 4.4: Team Members Manager (`admin/team/`)
