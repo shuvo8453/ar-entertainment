@@ -148,6 +148,7 @@ flowchart LR
 - **Status:** `[PENDING ⏳]`
 
 * [ ] Create universal backend form processor (`process-inquiry.php`) with CSRF protection, invisible anti-spam honeypot, and database logging.
+* [ ] Integrate Google reCAPTCHA v3 spam protection (Configurable Site Key/Secret Key via Settings, localhost bypass during dev, and backend token verification on form submission).
 * [ ] Setup SMTP email alerts for new incoming leads.
 * [ ] Apply input sanitization, XSS filters, and Gzip caching rules in `.htaccess`.
 * [ ] Perform cross-browser responsiveness, mobile UI testing, and page speed audit.
