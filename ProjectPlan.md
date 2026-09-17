@@ -115,11 +115,11 @@ flowchart LR
 * [x] Add/Edit staff profiles, designations, bios, headshot photo uploader, contact info, and social profiles.
 
 #### Phase 4.5: Brands, Clients & Awards Manager (`admin/brands/`)
-- **Status:** `[NEXT UP 🎯]`
-* [ ] Logo upload and sort ordering for clients, partners, and awards.
+- **Status:** `[DONE ✅]`
+* [x] Logo upload and sort ordering for clients, partners, awards, and affiliations with dynamic type filter pills, live SVG/PNG preview, and auto-optimization.
 
 #### Phase 4.6: Reviews & Testimonials Manager (`admin/reviews/`)
-- **Status:** `[PENDING ⏳]`
+- **Status:** `[NEXT UP 🎯]`
 * [ ] Manage client feedback, star ratings (e.g. 5.0), and featured flags.
 
 #### Phase 4.7: Inquiries / Leads Inbox (`admin/inquiries/`)
