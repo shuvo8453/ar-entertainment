@@ -329,6 +329,17 @@ function upload_image(
         return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Invalid image format. Allowed: JPG, PNG, WebP.'];
     }
 
+    // Strict extension check (blocks .jfif, .bmp, .gif, .exe, etc.)
+    $orig_ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    $valid_exts = ['jpg', 'jpeg', 'png', 'webp'];
+    if (in_array('image/svg+xml', $allowed_types, true)) {
+        $valid_exts[] = 'svg';
+    }
+
+    if (!in_array($orig_ext, $valid_exts, true)) {
+        return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Invalid file extension (.' . htmlspecialchars($orig_ext) . '). Only .jpg, .jpeg, .png, and .webp files are allowed.'];
+    }
+
     $target_dir = UPLOADS_PATH . DIRECTORY_SEPARATOR . trim($folder, '/\\');
     if (!is_dir($target_dir)) {
         mkdir($target_dir, 0755, true);

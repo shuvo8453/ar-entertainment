@@ -389,9 +389,9 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                             <label for="photoFile" class="form-label text-muted small fw-semibold">
                                 <?= !empty($current_photo) ? 'Replace Photo File' : 'Upload Photo File' ?>
                             </label>
-                            <input type="file" name="photo" id="photoFile" class="form-control bg-dark border-secondary text-white" accept="image/jpeg,image/png,image/webp">
+                            <input type="file" name="photo" id="photoFile" class="form-control bg-dark border-secondary text-white" accept=".jpg,.jpeg,.png,.webp">
                             <div class="form-text text-muted small">
-                                Allowed: JPG, PNG, WebP (Max: 5MB). Auto-optimized on upload.
+                                Allowed: .jpg, .jpeg, .png, .webp (Max: 5MB). Auto-optimized on upload.
                             </div>
                         </div>
                     </div>
@@ -502,17 +502,32 @@ document.addEventListener('DOMContentLoaded', function() {
         photoFileInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
-                const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-                if (!allowedTypes.includes(file.type)) {
-                    alert('Invalid file format (' + file.type + '). Please choose a JPG, PNG, or WebP image.');
+                const fileName = file.name.toLowerCase();
+                const validExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
+                const hasValidExt = validExtensions.some(ext => fileName.endsWith(ext));
+
+                if (!hasValidExt) {
+                    alert('Invalid file format. Only .jpg, .jpeg, .png, and .webp files are allowed. (' + file.name + ' is not allowed)');
                     this.value = '';
+                    previewImg.src = '';
+                    previewImg.classList.add('d-none');
+                    if (previewPlaceholder) {
+                        previewPlaceholder.classList.remove('d-none');
+                    }
                     return;
                 }
+
                 if (file.size > 5 * 1024 * 1024) {
                     alert('The selected image is ' + (file.size / (1024 * 1024)).toFixed(1) + 'MB. Maximum allowed size is 5MB. Please choose a smaller image.');
                     this.value = '';
+                    previewImg.src = '';
+                    previewImg.classList.add('d-none');
+                    if (previewPlaceholder) {
+                        previewPlaceholder.classList.remove('d-none');
+                    }
                     return;
                 }
+
                 const reader = new FileReader();
                 reader.onload = function(evt) {
                     previewImg.src = evt.target.result;
