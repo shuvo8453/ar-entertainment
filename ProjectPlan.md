@@ -111,11 +111,11 @@ flowchart LR
 * [x] Video Categories CRUD manager with live project counters per category.
 
 #### Phase 4.4: Team Members Manager (`admin/team/`)
-- **Status:** `[NEXT UP 🎯]`
-* [ ] Add/Edit staff profiles, designations, bios, photos, and social profiles.
+- **Status:** `[DONE ✅]`
+* [x] Add/Edit staff profiles, designations, bios, headshot photo uploader, contact info, and social profiles.
 
 #### Phase 4.5: Brands, Clients & Awards Manager (`admin/brands/`)
-- **Status:** `[PENDING ⏳]`
+- **Status:** `[NEXT UP 🎯]`
 * [ ] Logo upload and sort ordering for clients, partners, and awards.
 
 #### Phase 4.6: Reviews & Testimonials Manager (`admin/reviews/`)

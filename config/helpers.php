@@ -205,7 +205,7 @@ function render_flash(): string
         $alert_type = ($type === 'error') ? 'danger' : $type;
         $html .= '<div class="alert alert-' . htmlspecialchars($alert_type) . ' alert-dismissible fade show" role="alert">';
         foreach ($messages as $msg) {
-            $html .= '<div>' . htmlspecialchars($msg) . '</div>';
+            $html .= '<div>' . $msg . '</div>';
         }
         $html .= '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
         $html .= '</div>';
@@ -290,16 +290,25 @@ function truncate_text(string $text, int $limit = 150, string $ellipsis = '...')
 }
 
 /**
- * Upload an image file securely with MIME and size validation.
+ * Upload an image file securely with MIME verification, size validation, and automatic optimization.
+ * Automatically downscales oversized photos and converts to modern AVIF/WebP when GD is available.
  *
- * @param array $file $_FILES['key']
- * @param string $folder Destination folder inside /uploads/ (e.g. 'blogs', 'team', 'portfolio')
- * @param array $allowed_types Allowed MIME types
- * @param int $max_size Maximum file size in bytes (default 5MB)
+ * @param array  $file           $_FILES['key']
+ * @param string $folder         Destination folder inside /uploads/ (e.g. 'blogs', 'team', 'portfolio', 'brands')
+ * @param array  $allowed_types  Allowed MIME types (default: JPG, PNG, WEBP)
+ * @param int    $max_size       Maximum file size in bytes (default 5MB)
+ * @param int    $max_dimension  Maximum width/height in pixels (default 1200)
+ * @param int    $quality        Compression quality (default 82)
  * @return array ['success' => bool, 'path' => string, 'filename' => string, 'error' => string]
  */
-function upload_image(array $file, string $folder = 'blogs', array $allowed_types = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml'], int $max_size = 5242880): array
-{
+function upload_image(
+    array $file,
+    string $folder = 'blogs',
+    array $allowed_types = ['image/jpeg', 'image/png', 'image/webp'],
+    int $max_size = 5242880,
+    int $max_dimension = 1200,
+    int $quality = 82
+): array {
     if (empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
         return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'No file was uploaded or upload failed.'];
     }
@@ -313,22 +322,12 @@ function upload_image(array $file, string $folder = 'blogs', array $allowed_type
     }
 
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
-    $mime = finfo_file($finfo, $file['tmp_name']);
+    $mime  = finfo_file($finfo, $file['tmp_name']);
     finfo_close($finfo);
 
     if (!in_array($mime, $allowed_types, true)) {
-        return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Invalid image format. Allowed: JPG, PNG, WEBP, GIF, SVG.'];
+        return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Invalid image format. Allowed: JPG, PNG, WebP.'];
     }
-
-    $ext_map = [
-        'image/jpeg' => 'jpg',
-        'image/png'  => 'png',
-        'image/webp' => 'webp',
-        'image/gif'  => 'gif',
-        'image/svg+xml' => 'svg'
-    ];
-    $ext = $ext_map[$mime] ?? pathinfo($file['name'], PATHINFO_EXTENSION);
-    $ext = strtolower($ext);
 
     $target_dir = UPLOADS_PATH . DIRECTORY_SEPARATOR . trim($folder, '/\\');
     if (!is_dir($target_dir)) {
@@ -339,12 +338,97 @@ function upload_image(array $file, string $folder = 'blogs', array $allowed_type
     if (empty($clean_orig_name)) {
         $clean_orig_name = 'image';
     }
-    $filename = $clean_orig_name . '-' . uniqid() . '.' . $ext;
+
+    // Direct save for SVG files (vector logos/badges)
+    if ($mime === 'image/svg+xml') {
+        $filename    = $clean_orig_name . '-' . uniqid() . '.svg';
+        $target_file = $target_dir . DIRECTORY_SEPARATOR . $filename;
+        if (move_uploaded_file($file['tmp_name'], $target_file)) {
+            return ['success' => true, 'path' => $folder . '/' . $filename, 'filename' => $filename, 'error' => ''];
+        }
+        return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Failed to save SVG file.'];
+    }
+
+    // Automatic GD Optimization (Resize + AVIF/WebP Compression)
+    if (extension_loaded('gd') && function_exists('imagecreatefromstring')) {
+        $raw_data = file_get_contents($file['tmp_name']);
+        $src_img  = @imagecreatefromstring($raw_data);
+
+        if ($src_img !== false) {
+            $orig_width  = imagesx($src_img);
+            $orig_height = imagesy($src_img);
+
+            $out_img = $src_img;
+            if ($orig_width > $max_dimension || $orig_height > $max_dimension) {
+                if ($orig_width >= $orig_height) {
+                    $new_width  = $max_dimension;
+                    $new_height = (int) round(($orig_height / $orig_width) * $max_dimension);
+                } else {
+                    $new_height = $max_dimension;
+                    $new_width  = (int) round(($orig_width / $orig_height) * $max_dimension);
+                }
+
+                $scaled = imagescale($src_img, $new_width, $new_height, IMG_BILINEAR_FIXED);
+                if ($scaled !== false) {
+                    $out_img = $scaled;
+                    if ($src_img !== $out_img) {
+                        imagedestroy($src_img);
+                    }
+                }
+            }
+
+            // Preserve alpha channel for PNG/WebP/AVIF
+            imagealphablending($out_img, false);
+            imagesavealpha($out_img, true);
+
+            $saved = false;
+            $ext   = 'jpg';
+
+            if (function_exists('imageavif')) {
+                $ext         = 'avif';
+                $filename    = $clean_orig_name . '-' . uniqid() . '.' . $ext;
+                $target_file = $target_dir . DIRECTORY_SEPARATOR . $filename;
+                $saved       = @imageavif($out_img, $target_file, $quality);
+            } elseif (function_exists('imagewebp')) {
+                $ext         = 'webp';
+                $filename    = $clean_orig_name . '-' . uniqid() . '.' . $ext;
+                $target_file = $target_dir . DIRECTORY_SEPARATOR . $filename;
+                $saved       = @imagewebp($out_img, $target_file, $quality);
+            } elseif ($mime === 'image/png' && function_exists('imagepng')) {
+                $ext         = 'png';
+                $filename    = $clean_orig_name . '-' . uniqid() . '.' . $ext;
+                $target_file = $target_dir . DIRECTORY_SEPARATOR . $filename;
+                $saved       = @imagepng($out_img, $target_file, 8);
+            } elseif (function_exists('imagejpeg')) {
+                $ext         = 'jpg';
+                $filename    = $clean_orig_name . '-' . uniqid() . '.' . $ext;
+                $target_file = $target_dir . DIRECTORY_SEPARATOR . $filename;
+                $saved       = @imagejpeg($out_img, $target_file, $quality);
+            }
+
+            imagedestroy($out_img);
+
+            if ($saved && file_exists($target_file)) {
+                return ['success' => true, 'path' => $folder . '/' . $filename, 'filename' => $filename, 'error' => ''];
+            }
+        }
+    }
+
+    // Direct fallback if GD is not present
+    $ext_map = [
+        'image/jpeg' => 'jpg',
+        'image/png'  => 'png',
+        'image/webp' => 'webp',
+        'image/gif'  => 'gif',
+        'image/svg+xml' => 'svg'
+    ];
+    $ext         = $ext_map[$mime] ?? pathinfo($file['name'], PATHINFO_EXTENSION);
+    $ext         = strtolower($ext);
+    $filename    = $clean_orig_name . '-' . uniqid() . '.' . $ext;
     $target_file = $target_dir . DIRECTORY_SEPARATOR . $filename;
 
     if (move_uploaded_file($file['tmp_name'], $target_file)) {
-        $relative_path = $folder . '/' . $filename;
-        return ['success' => true, 'path' => $relative_path, 'filename' => $filename, 'error' => ''];
+        return ['success' => true, 'path' => $folder . '/' . $filename, 'filename' => $filename, 'error' => ''];
     }
 
     return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Failed to save uploaded file to storage directory.'];
