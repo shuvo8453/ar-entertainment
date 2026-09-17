@@ -34,33 +34,86 @@ ServerSignature Off
     DirectoryIndex index.php index.html
 
     # -----------------------------------------------------------------
-    # 3.2. 301 Permanent Redirects for Clean URLs (Strip index.php & .html)
+    # 3.2. Universal Asset Fallback (CSS, JS, Images, Fonts, Uploads)
     # -----------------------------------------------------------------
-    # Redirect root /index.html and /index.php to ./
-    RewriteCond %{THE_REQUEST} \s/+(?:ar-entertainment/)?index\.(html|php)[\s?] [NC]
-    RewriteRule ^index\.(html|php)$ ./ [R=301,L,NE]
+    # Any subpath requesting /inc/, /images/, or /uploads/ routes to root assets
+    RewriteRule ^(?:.+?/)*(inc/.*)$ $1 [L,QSA]
+    RewriteRule ^(?:.+?/)*(images/.*)$ $1 [L,QSA]
+    RewriteRule ^(?:.+?/)*(uploads/.*)$ $1 [L,QSA]
 
-    # Redirect subfolder /index.php to subfolder / (e.g. /admin/blogs/index.php -> /admin/blogs/)
-    RewriteCond %{THE_REQUEST} \s/+(?:ar-entertainment/)?(.+?)/index\.php[\s?] [NC]
-    RewriteRule ^(.+?)/index\.php$ $1/ [R=301,L,NE]
-
-    # Strip .html extension from direct requests to preserve SEO equity
-    RewriteCond %{THE_REQUEST} \s/+(?:ar-entertainment/)?([^\s?]+)\.html[\s?] [NC]
-    RewriteRule ^(.+)\.html$ $1 [R=301,L,NE]
-
-    # -----------------------------------------------------------------
-    # 3.3. Pass-through Real Files and Static Directories
-    # -----------------------------------------------------------------
     RewriteRule ^uploads(/.*)?$ - [L]
     RewriteRule ^inc(/.*)?$ - [L]
     RewriteRule ^images(/.*)?$ - [L]
 
-    # Pass-through real static files (css, js, images, fonts)
+    # Pass-through real static files
     RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule ^ - [L]
 
     # -----------------------------------------------------------------
-    # 3.4. Clean SEO Frontend Routes (PHP dynamic with HTML fallback)
+    # 3.3. Relative Link Recovery & URL Normalization
+    # -----------------------------------------------------------------
+    # Strip .html extension from direct requests to preserve SEO equity
+    RewriteCond %{THE_REQUEST} \s/+(?:ar-entertainment/)?([^\s?]+)\.html[\s?] [NC]
+    RewriteRule ^(.+)\.html$ $1 [R=301,L,NE]
+
+    # Redirect root /index.html and /index.php to ./
+    RewriteCond %{THE_REQUEST} \s/+(?:ar-entertainment/)?index\.(html|php)[\s?] [NC]
+    RewriteRule ^index\.(html|php)$ ./ [R=301,L,NE]
+
+    # Fix relative index.html / home links clicked from subfolder paths
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^.+?/(?:index\.(?:html|php)|home)/?$ ./ [R=301,L]
+
+    # Sibling link recovery for nested subfolders (e.g. /about-us/meet-the-team/why-choose-us -> /about-us/why-choose-us)
+    # 1. about-us sibling links
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/about-us/$1.html -f [OR]
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/about-us/$1.php -f
+    RewriteRule ^about-us/.+?/([^/]+)/?$ about-us/$1 [R=301,L]
+
+    # 2. services sibling links
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/services/$1.html -f [OR]
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/services/$1.php -f
+    RewriteRule ^services/.+?/([^/]+)/?$ services/$1 [R=301,L]
+
+    # 3. ai sibling links
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/ai/$1.html -f [OR]
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/ai/$1.php -f
+    RewriteRule ^ai/.+?/([^/]+)/?$ ai/$1 [R=301,L]
+
+    # 4. blog sibling links
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/blog/$1.html -f [OR]
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/blog/$1.php -f
+    RewriteRule ^blog/.+?/([^/]+)/?$ blog/$1 [R=301,L]
+
+    # 5. portfolio sibling links
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/portfolio/$1.html -f [OR]
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/portfolio/$1.php -f
+    RewriteRule ^portfolio/.+?/([^/]+)/?$ portfolio/$1 [R=301,L]
+
+    # Fix relative top-level navigation links clicked from subfolders (e.g. /brands/about-us/meet-the-team -> /about-us/meet-the-team)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^.+?/(about-us|services|portfolio|ai|brands|service-area|blog|contact-us|sitemap|survey|goodfirms|global-healthcare-center)(/.*)?$ $1$2 [R=301,L]
+
+    # Direct shortcuts to about-us subpages (e.g. /contact-us -> about-us/contact-us.html)
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/about-us/$1.php -f
+    RewriteRule ^(contact-us|privacy|careers|partners|reviews|why-choose-us|meet-the-team|hours-and-location)/?$ about-us/$1.php [L,QSA]
+
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/about-us/$1.html -f
+    RewriteRule ^(contact-us|privacy|careers|partners|reviews|why-choose-us|meet-the-team|hours-and-location)/?$ about-us/$1.html [L,QSA]
+
+    # -----------------------------------------------------------------
+    # 3.4. Dynamic Routes & Clean SEO Routing
     # -----------------------------------------------------------------
     # Homepage
     RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/index.php -f [OR]
@@ -75,83 +128,47 @@ ServerSignature Off
     RewriteCond sitemap.php -f
     RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
-    # Blog Routes
-    RewriteCond blog.php -f
-    RewriteRule ^blog/?$ blog.php [L,QSA]
-    RewriteCond blog-single.php -f
-    RewriteRule ^blog/([^/]+)/?$ blog-single.php?slug=$1 [L,QSA]
-
-    # Services Routes
-    RewriteCond services.php -f
-    RewriteRule ^services/?$ services.php [L,QSA]
-    RewriteCond service-single.php -f
-    RewriteRule ^services/([^/]+)/([^/]+)/?$ service-single.php?category=$1&slug=$2 [L,QSA]
-    RewriteCond service-single.php -f
-    RewriteRule ^services/([^/]+)/?$ service-single.php?slug=$1 [L,QSA]
-
-    # AI Production Hub Routes
-    RewriteCond ai.php -f
-    RewriteRule ^ai/?$ ai.php [L,QSA]
-    RewriteCond ai-single.php -f
-    RewriteRule ^ai/([^/]+)/?$ ai-single.php?slug=$1 [L,QSA]
-
-    # Portfolio Routes
-    RewriteCond portfolio.php -f
-    RewriteRule ^portfolio/?$ portfolio.php [L,QSA]
-    RewriteCond portfolio-single.php -f
-    RewriteRule ^portfolio/([^/]+)/?$ portfolio-single.php?slug=$1 [L,QSA]
-
-    # District Service Area Guides
-    RewriteCond service-area.php -f
-    RewriteRule ^service-area/?$ service-area.php [L,QSA]
-    RewriteCond service-area-single.php -f
-    RewriteRule ^service-area/([^/]+)/?$ service-area-single.php?district=$1 [L,QSA]
-
-    # Brands & Clients
-    RewriteCond brands.php -f
-    RewriteRule ^brands/?$ brands.php [L,QSA]
-    RewriteCond brand-single.php -f
-    RewriteRule ^brands/([^/]+)/?$ brand-single.php?slug=$1 [L,QSA]
-
-    # About Us & Subpages
-    RewriteCond about-us.php -f
-    RewriteRule ^about-us/?$ about-us.php [L,QSA]
-    RewriteCond why-choose-us.php -f
-    RewriteRule ^about-us/why-choose-us/?$ why-choose-us.php [L,QSA]
-    RewriteCond careers.php -f
-    RewriteRule ^about-us/careers/?$ careers.php [L,QSA]
-    RewriteCond partners.php -f
-    RewriteRule ^about-us/partners/?$ partners.php [L,QSA]
-    RewriteCond contact-us.php -f
-    RewriteRule ^about-us/contact-us/?$ contact-us.php [L,QSA]
-
-    # Fallback to corresponding .html templates when dynamic .php does not exist yet
-    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/$1.php !-f
-    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/$1.html -f
-    RewriteRule ^(about-us|services|portfolio|ai|brands|service-area|blog)/?$ $1.html [L,QSA]
-
-    # Sub-pages in about-us/
-    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/about-us/$1.php !-f
-    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/about-us/$1.html -f
-    RewriteRule ^about-us/([^/]+)/?$ about-us/$1.html [L,QSA]
-
     # -----------------------------------------------------------------
-    # 3.5. Multi-level Clean URL Route Resolution (Admin & Static Fallbacks)
+    # 3.5. Directory & Multi-level Clean Route Resolution
     # -----------------------------------------------------------------
-    # If directory without trailing slash, redirect to trailing slash
+    # If directory has an index.php or index.html, let DirectoryIndex serve it
     RewriteCond %{REQUEST_FILENAME} -d
-    RewriteCond %{REQUEST_URI} !/$
-    RewriteRule ^(.*)$ $1/ [R=301,L]
-
-    # If directory exists, let DirectoryIndex serve index.php or index.html
-    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteCond %{REQUEST_FILENAME}/index.php -f [OR]
+    RewriteCond %{REQUEST_FILENAME}/index.html -f
     RewriteRule ^ - [L]
 
-    # If extensionless .php file exists in current path or subdirectories
+    # If directory has NO index file, route to corresponding root .php or .html file (e.g. /brands/ -> brands.html)
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/$1.php -f
+    RewriteRule ^([^/]+)/?$ $1.php [L,QSA]
+
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/$1.html -f
+    RewriteRule ^([^/]+)/?$ $1.html [L,QSA]
+
+    # 3-level extensionless resolution (e.g. services/category/subitem)
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/$1/$2/$3.php -f
+    RewriteRule ^([^/]+)/([^/]+)/([^/]+)/?$ $1/$2/$3.php [L,QSA]
+
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/$1/$2/$3.html -f
+    RewriteRule ^([^/]+)/([^/]+)/([^/]+)/?$ $1/$2/$3.html [L,QSA]
+
+    # 2-level extensionless resolution (e.g. about-us/meet-the-team or services/tv-commercial)
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/$1/$2.php -f
+    RewriteRule ^([^/]+)/([^/]+)/?$ $1/$2.php [L,QSA]
+
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/$1/$2.html -f
+    RewriteRule ^([^/]+)/([^/]+)/?$ $1/$2.html [L,QSA]
+
+    # 1-level extensionless resolution (e.g. about-us, services, portfolio, blog, etc.)
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/$1.php -f
+    RewriteRule ^([^/]+)/?$ $1.php [L,QSA]
+
+    RewriteCond %{DOCUMENT_ROOT}/ar-entertainment/$1.html -f
+    RewriteRule ^([^/]+)/?$ $1.html [L,QSA]
+
+    # Fallback to standard extensionless resolution
     RewriteCond %{REQUEST_FILENAME}.php -f
     RewriteRule ^(.+?)/?$ $1.php [L,QSA]
 
-    # If extensionless .html file exists in current path (template fallback before Phase 5)
     RewriteCond %{REQUEST_FILENAME}.html -f
     RewriteRule ^(.+?)/?$ $1.html [L,QSA]
 </IfModule>
