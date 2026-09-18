@@ -39,6 +39,27 @@ require_once __DIR__ . '/includes/sidebar.php';
     <?php require_once __DIR__ . '/includes/navbar.php'; ?>
 
     <main class="admin-content">
+        <!-- Breadcrumb & Header -->
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+            <div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-1 small text-muted">
+                        <li class="breadcrumb-item"><a href="<?= site_url('admin') ?>" class="text-muted text-decoration-none">Home</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Dashboard</li>
+                    </ol>
+                </nav>
+                <h3 class="fw-bold mb-0 text-white">Dashboard Overview</h3>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="<?= site_url('admin/blogs/create') ?>" class="btn btn-ar-primary btn-sm">
+                    <i class="fa-solid fa-plus me-1"></i> New Article
+                </a>
+                <a href="<?= site_url('admin/portfolio/create') ?>" class="btn btn-ar-secondary btn-sm">
+                    <i class="fa-solid fa-video me-1"></i> Add Work
+                </a>
+            </div>
+        </div>
+
         <!-- Flash notifications -->
         <?= render_flash() ?>
 
@@ -51,13 +72,8 @@ require_once __DIR__ . '/includes/sidebar.php';
                         Here is an overview of what's happening on <strong class="text-light"><?= SITE_NAME ?></strong>.
                     </p>
                 </div>
-                <div class="d-flex gap-2">
-                    <a href="<?= site_url('admin/blogs/create') ?>" class="btn btn-ar-primary btn-sm">
-                        <i class="fa-solid fa-plus me-1"></i> New Article
-                    </a>
-                    <a href="<?= site_url('admin/portfolio/create') ?>" class="btn btn-ar-secondary btn-sm">
-                        <i class="fa-solid fa-video me-1"></i> Add Work
-                    </a>
+                <div class="text-muted small">
+                    <i class="fa-regular fa-calendar-days me-1 text-danger"></i> <?= date('l, F j, Y') ?>
                 </div>
             </div>
         </div>

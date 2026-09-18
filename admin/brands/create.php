@@ -3,12 +3,9 @@
  * AR Entertainment - Add New Brand / Client / Award
  * Phase 4.5: Management CRUD (admin/brands/create.php)
  */
-require_once __DIR__ . '/../../config/db.php';
-require_once __DIR__ . '/../../config/helpers.php';
+require_once dirname(__DIR__) . '/auth_check.php';
 
-require_login();
-
-$current_page = 'brands';
+$current_page = 'brands_create';
 $page_title   = 'Add Brand / Client';
 
 $name        = '';
@@ -105,24 +102,28 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
 ?>
 
 <div class="admin-main">
-    <div class="top-navbar">
-        <div class="d-flex align-items-center gap-3">
-            <button class="btn btn-outline-secondary d-lg-none" id="sidebarToggleBtn">
-                <i class="fa-solid fa-bars"></i>
-            </button>
+    <?php require_once ADMIN_PATH . '/includes/navbar.php'; ?>
+
+    <main class="admin-content">
+        <!-- Breadcrumb & Header -->
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
             <div>
-                <h4 class="fw-bold mb-0 text-white">Add Brand / Client</h4>
-                <small class="text-muted">Register a new client logo, strategic partner, or award recognition</small>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-1 small text-muted">
+                        <li class="breadcrumb-item"><a href="<?= site_url('admin') ?>" class="text-muted text-decoration-none">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="<?= site_url('admin/brands') ?>" class="text-muted text-decoration-none">Brands &amp; Clients</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Add Brand</li>
+                    </ol>
+                </nav>
+                <h3 class="fw-bold mb-0 text-white">Add Brand / Client</h3>
+            </div>
+            <div>
+                <a href="<?= site_url('admin/brands') ?>" class="btn btn-ar-secondary">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Brands
+                </a>
             </div>
         </div>
-        <div class="d-flex align-items-center gap-2">
-            <a href="<?= site_url('admin/brands') ?>" class="btn btn-outline-secondary">
-                <i class="fa-solid fa-arrow-left me-1"></i> Back to Brands
-            </a>
-        </div>
-    </div>
 
-    <main class="content-body">
         <?php if (!empty($errors)): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <div class="fw-bold mb-1"><i class="fa-solid fa-circle-exclamation me-2"></i>Please resolve the following issues:</div>
@@ -275,10 +276,10 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary py-2 fw-bold">
+                            <button type="submit" class="btn btn-ar-primary py-2 fw-bold">
                                 <i class="fa-solid fa-check-circle me-2"></i> Save Brand / Client
                             </button>
-                            <a href="<?= site_url('admin/brands') ?>" class="btn btn-outline-secondary py-2">
+                            <a href="<?= site_url('admin/brands') ?>" class="btn btn-ar-secondary py-2 text-center">
                                 <i class="fa-solid fa-arrow-left me-1"></i> Cancel &amp; Back
                             </a>
                         </div>
@@ -293,7 +294,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const logoFileInput    = document.getElementById('logoFile');
+    const logoFileInput     = document.getElementById('logoFile');
     const previewImg        = document.getElementById('previewImg');
     const previewPlaceholder= document.getElementById('previewPlaceholder');
     const btnRemoveImage    = document.getElementById('btnRemoveImage');

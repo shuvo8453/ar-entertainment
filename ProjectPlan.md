@@ -93,7 +93,7 @@ flowchart LR
 
 ### Phase 4: Admin CRUD Management Modules
 
-- **Overall Status:** `[IN PROGRESS 🔄]`
+- **Overall Status:** `[COMPLETED ✅]`
 
 #### Phase 4.1: Blog Manager (`admin/blogs/`)
 - **Status:** `[DONE ✅]`
@@ -123,12 +123,12 @@ flowchart LR
 * [x] Manage client feedback, star ratings (e.g. 5.0), platform sources (Google, GoodFirms, Clutch, Direct), client avatar uploads, and featured sort ordering.
 
 #### Phase 4.7: Inquiries / Leads Inbox (`admin/inquiries/`)
-- **Status:** `[NEXT UP 🎯]`
-* [ ] View submissions (Contact, Quote, Careers, Survey), mark read/unread, filter by form type, CSV export.
+- **Status:** `[DONE ✅]`
+* [x] View submissions (Contact, Quote, Careers, Survey), mark read/unread, filter by form type, full details view with structured JSON metadata parser, bulk actions, and Excel-compatible CSV export.
 
 #### Phase 4.8: Global Site Settings Manager (`admin/settings/`)
-- **Status:** `[PENDING ⏳]`
-* [ ] Live editor for phone, email, office address, social links, GA4 ID, Meta Pixel ID, and custom scripts.
+- **Status:** `[DONE ✅]`
+* [x] Live tabbed editor for General brand info, Contact & Studio address, Social & Video links, GA4 ID, Meta Pixel ID, and custom header/footer scripts.
 
 ---
 

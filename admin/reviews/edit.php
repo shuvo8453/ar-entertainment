@@ -3,10 +3,7 @@
  * AR Entertainment - Edit Client Review / Testimonial
  * Phase 4.6: Management CRUD (admin/reviews/edit.php)
  */
-require_once __DIR__ . '/../../config/db.php';
-require_once __DIR__ . '/../../config/helpers.php';
-
-require_login();
+require_once dirname(__DIR__) . '/auth_check.php';
 
 $current_page = 'reviews';
 $page_title   = 'Edit Client Review';
@@ -154,24 +151,28 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
 ?>
 
 <div class="admin-main">
-    <div class="top-navbar">
-        <div class="d-flex align-items-center gap-3">
-            <button class="btn btn-outline-secondary d-lg-none" id="sidebarToggleBtn">
-                <i class="fa-solid fa-bars"></i>
-            </button>
+    <?php require_once ADMIN_PATH . '/includes/navbar.php'; ?>
+
+    <main class="admin-content">
+        <!-- Breadcrumb & Header -->
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
             <div>
-                <h4 class="fw-bold mb-0 text-white">Edit Client Review</h4>
-                <small class="text-muted">Editing feedback from <?= htmlspecialchars($client_name) ?></small>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-1 small text-muted">
+                        <li class="breadcrumb-item"><a href="<?= site_url('admin') ?>" class="text-muted text-decoration-none">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="<?= site_url('admin/reviews') ?>" class="text-muted text-decoration-none">Client Reviews</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Edit #<?= (int)$id ?></li>
+                    </ol>
+                </nav>
+                <h3 class="fw-bold mb-0 text-white">Edit Review: <?= htmlspecialchars($client_name) ?></h3>
+            </div>
+            <div>
+                <a href="<?= site_url('admin/reviews') ?>" class="btn btn-ar-secondary">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Reviews
+                </a>
             </div>
         </div>
-        <div class="d-flex align-items-center gap-2">
-            <a href="<?= site_url('admin/reviews') ?>" class="btn btn-outline-secondary">
-                <i class="fa-solid fa-arrow-left me-1"></i> Back to Reviews
-            </a>
-        </div>
-    </div>
 
-    <main class="content-body">
         <?php if (!empty($errors)): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <div class="fw-bold mb-1"><i class="fa-solid fa-circle-exclamation me-2"></i>Please resolve the following issues:</div>
@@ -186,14 +187,56 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
 
         <form method="POST" action="<?= site_url('admin/reviews/edit.php?id=' . $id) ?>" enctype="multipart/form-data">
             <?= csrf_field() ?>
+            <input type="hidden" name="remove_photo" id="removePhotoInput" value="0">
 
             <div class="row g-4">
-                <!-- Left Column: Testimonial & Review Content -->
+                <!-- Left Column: Primary Feedback Content -->
                 <div class="col-12 col-lg-8">
+                    <!-- Feedback Text Card -->
+                    <div class="card-ar mb-4">
+                        <h5 class="fw-bold text-white mb-3">
+                            <i class="fa-solid fa-comment-dots text-primary me-2"></i> Client Testimonial
+                        </h5>
+
+                        <!-- Review Text -->
+                        <div class="mb-4">
+                            <label for="reviewText" class="form-label text-white fw-semibold">
+                                Review / Testimonial Text <span class="text-danger">*</span>
+                            </label>
+                            <textarea name="review_text" id="reviewText" rows="5" class="form-control bg-dark border-secondary text-white" placeholder="Write or paste client feedback..." required><?= htmlspecialchars($review_text) ?></textarea>
+                        </div>
+
+                        <!-- Rating Selector -->
+                        <div class="mb-4">
+                            <label class="form-label text-white fw-semibold d-block">
+                                Star Rating <span class="text-danger">*</span>
+                            </label>
+                            <div class="d-flex align-items-center gap-3">
+                                <select name="rating" id="ratingSelect" class="form-select bg-dark border-secondary text-white" style="max-width: 140px;">
+                                    <option value="5.0" <?= ($rating == 5.0) ? 'selected' : '' ?>>5.0 Stars ★★★★★</option>
+                                    <option value="4.5" <?= ($rating == 4.5) ? 'selected' : '' ?>>4.5 Stars ★★★★½</option>
+                                    <option value="4.0" <?= ($rating == 4.0) ? 'selected' : '' ?>>4.0 Stars ★★★★☆</option>
+                                    <option value="3.5" <?= ($rating == 3.5) ? 'selected' : '' ?>>3.5 Stars ★★★½☆</option>
+                                    <option value="3.0" <?= ($rating == 3.0) ? 'selected' : '' ?>>3.0 Stars ★★★☆☆</option>
+                                </select>
+                                <span class="text-warning fs-5" id="starsLivePreview">★★★★★</span>
+                            </div>
+                        </div>
+
+                        <!-- Associated Project Name -->
+                        <div class="mb-0">
+                            <label for="projectName" class="form-label text-white fw-semibold">
+                                Associated Video / Project Title <small class="text-muted fw-normal">(Optional)</small>
+                            </label>
+                            <input type="text" name="project_name" id="projectName" class="form-control bg-dark border-secondary text-white" placeholder="e.g. Apex Eid TV Commercial or BBC Line Production" value="<?= htmlspecialchars($project_name) ?>">
+                            <div class="form-text text-muted small">Associating a project creates an authentic context badge.</div>
+                        </div>
+                    </div>
+
                     <!-- Client Details Card -->
                     <div class="card-ar mb-4">
                         <h5 class="fw-bold text-white mb-3">
-                            <i class="fa-solid fa-user-check text-primary me-2"></i> Reviewer Information
+                            <i class="fa-solid fa-user-tie text-info me-2"></i> Client Information
                         </h5>
 
                         <div class="row g-3">
@@ -202,87 +245,30 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                                 <label for="clientName" class="form-label text-white fw-semibold">
                                     Client / Reviewer Full Name <span class="text-danger">*</span>
                                 </label>
-                                <input type="text" name="client_name" id="clientName" class="form-control bg-dark border-secondary text-white" placeholder="e.g. Ehtesham Ahmed" value="<?= htmlspecialchars($client_name) ?>" required>
+                                <input type="text" name="client_name" id="clientName" class="form-control bg-dark border-secondary text-white" placeholder="e.g. Tanvir Ahmed" value="<?= htmlspecialchars($client_name) ?>" required>
                             </div>
 
                             <!-- Company Name -->
                             <div class="col-12 col-md-6">
                                 <label for="clientCompany" class="form-label text-white fw-semibold">
-                                    Company / Organization <small class="text-muted fw-normal">(Optional)</small>
+                                    Company / Organization
                                 </label>
-                                <input type="text" name="client_company" id="clientCompany" class="form-control bg-dark border-secondary text-white" placeholder="e.g. PRAN-RFL Group or Unilever" value="<?= htmlspecialchars($client_company) ?>">
+                                <input type="text" name="client_company" id="clientCompany" class="form-control bg-dark border-secondary text-white" placeholder="e.g. Apex Footwear Ltd." value="<?= htmlspecialchars($client_company) ?>">
                             </div>
 
-                            <!-- Designation -->
-                            <div class="col-12 col-md-6">
-                                <label for="clientDesignation" class="form-label text-muted small fw-semibold">
-                                    Job Title / Role <small class="text-muted fw-normal">(Optional)</small>
+                            <!-- Designation / Title -->
+                            <div class="col-12">
+                                <label for="clientDesignation" class="form-label text-white fw-semibold">
+                                    Designation / Job Title
                                 </label>
                                 <input type="text" name="client_designation" id="clientDesignation" class="form-control bg-dark border-secondary text-white" placeholder="e.g. Head of Marketing & Communications" value="<?= htmlspecialchars($client_designation) ?>">
                             </div>
-
-                            <!-- Project Name -->
-                            <div class="col-12 col-md-6">
-                                <label for="projectName" class="form-label text-muted small fw-semibold">
-                                    Project / Campaign Name <small class="text-muted fw-normal">(Optional)</small>
-                                </label>
-                                <input type="text" name="project_name" id="projectName" class="form-control bg-dark border-secondary text-white" placeholder="e.g. 4K Brand Film & TVC Campaign" value="<?= htmlspecialchars($project_name) ?>">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Testimonial Content Card -->
-                    <div class="card-ar mb-4">
-                        <h5 class="fw-bold text-white mb-3">
-                            <i class="fa-solid fa-quote-left text-warning me-2"></i> Testimonial &amp; Rating
-                        </h5>
-
-                        <!-- Star Rating Selector -->
-                        <div class="mb-4">
-                            <label for="ratingInput" class="form-label text-white fw-semibold d-block">
-                                Star Rating <span class="text-danger">*</span>
-                            </label>
-                            <div class="d-flex align-items-center gap-3">
-                                <select name="rating" id="ratingInput" class="form-select bg-dark border-secondary text-warning fw-bold" style="width: 150px;">
-                                    <option value="5.0" <?= (number_format((float)$rating, 1) === '5.0') ? 'selected' : '' ?>>★★★★★ 5.0 (Perfect)</option>
-                                    <option value="4.5" <?= (number_format((float)$rating, 1) === '4.5') ? 'selected' : '' ?>>★★★★½ 4.5 (Excellent)</option>
-                                    <option value="4.0" <?= (number_format((float)$rating, 1) === '4.0') ? 'selected' : '' ?>>★★★★☆ 4.0 (Great)</option>
-                                    <option value="3.5" <?= (number_format((float)$rating, 1) === '3.5') ? 'selected' : '' ?>>★★★½☆ 3.5 (Good)</option>
-                                    <option value="3.0" <?= (number_format((float)$rating, 1) === '3.0') ? 'selected' : '' ?>>★★★☆☆ 3.0 (Average)</option>
-                                </select>
-                                <span class="text-muted small">Select the official rating awarded by the client.</span>
-                            </div>
-                        </div>
-
-                        <!-- Review Text -->
-                        <div class="mb-0">
-                            <label for="reviewText" class="form-label text-white fw-semibold">
-                                Review / Testimonial Text <span class="text-danger">*</span>
-                            </label>
-                            <textarea name="review_text" id="reviewText" rows="6" class="form-control bg-dark border-secondary text-white" placeholder="Write or paste the exact client feedback here..." required><?= htmlspecialchars($review_text) ?></textarea>
-                            <div class="form-text text-muted small">This text will be showcased in client testimonials carousels and reviews pages.</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Column: Source, Avatar & Publishing -->
+                <!-- Right Column: Avatar Uploader & Source Settings -->
                 <div class="col-12 col-lg-4">
-                    <!-- Platform Source Card -->
-                    <div class="card-ar mb-4">
-                        <h5 class="fw-bold text-white mb-3">
-                            <i class="fa-solid fa-share-nodes text-info me-2"></i> Review Source
-                        </h5>
-
-                        <label class="form-label text-muted small fw-semibold">Platform / Channel</label>
-                        <select name="source" class="form-select bg-dark border-secondary text-white mb-2">
-                            <option value="google" <?= ($source === 'google') ? 'selected' : '' ?>>Google Business Reviews</option>
-                            <option value="goodfirms" <?= ($source === 'goodfirms') ? 'selected' : '' ?>>GoodFirms Verified</option>
-                            <option value="clutch" <?= ($source === 'clutch') ? 'selected' : '' ?>>Clutch.co Verified</option>
-                            <option value="direct" <?= ($source === 'direct') ? 'selected' : '' ?>>Direct Client Feedback / Email</option>
-                        </select>
-                        <div class="form-text text-muted small">Displays the source platform icon alongside the review.</div>
-                    </div>
-
                     <!-- Client Photo Card -->
                     <div class="card-ar mb-4">
                         <h5 class="fw-bold text-white mb-3">
@@ -290,72 +276,74 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                         </h5>
 
                         <div class="text-center mb-3">
-                            <div id="photoPreviewContainer" class="d-flex align-items-center justify-content-center mx-auto rounded-circle border border-secondary bg-dark overflow-hidden mb-2" style="width: 120px; height: 120px; position: relative;">
+                            <div id="avatarPreviewContainer" class="d-flex align-items-center justify-content-center mx-auto rounded-circle border border-secondary p-1 mb-2 overflow-hidden" style="width: 100px; height: 100px; background-color: #1a1a24;">
                                 <?php if (!empty($current_photo)): ?>
-                                    <img id="previewImg" src="<?= htmlspecialchars(upload_url($current_photo)) ?>" alt="Client Photo" class="w-100 h-100 object-fit-cover">
-                                    <div id="previewPlaceholder" class="text-center p-2 text-muted d-none">
-                                        <i class="fa-solid fa-user fa-2x mb-1 text-secondary"></i>
-                                        <div style="font-size: 0.72rem;">No photo</div>
+                                    <img id="previewImg" src="<?= htmlspecialchars(upload_url($current_photo)) ?>" alt="Avatar Preview" class="w-100 h-100 object-fit-cover">
+                                    <div id="previewPlaceholder" class="text-center text-muted d-none">
+                                        <i class="fa-solid fa-user fa-2x text-secondary"></i>
                                     </div>
                                 <?php else: ?>
-                                    <img id="previewImg" src="" alt="Client Photo" class="w-100 h-100 object-fit-cover d-none">
-                                    <div id="previewPlaceholder" class="text-center p-2 text-muted">
-                                        <i class="fa-solid fa-user fa-2x mb-1 text-secondary"></i>
-                                        <div style="font-size: 0.72rem;">No photo</div>
+                                    <img id="previewImg" src="" alt="Avatar Preview" class="d-none w-100 h-100 object-fit-cover">
+                                    <div id="previewPlaceholder" class="text-center text-muted">
+                                        <i class="fa-solid fa-user fa-2x text-secondary"></i>
                                     </div>
                                 <?php endif; ?>
                             </div>
 
-                            <?php if (!empty($current_photo)): ?>
-                                <div class="form-check form-check-inline mb-2">
-                                    <input class="form-check-input bg-dark border-secondary" type="checkbox" name="remove_photo" id="removePhotoCheck" value="1">
-                                    <label class="form-check-label text-danger small" for="removePhotoCheck">
-                                        <i class="fa-solid fa-trash me-1"></i> Remove current photo
-                                    </label>
-                                </div>
-                            <?php endif; ?>
+                            <button type="button" id="btnRemoveImage" class="btn btn-outline-danger btn-sm <?= empty($current_photo) ? 'd-none' : '' ?>">
+                                <i class="fa-solid fa-trash me-1"></i> Remove Photo
+                            </button>
                         </div>
 
                         <div>
-                            <label for="clientPhotoFile" class="form-label text-muted small fw-semibold">
-                                <?= !empty($current_photo) ? 'Replace Photo File' : 'Upload Client Photo' ?>
-                            </label>
-                            <input type="file" name="client_photo" id="clientPhotoFile" class="form-control bg-dark border-secondary text-white" accept=".jpg,.jpeg,.png,.webp">
+                            <label for="photoFile" class="form-label text-muted small fw-semibold">Replace Photo File</label>
+                            <input type="file" name="client_photo" id="photoFile" class="form-control bg-dark border-secondary text-white" accept=".jpg,.jpeg,.png,.webp">
                             <div class="form-text text-muted small">
-                                Allowed: .jpg, .jpeg, .png, .webp (Max: 5MB). Leave empty to keep current photo.
+                                Leave empty to preserve current photo. Allowed: JPG, PNG, WebP.
                             </div>
                         </div>
                     </div>
 
-                    <!-- Publishing & Sort Order Card -->
+                    <!-- Source Platform & Settings Card -->
                     <div class="card-ar mb-4">
                         <h5 class="fw-bold text-white mb-3">
-                            <i class="fa-solid fa-sliders text-success me-2"></i> Display Settings
+                            <i class="fa-solid fa-sliders text-success me-2"></i> Source &amp; Visibility
                         </h5>
 
+                        <!-- Review Source -->
+                        <div class="mb-3">
+                            <label for="reviewSource" class="form-label text-white fw-semibold">Verification Platform</label>
+                            <select name="source" id="reviewSource" class="form-select bg-dark border-secondary text-white">
+                                <option value="google" <?= ($source === 'google') ? 'selected' : '' ?>>Google Reviews</option>
+                                <option value="goodfirms" <?= ($source === 'goodfirms') ? 'selected' : '' ?>>GoodFirms</option>
+                                <option value="clutch" <?= ($source === 'clutch') ? 'selected' : '' ?>>Clutch.co</option>
+                                <option value="direct" <?= ($source === 'direct') ? 'selected' : '' ?>>Direct Client Feedback</option>
+                            </select>
+                        </div>
+
+                        <!-- Status -->
                         <div class="mb-3">
                             <label for="reviewStatus" class="form-label text-white fw-semibold">Status</label>
                             <select name="status" id="reviewStatus" class="form-select bg-dark border-secondary text-white">
-                                <option value="active" <?= ($status === 'active') ? 'selected' : '' ?>>Active (Visible on Website)</option>
+                                <option value="active" <?= ($status === 'active') ? 'selected' : '' ?>>Active (Published)</option>
                                 <option value="inactive" <?= ($status === 'inactive') ? 'selected' : '' ?>>Inactive (Hidden / Draft)</option>
                             </select>
                         </div>
 
+                        <!-- Sort Order -->
                         <div class="mb-4">
-                            <label for="sortOrder" class="form-label text-white fw-semibold">
-                                Sort Order Priority
-                            </label>
+                            <label for="sortOrder" class="form-label text-white fw-semibold">Sort Order Priority</label>
                             <input type="number" name="sort_order" id="sortOrder" class="form-control bg-dark border-secondary text-white" value="<?= (int) $sort_order ?>" min="0" step="1">
                             <div class="form-text text-muted small">
-                                Lower numbers appear first on featured carousels.
+                                Lower numbers appear first on testimonials carousels.
                             </div>
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary py-2 fw-bold">
+                            <button type="submit" class="btn btn-ar-primary py-2 fw-bold">
                                 <i class="fa-solid fa-check-circle me-2"></i> Update Review
                             </button>
-                            <a href="<?= site_url('admin/reviews') ?>" class="btn btn-outline-secondary py-2">
+                            <a href="<?= site_url('admin/reviews') ?>" class="btn btn-ar-secondary py-2 text-center">
                                 <i class="fa-solid fa-arrow-left me-1"></i> Cancel &amp; Back
                             </a>
                         </div>
@@ -370,26 +358,45 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const photoFileInput    = document.getElementById('clientPhotoFile');
+    const ratingSelect      = document.getElementById('ratingSelect');
+    const starsLivePreview  = document.getElementById('starsLivePreview');
+    const photoFileInput    = document.getElementById('photoFile');
     const previewImg        = document.getElementById('previewImg');
     const previewPlaceholder= document.getElementById('previewPlaceholder');
+    const btnRemoveImage    = document.getElementById('btnRemoveImage');
+    const removePhotoInput  = document.getElementById('removePhotoInput');
+
+    if (ratingSelect && starsLivePreview) {
+        const starMap = {
+            '5.0': '★★★★★',
+            '4.5': '★★★★½',
+            '4.0': '★★★★☆',
+            '3.5': '★★★½☆',
+            '3.0': '★★★☆☆'
+        };
+        function updateStars() {
+            starsLivePreview.textContent = starMap[ratingSelect.value] || '★★★★★';
+        }
+        ratingSelect.addEventListener('change', updateStars);
+        updateStars();
+    }
 
     if (photoFileInput && previewImg) {
         photoFileInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
                 const fileName = file.name.toLowerCase();
-                const validExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
+                const validExtensions = ['.png', '.webp', '.jpg', '.jpeg'];
                 const hasValidExt = validExtensions.some(ext => fileName.endsWith(ext));
 
                 if (!hasValidExt) {
-                    alert('Invalid file format. Only .jpg, .jpeg, .png, and .webp files are allowed.');
+                    alert('Invalid file format. Allowed formats: .png, .webp, .jpg, .jpeg');
                     this.value = '';
                     return;
                 }
 
                 if (file.size > 5 * 1024 * 1024) {
-                    alert('The selected photo is ' + (file.size / (1024 * 1024)).toFixed(1) + 'MB. Maximum allowed size is 5MB.');
+                    alert('File size exceeds 5MB limit.');
                     this.value = '';
                     return;
                 }
@@ -398,12 +405,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 reader.onload = function(evt) {
                     previewImg.src = evt.target.result;
                     previewImg.classList.remove('d-none');
-                    if (previewPlaceholder) {
-                        previewPlaceholder.classList.add('d-none');
-                    }
+                    previewPlaceholder.classList.add('d-none');
+                    btnRemoveImage.classList.remove('d-none');
+                    removePhotoInput.value = '0';
                 };
                 reader.readAsDataURL(file);
             }
+        });
+
+        btnRemoveImage.addEventListener('click', function() {
+            photoFileInput.value = '';
+            previewImg.src = '';
+            previewImg.classList.add('d-none');
+            previewPlaceholder.classList.remove('d-none');
+            btnRemoveImage.classList.add('d-none');
+            removePhotoInput.value = '1';
         });
     }
 });

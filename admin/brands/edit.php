@@ -3,10 +3,7 @@
  * AR Entertainment - Edit Brand / Client / Award
  * Phase 4.5: Management CRUD (admin/brands/edit.php)
  */
-require_once __DIR__ . '/../../config/db.php';
-require_once __DIR__ . '/../../config/helpers.php';
-
-require_login();
+require_once dirname(__DIR__) . '/auth_check.php';
 
 $current_page = 'brands';
 $page_title   = 'Edit Brand / Client';
@@ -134,24 +131,28 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
 ?>
 
 <div class="admin-main">
-    <div class="top-navbar">
-        <div class="d-flex align-items-center gap-3">
-            <button class="btn btn-outline-secondary d-lg-none" id="sidebarToggleBtn">
-                <i class="fa-solid fa-bars"></i>
-            </button>
+    <?php require_once ADMIN_PATH . '/includes/navbar.php'; ?>
+
+    <main class="admin-content">
+        <!-- Breadcrumb & Header -->
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
             <div>
-                <h4 class="fw-bold mb-0 text-white">Edit Brand / Client</h4>
-                <small class="text-muted">Editing <?= htmlspecialchars($name) ?></small>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-1 small text-muted">
+                        <li class="breadcrumb-item"><a href="<?= site_url('admin') ?>" class="text-muted text-decoration-none">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="<?= site_url('admin/brands') ?>" class="text-muted text-decoration-none">Brands &amp; Clients</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Edit #<?= (int)$id ?></li>
+                    </ol>
+                </nav>
+                <h3 class="fw-bold mb-0 text-white">Edit Brand: <?= htmlspecialchars($name) ?></h3>
+            </div>
+            <div>
+                <a href="<?= site_url('admin/brands') ?>" class="btn btn-ar-secondary">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Brands
+                </a>
             </div>
         </div>
-        <div class="d-flex align-items-center gap-2">
-            <a href="<?= site_url('admin/brands') ?>" class="btn btn-outline-secondary">
-                <i class="fa-solid fa-arrow-left me-1"></i> Back to Brands
-            </a>
-        </div>
-    </div>
 
-    <main class="content-body">
         <?php if (!empty($errors)): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <div class="fw-bold mb-1"><i class="fa-solid fa-circle-exclamation me-2"></i>Please resolve the following issues:</div>
@@ -166,6 +167,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
 
         <form method="POST" action="<?= site_url('admin/brands/edit.php?id=' . $id) ?>" enctype="multipart/form-data">
             <?= csrf_field() ?>
+            <input type="hidden" name="remove_logo" id="removeLogoInput" value="0">
 
             <div class="row g-4">
                 <!-- Left Column: Primary Details -->
@@ -258,7 +260,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                         </h5>
 
                         <div class="text-center mb-3">
-                            <div id="logoPreviewContainer" class="d-flex align-items-center justify-content-center mx-auto rounded-3 border border-secondary p-3 mb-2" style="width: 100%; height: 140px; background: repeating-conic-gradient(#20202e 0% 25%, #161622 0% 50%) 50% / 20px 20px;">
+                            <div id="logoPreviewContainer" class="d-flex align-items-center justify-content-center mx-auto rounded-3 border border-secondary p-3 mb-3" style="width: 100%; height: 140px; background: repeating-conic-gradient(#20202e 0% 25%, #161622 0% 50%) 50% / 20px 20px;">
                                 <?php if (!empty($current_logo)): ?>
                                     <img id="previewImg" src="<?= htmlspecialchars(upload_url($current_logo)) ?>" alt="Logo Preview" style="max-width: 100%; max-height: 110px; object-fit: contain;">
                                     <div id="previewPlaceholder" class="text-center p-3 text-muted d-none">
@@ -274,23 +276,16 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                                 <?php endif; ?>
                             </div>
 
-                            <?php if (!empty($current_logo)): ?>
-                                <div class="form-check form-check-inline mb-2">
-                                    <input class="form-check-input bg-dark border-secondary" type="checkbox" name="remove_logo" id="removeLogoCheck" value="1">
-                                    <label class="form-check-label text-danger small" for="removeLogoCheck">
-                                        <i class="fa-solid fa-trash me-1"></i> Remove current logo
-                                    </label>
-                                </div>
-                            <?php endif; ?>
+                            <button type="button" id="btnRemoveImage" class="btn btn-outline-danger btn-sm <?= empty($current_logo) ? 'd-none' : '' ?>">
+                                <i class="fa-solid fa-trash me-1"></i> Remove Logo
+                            </button>
                         </div>
 
                         <div>
-                            <label for="logoFile" class="form-label text-muted small fw-semibold">
-                                <?= !empty($current_logo) ? 'Replace Logo File' : 'Upload Logo File' ?>
-                            </label>
+                            <label for="logoFile" class="form-label text-muted small fw-semibold">Replace Logo File</label>
                             <input type="file" name="logo" id="logoFile" class="form-control bg-dark border-secondary text-white" accept=".jpg,.jpeg,.png,.webp,.svg">
                             <div class="form-text text-muted small">
-                                Allowed: .svg, .png, .webp, .jpg (Max 5MB). Leave blank to keep current logo.
+                                Leave blank to keep existing logo. Allowed: .svg, .png, .webp, .jpg (Max 5MB).
                             </div>
                         </div>
                     </div>
@@ -320,10 +315,10 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary py-2 fw-bold">
+                            <button type="submit" class="btn btn-ar-primary py-2 fw-bold">
                                 <i class="fa-solid fa-check-circle me-2"></i> Update Brand / Client
                             </button>
-                            <a href="<?= site_url('admin/brands') ?>" class="btn btn-outline-secondary py-2">
+                            <a href="<?= site_url('admin/brands') ?>" class="btn btn-ar-secondary py-2 text-center">
                                 <i class="fa-solid fa-arrow-left me-1"></i> Cancel &amp; Back
                             </a>
                         </div>
@@ -339,8 +334,10 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const logoFileInput     = document.getElementById('logoFile');
-    const previewImg         = document.getElementById('previewImg');
-    const previewPlaceholder = document.getElementById('previewPlaceholder');
+    const previewImg        = document.getElementById('previewImg');
+    const previewPlaceholder= document.getElementById('previewPlaceholder');
+    const btnRemoveImage    = document.getElementById('btnRemoveImage');
+    const removeLogoInput   = document.getElementById('removeLogoInput');
 
     if (logoFileInput && previewImg) {
         logoFileInput.addEventListener('change', function(e) {
@@ -366,12 +363,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 reader.onload = function(evt) {
                     previewImg.src = evt.target.result;
                     previewImg.classList.remove('d-none');
-                    if (previewPlaceholder) {
-                        previewPlaceholder.classList.add('d-none');
-                    }
+                    previewPlaceholder.classList.add('d-none');
+                    btnRemoveImage.classList.remove('d-none');
+                    removeLogoInput.value = '0';
                 };
                 reader.readAsDataURL(file);
             }
+        });
+
+        btnRemoveImage.addEventListener('click', function() {
+            logoFileInput.value = '';
+            previewImg.src = '';
+            previewImg.classList.add('d-none');
+            previewPlaceholder.classList.remove('d-none');
+            btnRemoveImage.classList.add('d-none');
+            removeLogoInput.value = '1';
         });
     }
 });
