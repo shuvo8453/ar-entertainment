@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $upload = upload_image(
                     $_FILES['site_logo'],
                     'settings',
-                    ['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/svg+xml'],
+                    ['image/jpeg', 'image/pjpeg', 'image/jfif', 'image/png', 'image/webp', 'image/avif', 'image/svg+xml'],
                     5242880,
                     1200,
                     90
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $upload = upload_image(
                     $_FILES['site_logo_dark'],
                     'settings',
-                    ['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/svg+xml'],
+                    ['image/jpeg', 'image/pjpeg', 'image/jfif', 'image/png', 'image/webp', 'image/avif', 'image/svg+xml'],
                     5242880,
                     1200,
                     90
@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $upload = upload_image(
                     $_FILES['site_favicon'],
                     'settings',
-                    ['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/svg+xml', 'image/x-icon', 'image/vnd.microsoft.icon'],
+                    ['image/jpeg', 'image/pjpeg', 'image/jfif', 'image/png', 'image/webp', 'image/avif', 'image/svg+xml', 'image/x-icon', 'image/vnd.microsoft.icon'],
                     2097152,
                     512,
                     90
@@ -417,9 +417,9 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-7">
-                                        <input type="file" name="site_logo" id="siteLogoInput" class="form-control bg-dark border-secondary text-white mb-2" accept=".png,.webp,.avif,.jpg,.jpeg,.svg">
+                                        <input type="file" name="site_logo" id="siteLogoInput" class="form-control bg-dark border-secondary text-white mb-2" accept=".png,.webp,.avif,.jpg,.jpeg,.jfif,.svg">
                                         <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
-                                            <span class="text-muted" style="font-size: 11px;">PNG, WebP, AVIF, SVG (Auto-compressed to AVIF)</span>
+                                            <span class="text-muted" style="font-size: 11px;">PNG, WebP, JPG, JPEG, JFIF, AVIF, SVG (Auto-compressed to AVIF)</span>
                                             <button type="button" class="btn btn-outline-danger btn-sm py-0 px-2 <?= empty($current_logo) ? 'd-none' : '' ?>" id="btnRemoveLogoMain">
                                                 <i class="fa-solid fa-trash me-1"></i> Remove Logo
                                             </button>
@@ -452,9 +452,9 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-7">
-                                        <input type="file" name="site_logo_dark" id="siteLogoDarkInput" class="form-control bg-dark border-secondary text-white mb-2" accept=".png,.webp,.avif,.jpg,.jpeg,.svg">
+                                        <input type="file" name="site_logo_dark" id="siteLogoDarkInput" class="form-control bg-dark border-secondary text-white mb-2" accept=".png,.webp,.avif,.jpg,.jpeg,.jfif,.svg">
                                         <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
-                                            <span class="text-muted" style="font-size: 11px;">Recommended: High-contrast light PNG / SVG for dark footers</span>
+                                            <span class="text-muted" style="font-size: 11px;">PNG, WebP, JPG, JPEG, JFIF, AVIF, SVG (High-contrast light recommended)</span>
                                             <button type="button" class="btn btn-outline-danger btn-sm py-0 px-2 <?= empty($current_logo_dark) ? 'd-none' : '' ?>" id="btnRemoveLogoDark">
                                                 <i class="fa-solid fa-trash me-1"></i> Remove Logo
                                             </button>
@@ -486,9 +486,9 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-7">
-                                        <input type="file" name="site_favicon" id="siteFaviconInput" class="form-control bg-dark border-secondary text-white mb-2" accept=".ico,.png,.svg,.webp,.avif">
+                                        <input type="file" name="site_favicon" id="siteFaviconInput" class="form-control bg-dark border-secondary text-white mb-2" accept=".png,.webp,.avif,.jpg,.jpeg,.jfif,.ico,.svg">
                                         <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
-                                            <span class="text-muted" style="font-size: 11px;">Square 32x32 / 64x64 (.png, .ico, .svg, .avif)</span>
+                                            <span class="text-muted" style="font-size: 11px;">PNG, WebP, JPG, JPEG, JFIF, AVIF, ICO, SVG (Square 32x32 / 64x64 / 512x512)</span>
                                             <button type="button" class="btn btn-outline-danger btn-sm py-0 px-2 <?= empty($current_favicon) ? 'd-none' : '' ?>" id="btnRemoveFavicon">
                                                 <i class="fa-solid fa-trash me-1"></i> Remove
                                             </button>

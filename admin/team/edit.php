@@ -389,9 +389,9 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                             <label for="photoFile" class="form-label text-muted small fw-semibold">
                                 <?= !empty($current_photo) ? 'Replace Photo File' : 'Upload Photo File' ?>
                             </label>
-                            <input type="file" name="photo" id="photoFile" class="form-control bg-dark border-secondary text-white" accept=".jpg,.jpeg,.png,.webp">
+                            <input type="file" name="photo" id="photoFile" class="form-control bg-dark border-secondary text-white" accept=".png,.webp,.avif,.jpg,.jpeg,.jfif">
                             <div class="form-text text-muted small">
-                                Allowed: .jpg, .jpeg, .png, .webp (Max: 5MB). Auto-optimized on upload.
+                                Allowed: PNG, WebP, JPG, JPEG, JFIF, AVIF (Max 5MB). Auto-compressed to AVIF.
                             </div>
                         </div>
                     </div>

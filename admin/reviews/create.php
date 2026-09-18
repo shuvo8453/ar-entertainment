@@ -52,7 +52,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             $upload_res = upload_image(
                 $_FILES['client_photo'],
                 'reviews',
-                ['image/jpeg', 'image/png', 'image/webp'],
+                ['image/jpeg', 'image/pjpeg', 'image/jfif', 'image/png', 'image/webp', 'image/avif'],
                 5242880,
                 600,
                 82
@@ -261,9 +261,9 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
 
                         <div>
                             <label for="photoFile" class="form-label text-muted small fw-semibold">Upload Photo</label>
-                            <input type="file" name="client_photo" id="photoFile" class="form-control bg-dark border-secondary text-white" accept=".jpg,.jpeg,.png,.webp">
+                            <input type="file" name="client_photo" id="photoFile" class="form-control bg-dark border-secondary text-white" accept=".png,.webp,.avif,.jpg,.jpeg,.jfif">
                             <div class="form-text text-muted small">
-                                JPG, PNG, or WebP. Square crop recommended.
+                                PNG, WebP, JPG, JPEG, JFIF, AVIF. Square crop recommended.
                             </div>
                         </div>
                     </div>

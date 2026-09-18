@@ -288,9 +288,9 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                         </h6>
 
                         <div class="mb-3">
-                            <input type="file" name="thumbnail" id="thumbnailInput" class="form-control bg-dark border-secondary text-white" accept="image/jpeg,image/png,image/webp">
+                            <input type="file" name="thumbnail" id="thumbnailInput" class="form-control bg-dark border-secondary text-white" accept=".png,.webp,.avif,.jpg,.jpeg,.jfif">
                             <div class="form-text text-muted small">
-                                Optional. If left empty, AR Entertainment automatically retrieves HD poster from YouTube / Vimeo.
+                                Optional: PNG, WebP, JPG, JPEG, JFIF, AVIF (Max 5MB). If left empty, AR Entertainment automatically retrieves HD poster from YouTube / Vimeo.
                             </div>
                         </div>
 

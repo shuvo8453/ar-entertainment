@@ -304,12 +304,12 @@ function truncate_text(string $text, int $limit = 150, string $ellipsis = '...')
 function upload_image(
     array $file,
     string $folder = 'blogs',
-    array $allowed_types = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'],
+    array $allowed_types = ['image/jpeg', 'image/pjpeg', 'image/jfif', 'image/png', 'image/webp', 'image/avif', 'image/svg+xml', 'image/x-icon', 'image/vnd.microsoft.icon'],
     int $max_size = 5242880,
     int $max_dimension = 1200,
     int $quality = 82
 ): array {
-    if (empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
+    if (empty($file['tmp_name']) || (!is_uploaded_file($file['tmp_name']) && php_sapi_name() !== 'cli')) {
         return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'No file was uploaded or upload failed.'];
     }
 
@@ -321,17 +321,27 @@ function upload_image(
         return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'File size exceeds maximum limit (' . round($max_size / 1048576, 1) . 'MB).'];
     }
 
+    // Auto-expand JPEG mime variants
+    if (in_array('image/jpeg', $allowed_types, true)) {
+        if (!in_array('image/pjpeg', $allowed_types, true)) {
+            $allowed_types[] = 'image/pjpeg';
+        }
+        if (!in_array('image/jfif', $allowed_types, true)) {
+            $allowed_types[] = 'image/jfif';
+        }
+    }
+
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
     $mime  = finfo_file($finfo, $file['tmp_name']);
     finfo_close($finfo);
 
     if (!in_array($mime, $allowed_types, true)) {
-        return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Invalid image format (' . htmlspecialchars($mime) . '). Allowed: JPG, PNG, WebP, AVIF, SVG.'];
+        return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Invalid image format (' . htmlspecialchars($mime) . '). Allowed formats: PNG, WebP, JPG, JPEG, JFIF, AVIF' . (in_array('image/svg+xml', $allowed_types, true) ? ', SVG' : '') . (in_array('image/x-icon', $allowed_types, true) ? ', ICO' : '') . '.'];
     }
 
     // Strict extension check
     $orig_ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    $valid_exts = ['jpg', 'jpeg', 'png', 'webp', 'avif'];
+    $valid_exts = ['jpg', 'jpeg', 'jfif', 'png', 'webp', 'avif'];
     if (in_array('image/svg+xml', $allowed_types, true)) {
         $valid_exts[] = 'svg';
     }
@@ -340,7 +350,7 @@ function upload_image(
     }
 
     if (!in_array($orig_ext, $valid_exts, true)) {
-        return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Invalid file extension (.' . htmlspecialchars($orig_ext) . '). Only allowed image formats can be uploaded.'];
+        return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Invalid file extension (.' . htmlspecialchars($orig_ext) . '). Allowed extensions: ' . strtoupper(implode(', ', $valid_exts)) . '.'];
     }
 
     $target_dir = UPLOADS_PATH . DIRECTORY_SEPARATOR . trim($folder, '/\\');
@@ -353,17 +363,29 @@ function upload_image(
         $clean_orig_name = 'image';
     }
 
-    // Direct save for SVG files (vector logos/badges)
-    if ($mime === 'image/svg+xml') {
+    // 1. Direct save for SVG vector graphics (Preserve original SVG without AVIF conversion)
+    if ($mime === 'image/svg+xml' || $orig_ext === 'svg') {
         $filename    = $clean_orig_name . '-' . uniqid() . '.svg';
         $target_file = $target_dir . DIRECTORY_SEPARATOR . $filename;
-        if (move_uploaded_file($file['tmp_name'], $target_file)) {
+        $saved       = is_uploaded_file($file['tmp_name']) ? move_uploaded_file($file['tmp_name'], $target_file) : copy($file['tmp_name'], $target_file);
+        if ($saved) {
             return ['success' => true, 'path' => $folder . '/' . $filename, 'filename' => $filename, 'error' => ''];
         }
         return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Failed to save SVG file.'];
     }
 
-    // Automatic GD Optimization (Resize + AVIF/WebP Compression)
+    // 2. Direct save for ICO icons (Preserve original ICO)
+    if ($mime === 'image/x-icon' || $mime === 'image/vnd.microsoft.icon' || $orig_ext === 'ico') {
+        $filename    = $clean_orig_name . '-' . uniqid() . '.ico';
+        $target_file = $target_dir . DIRECTORY_SEPARATOR . $filename;
+        $saved       = is_uploaded_file($file['tmp_name']) ? move_uploaded_file($file['tmp_name'], $target_file) : copy($file['tmp_name'], $target_file);
+        if ($saved) {
+            return ['success' => true, 'path' => $folder . '/' . $filename, 'filename' => $filename, 'error' => ''];
+        }
+        return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Failed to save ICO file.'];
+    }
+
+    // 3. Automatic GD Optimization for raster images (JPG, JPEG, JFIF, PNG, WebP, AVIF -> AVIF)
     if (extension_loaded('gd') && function_exists('imagecreatefromstring')) {
         $raw_data = file_get_contents($file['tmp_name']);
         $src_img  = @imagecreatefromstring($raw_data);
@@ -391,7 +413,7 @@ function upload_image(
                 }
             }
 
-            // Preserve alpha channel for PNG/WebP/AVIF
+            // Preserve alpha channel transparency for PNG / WebP / AVIF
             imagealphablending($out_img, false);
             imagesavealpha($out_img, true);
 
@@ -428,12 +450,15 @@ function upload_image(
         }
     }
 
-    // Direct fallback if GD is not present
+    // Direct fallback if GD fails or is not available
     $ext_map = [
-        'image/jpeg' => 'jpg',
-        'image/png'  => 'png',
-        'image/webp' => 'webp',
-        'image/gif'  => 'gif',
+        'image/jpeg'  => 'jpg',
+        'image/pjpeg' => 'jpg',
+        'image/jfif'  => 'jfif',
+        'image/png'   => 'png',
+        'image/webp'  => 'webp',
+        'image/avif'  => 'avif',
+        'image/gif'   => 'gif',
         'image/svg+xml' => 'svg'
     ];
     $ext         = $ext_map[$mime] ?? pathinfo($file['name'], PATHINFO_EXTENSION);

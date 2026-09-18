@@ -42,7 +42,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             $upload_res = upload_image(
                 $_FILES['logo'],
                 'brands',
-                ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'],
+                ['image/jpeg', 'image/pjpeg', 'image/jfif', 'image/png', 'image/webp', 'image/avif', 'image/svg+xml'],
                 5242880,
                 800,
                 85
@@ -244,9 +244,9 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
 
                         <div>
                             <label for="logoFile" class="form-label text-muted small fw-semibold">Choose Logo File</label>
-                            <input type="file" name="logo" id="logoFile" class="form-control bg-dark border-secondary text-white" accept=".jpg,.jpeg,.png,.webp,.svg" required>
+                            <input type="file" name="logo" id="logoFile" class="form-control bg-dark border-secondary text-white" accept=".png,.webp,.avif,.jpg,.jpeg,.jfif,.svg" required>
                             <div class="form-text text-muted small">
-                                Allowed: .svg, .png, .webp, .jpg (Max 5MB). Transparent vector SVGs and PNGs recommended.
+                                Allowed: PNG, WebP, JPG, JPEG, JFIF, AVIF, SVG (Max 5MB). Transparent vector SVGs and PNGs recommended.
                             </div>
                         </div>
                     </div>

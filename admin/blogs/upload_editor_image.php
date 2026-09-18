@@ -28,7 +28,7 @@ if (empty($_FILES['file'])) {
     exit;
 }
 
-$upload_result = upload_image($_FILES['file'], 'blogs', ['image/jpeg', 'image/png', 'image/webp', 'image/gif'], 5242880);
+$upload_result = upload_image($_FILES['file'], 'blogs', ['image/jpeg', 'image/pjpeg', 'image/jfif', 'image/png', 'image/webp', 'image/avif', 'image/gif'], 5242880);
 
 if (!$upload_result['success']) {
     http_response_code(400);

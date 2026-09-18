@@ -404,14 +404,14 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
 
                         <div class="mb-3">
                             <div class="border border-secondary border-dashed rounded p-3 text-center position-relative" id="dropZone" style="background-color: #12131d; cursor: pointer;">
-                                <input type="file" name="thumbnail" id="thumbnailInput" class="position-absolute top-0 start-0 w-100 h-100 opacity-0" accept="image/jpeg,image/png,image/webp,image/gif" style="cursor: pointer;">
+                                <input type="file" name="thumbnail" id="thumbnailInput" class="position-absolute top-0 start-0 w-100 h-100 opacity-0" accept=".png,.webp,.avif,.jpg,.jpeg,.jfif" style="cursor: pointer;">
                                 <div id="previewContainer" class="d-none mb-2">
                                     <img id="imagePreview" src="#" alt="Preview" class="img-fluid rounded" style="max-height: 180px; object-fit: cover;">
                                 </div>
                                 <div id="uploadPrompt">
                                     <i class="fa-solid fa-cloud-arrow-up fs-2 text-muted mb-2"></i>
                                     <p class="text-white small mb-1 fw-semibold"><?= !empty($thumbnail) ? 'Upload new image to replace' : 'Click to browse or drag &amp; drop' ?></p>
-                                    <p class="text-muted" style="font-size: 11px;">WEBP, JPG, PNG up to 5MB (1200x630 recommended)</p>
+                                    <p class="text-muted" style="font-size: 11px;">PNG, WebP, JPG, JPEG, JFIF, AVIF up to 5MB (1200x630 recommended)</p>
                                 </div>
                             </div>
                         </div>
