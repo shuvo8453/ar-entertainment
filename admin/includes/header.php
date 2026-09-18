@@ -14,6 +14,16 @@ $current_user = current_user();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($page_title) ?> &mdash; AR Entertainment Admin</title>
 
+    <!-- Favicon -->
+    <?php 
+    $admin_fav_path = get_setting('site_favicon');
+    $admin_favicon = !empty($admin_fav_path) ? upload_url($admin_fav_path) : site_url('images/favicon.ico');
+    $admin_fav_ext = strtolower(pathinfo($admin_fav_path, PATHINFO_EXTENSION));
+    $admin_fav_mime = ($admin_fav_ext === 'avif') ? 'image/avif' : (($admin_fav_ext === 'svg') ? 'image/svg+xml' : (($admin_fav_ext === 'png') ? 'image/png' : 'image/x-icon'));
+    ?>
+    <link rel="icon" type="<?= $admin_fav_mime ?>" href="<?= htmlspecialchars($admin_favicon) ?>">
+    <link rel="shortcut icon" href="<?= htmlspecialchars($admin_favicon) ?>">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

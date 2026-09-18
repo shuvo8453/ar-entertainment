@@ -89,11 +89,6 @@ try {
             <span>Site Settings</span>
         </a>
 
-        <a href="<?= site_url('admin/users') ?>" class="sidebar-link <?= (str_starts_with($current_page, 'users')) ? 'active' : '' ?>">
-            <i class="fa-solid fa-user-shield"></i>
-            <span>Users & Access</span>
-        </a>
-
         <hr style="border-color: var(--ar-border-color); margin: 15px 0;">
 
         <a href="<?= site_url('') ?>" target="_blank" class="sidebar-link text-info">

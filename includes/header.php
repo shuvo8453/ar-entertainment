@@ -70,8 +70,14 @@ $social_links = array_filter([
     <?php endif; ?>
 
     <!-- Favicons -->
-    <link rel="shortcut icon" href="<?= site_url('images/favicon.ico') ?>" type="image/x-icon">
-    <link rel="icon" href="<?= site_url('images/favicon.ico') ?>" type="image/x-icon">
+    <?php 
+    $fav_path = get_setting('site_favicon');
+    $frontend_favicon = !empty($fav_path) ? upload_url($fav_path) : site_url('images/favicon.ico');
+    $fav_ext = strtolower(pathinfo($fav_path, PATHINFO_EXTENSION));
+    $fav_mime = ($fav_ext === 'avif') ? 'image/avif' : (($fav_ext === 'svg') ? 'image/svg+xml' : (($fav_ext === 'png') ? 'image/png' : 'image/x-icon'));
+    ?>
+    <link rel="icon" type="<?= $fav_mime ?>" href="<?= htmlspecialchars($frontend_favicon) ?>">
+    <link rel="shortcut icon" href="<?= htmlspecialchars($frontend_favicon) ?>">
 
     <!-- Open Graph (Facebook / LinkedIn) -->
     <meta property="og:title" content="<?= htmlspecialchars($meta_title) ?>">

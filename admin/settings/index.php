@@ -3,7 +3,8 @@
  * AR Entertainment - Global Site Settings & Brand Configuration
  * Phase 4.8: Management Module (admin/settings/index.php)
  * 
- * Manages General, Contact, Social Media, Analytics & Custom Code settings.
+ * Manages General Brand Identity, Logo Uploader with AVIF/WebP Auto-Conversion,
+ * Contact, Social Media, Analytics & Custom Code settings.
  */
 
 require_once dirname(__DIR__) . '/auth_check.php';
@@ -37,8 +38,110 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             foreach ($fields as $key => $data) {
                 update_setting($key, $data['val'], $data['group']);
             }
-            set_flash('success', 'General site identity settings saved successfully.');
-            redirect('admin/settings/?tab=general');
+
+            // 1. Primary Website Logo Upload (Auto-converts to AVIF / WebP via helper)
+            if (!empty($_FILES['site_logo']['tmp_name'])) {
+                $upload = upload_image(
+                    $_FILES['site_logo'],
+                    'settings',
+                    ['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/svg+xml'],
+                    5242880,
+                    1200,
+                    90
+                );
+                if ($upload['success']) {
+                    $old_logo = get_setting('site_logo');
+                    if (!empty($old_logo) && !str_starts_with($old_logo, 'images/')) {
+                        $old_file = UPLOADS_PATH . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $old_logo);
+                        if (file_exists($old_file)) {
+                            @unlink($old_file);
+                        }
+                    }
+                    update_setting('site_logo', $upload['path'], 'general');
+                } else {
+                    $errors[] = 'Primary Logo error: ' . $upload['error'];
+                }
+            } elseif (!empty($_POST['remove_site_logo']) && $_POST['remove_site_logo'] === '1') {
+                $old_logo = get_setting('site_logo');
+                if (!empty($old_logo) && !str_starts_with($old_logo, 'images/')) {
+                    $old_file = UPLOADS_PATH . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $old_logo);
+                    if (file_exists($old_file)) {
+                        @unlink($old_file);
+                    }
+                }
+                update_setting('site_logo', '', 'general');
+            }
+
+            // 2. Footer / Dark Background Logo Upload
+            if (!empty($_FILES['site_logo_dark']['tmp_name'])) {
+                $upload = upload_image(
+                    $_FILES['site_logo_dark'],
+                    'settings',
+                    ['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/svg+xml'],
+                    5242880,
+                    1200,
+                    90
+                );
+                if ($upload['success']) {
+                    $old_logo = get_setting('site_logo_dark');
+                    if (!empty($old_logo) && !str_starts_with($old_logo, 'images/')) {
+                        $old_file = UPLOADS_PATH . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $old_logo);
+                        if (file_exists($old_file)) {
+                            @unlink($old_file);
+                        }
+                    }
+                    update_setting('site_logo_dark', $upload['path'], 'general');
+                } else {
+                    $errors[] = 'Footer Logo error: ' . $upload['error'];
+                }
+            } elseif (!empty($_POST['remove_site_logo_dark']) && $_POST['remove_site_logo_dark'] === '1') {
+                $old_logo = get_setting('site_logo_dark');
+                if (!empty($old_logo) && !str_starts_with($old_logo, 'images/')) {
+                    $old_file = UPLOADS_PATH . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $old_logo);
+                    if (file_exists($old_file)) {
+                        @unlink($old_file);
+                    }
+                }
+                update_setting('site_logo_dark', '', 'general');
+            }
+
+            // 3. Favicon Upload
+            if (!empty($_FILES['site_favicon']['tmp_name'])) {
+                $upload = upload_image(
+                    $_FILES['site_favicon'],
+                    'settings',
+                    ['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/svg+xml', 'image/x-icon', 'image/vnd.microsoft.icon'],
+                    2097152,
+                    512,
+                    90
+                );
+                if ($upload['success']) {
+                    $old_fav = get_setting('site_favicon');
+                    if (!empty($old_fav) && !str_starts_with($old_fav, 'images/')) {
+                        $old_file = UPLOADS_PATH . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $old_fav);
+                        if (file_exists($old_file)) {
+                            @unlink($old_file);
+                        }
+                    }
+                    update_setting('site_favicon', $upload['path'], 'general');
+                } else {
+                    $errors[] = 'Favicon upload error: ' . $upload['error'];
+                }
+            } elseif (!empty($_POST['remove_site_favicon']) && $_POST['remove_site_favicon'] === '1') {
+                $old_fav = get_setting('site_favicon');
+                if (!empty($old_fav) && !str_starts_with($old_fav, 'images/')) {
+                    $old_file = UPLOADS_PATH . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $old_fav);
+                    if (file_exists($old_file)) {
+                        @unlink($old_file);
+                    }
+                }
+                update_setting('site_favicon', '', 'general');
+            }
+
+            if (empty($errors)) {
+                set_flash('success', 'General site identity and logo settings saved successfully.');
+                redirect('admin/settings/?tab=general');
+            }
         }
 
         if ($tab === 'contact') {
@@ -111,6 +214,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Load current settings
 $settings = load_settings();
 
+// Logo Paths
+$current_logo      = $settings['site_logo'] ?? '';
+$current_logo_dark = $settings['site_logo_dark'] ?? '';
+$current_favicon   = $settings['site_favicon'] ?? '';
+
 require_once ADMIN_PATH . '/includes/header.php';
 require_once ADMIN_PATH . '/includes/sidebar.php';
 ?>
@@ -157,7 +265,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                 <div class="stat-card">
                     <div>
                         <div class="stat-number text-danger">PHP 8.3</div>
-                        <div class="stat-label">Environment</div>
+                        <div class="stat-label">Environment (AVIF/GD)</div>
                     </div>
                     <div class="stat-icon icon-red">
                         <i class="fa-brands fa-php"></i>
@@ -204,7 +312,7 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
             <ul class="nav nav-pills gap-1 flex-wrap">
                 <li class="nav-item">
                     <a class="nav-link <?= ($active_tab === 'general') ? 'active' : '' ?>" href="<?= site_url('admin/settings/?tab=general') ?>">
-                        <i class="fa-solid fa-globe me-2"></i> General Identity
+                        <i class="fa-solid fa-globe me-2"></i> General Identity &amp; Logos
                     </a>
                 </li>
                 <li class="nav-item">
@@ -233,12 +341,16 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
         <!-- Active Tab Content Area -->
         <div class="row g-4">
             <div class="col-12 col-lg-8">
-                <!-- TAB 1: General Identity -->
+                <!-- TAB 1: General Identity & Logos -->
                 <?php if ($active_tab === 'general'): ?>
-                    <form method="POST" action="<?= site_url('admin/settings/?tab=general') ?>">
+                    <form method="POST" action="<?= site_url('admin/settings/?tab=general') ?>" enctype="multipart/form-data">
                         <?= csrf_field() ?>
                         <input type="hidden" name="_tab" value="general">
+                        <input type="hidden" name="remove_site_logo" id="removeLogoInput" value="0">
+                        <input type="hidden" name="remove_site_logo_dark" id="removeLogoDarkInput" value="0">
+                        <input type="hidden" name="remove_site_favicon" id="removeFaviconInput" value="0">
 
+                        <!-- Brand Identity Text Card -->
                         <div class="card-ar mb-4">
                             <h5 class="fw-bold text-white mb-3">
                                 <i class="fa-solid fa-building text-primary me-2"></i> Brand &amp; Site Identity
@@ -264,14 +376,130 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                                 <input type="text" name="site_keywords" id="siteKeywords" class="form-control bg-dark border-secondary text-white" value="<?= htmlspecialchars($settings['site_keywords'] ?? 'video production bangladesh, tv commercial dhaka, film fixer bangladesh, ovc production, line producer') ?>">
                             </div>
 
-                            <div class="mb-4">
+                            <div class="mb-0">
                                 <label for="footerCopyright" class="form-label text-white fw-semibold">Footer Copyright Text</label>
                                 <input type="text" name="footer_copyright" id="footerCopyright" class="form-control bg-dark border-secondary text-white" value="<?= htmlspecialchars($settings['footer_copyright'] ?? '© ' . date('Y') . ' AR Entertainment. All Rights Reserved.') ?>">
                             </div>
+                        </div>
 
-                            <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-ar-primary px-4 py-2">
-                                    <i class="fa-solid fa-check-circle me-2"></i> Save General Settings
+                        <!-- Brand Logos & Graphics Card (with Live AVIF Converter & Preview) -->
+                        <div class="card-ar mb-4">
+                            <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom border-secondary border-opacity-25">
+                                <h5 class="fw-bold text-white mb-0">
+                                    <i class="fa-solid fa-image text-warning me-2"></i> Brand Logos &amp; Favicon
+                                </h5>
+                                <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50">
+                                    <i class="fa-solid fa-wand-magic-sparkles me-1"></i> Auto-Converts to AVIF
+                                </span>
+                            </div>
+
+                            <!-- 1. Main Header Logo -->
+                            <div class="mb-4 pb-3 border-bottom border-secondary border-opacity-25">
+                                <label class="form-label text-white fw-semibold d-block mb-2">
+                                    Main Header Logo <small class="text-muted fw-normal">(Primary Navigation Bar)</small>
+                                </label>
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-12 col-md-5">
+                                        <div class="rounded-3 border border-secondary p-2 d-flex align-items-center justify-content-center position-relative" style="height: 110px; background: repeating-conic-gradient(#222330 0% 25%, #181926 0% 50%) 50% / 16px 16px;">
+                                            <?php if (!empty($current_logo)): ?>
+                                                <img id="logoMainPreview" src="<?= htmlspecialchars(upload_url($current_logo)) ?>" alt="Header Logo" style="max-width: 90%; max-height: 80px; object-fit: contain;">
+                                                <div id="logoMainPlaceholder" class="text-muted small text-center d-none">
+                                                    <i class="fa-solid fa-image fa-2x mb-1 text-secondary"></i>
+                                                    <div>No Logo Set</div>
+                                                </div>
+                                            <?php else: ?>
+                                                <img id="logoMainPreview" src="" alt="Header Logo" class="d-none" style="max-width: 90%; max-height: 80px; object-fit: contain;">
+                                                <div id="logoMainPlaceholder" class="text-muted small text-center">
+                                                    <i class="fa-solid fa-image fa-2x mb-1 text-secondary"></i>
+                                                    <div>Default Brand Header Logo</div>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-7">
+                                        <input type="file" name="site_logo" id="siteLogoInput" class="form-control bg-dark border-secondary text-white mb-2" accept=".png,.webp,.avif,.jpg,.jpeg,.svg">
+                                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                                            <span class="text-muted" style="font-size: 11px;">PNG, WebP, AVIF, SVG (Auto-compressed to AVIF)</span>
+                                            <button type="button" class="btn btn-outline-danger btn-sm py-0 px-2 <?= empty($current_logo) ? 'd-none' : '' ?>" id="btnRemoveLogoMain">
+                                                <i class="fa-solid fa-trash me-1"></i> Remove Logo
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. Dark Background / Footer Logo -->
+                            <div class="mb-4 pb-3 border-bottom border-secondary border-opacity-25">
+                                <label class="form-label text-white fw-semibold d-block mb-2">
+                                    Footer / Dark Alternate Logo <small class="text-muted fw-normal">(Optional)</small>
+                                </label>
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-12 col-md-5">
+                                        <div class="rounded-3 border border-secondary p-2 d-flex align-items-center justify-content-center" style="height: 110px; background: repeating-conic-gradient(#222330 0% 25%, #181926 0% 50%) 50% / 16px 16px;">
+                                            <?php if (!empty($current_logo_dark)): ?>
+                                                <img id="logoDarkPreview" src="<?= htmlspecialchars(upload_url($current_logo_dark)) ?>" alt="Dark Logo" style="max-width: 90%; max-height: 80px; object-fit: contain;">
+                                                <div id="logoDarkPlaceholder" class="text-muted small text-center d-none">
+                                                    <i class="fa-solid fa-image fa-2x mb-1 text-secondary"></i>
+                                                    <div>No Dark Logo</div>
+                                                </div>
+                                            <?php else: ?>
+                                                <img id="logoDarkPreview" src="" alt="Dark Logo" class="d-none" style="max-width: 90%; max-height: 80px; object-fit: contain;">
+                                                <div id="logoDarkPlaceholder" class="text-muted small text-center">
+                                                    <i class="fa-solid fa-image fa-2x mb-1 text-secondary"></i>
+                                                    <div>Optional Alternate Logo</div>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-7">
+                                        <input type="file" name="site_logo_dark" id="siteLogoDarkInput" class="form-control bg-dark border-secondary text-white mb-2" accept=".png,.webp,.avif,.jpg,.jpeg,.svg">
+                                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                                            <span class="text-muted" style="font-size: 11px;">Recommended: High-contrast light PNG / SVG for dark footers</span>
+                                            <button type="button" class="btn btn-outline-danger btn-sm py-0 px-2 <?= empty($current_logo_dark) ? 'd-none' : '' ?>" id="btnRemoveLogoDark">
+                                                <i class="fa-solid fa-trash me-1"></i> Remove Logo
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3. Favicon & App Icon -->
+                            <div class="mb-3">
+                                <label class="form-label text-white fw-semibold d-block mb-2">
+                                    Browser Favicon / Web Icon <small class="text-muted fw-normal">(Tabs &amp; Bookmarks)</small>
+                                </label>
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-12 col-md-5">
+                                        <div class="rounded-3 border border-secondary p-2 d-flex align-items-center justify-content-center" style="height: 80px; background-color: #12131d;">
+                                            <?php if (!empty($current_favicon)): ?>
+                                                <img id="faviconPreview" src="<?= htmlspecialchars(upload_url($current_favicon)) ?>" alt="Favicon" style="width: 36px; height: 36px; object-fit: contain;">
+                                                <div id="faviconPlaceholder" class="text-muted small text-center d-none">
+                                                    <i class="fa-solid fa-icons fa-2x text-secondary"></i>
+                                                </div>
+                                            <?php else: ?>
+                                                <img id="faviconPreview" src="" alt="Favicon" class="d-none" style="width: 36px; height: 36px; object-fit: contain;">
+                                                <div id="faviconPlaceholder" class="text-muted small text-center">
+                                                    <i class="fa-solid fa-icons fa-2x text-secondary mb-1"></i>
+                                                    <div style="font-size: 10px;">Default Favicon</div>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-7">
+                                        <input type="file" name="site_favicon" id="siteFaviconInput" class="form-control bg-dark border-secondary text-white mb-2" accept=".ico,.png,.svg,.webp,.avif">
+                                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                                            <span class="text-muted" style="font-size: 11px;">Square 32x32 / 64x64 (.png, .ico, .svg, .avif)</span>
+                                            <button type="button" class="btn btn-outline-danger btn-sm py-0 px-2 <?= empty($current_favicon) ? 'd-none' : '' ?>" id="btnRemoveFavicon">
+                                                <i class="fa-solid fa-trash me-1"></i> Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end pt-3 border-top border-secondary border-opacity-25">
+                                <button type="submit" class="btn btn-ar-primary px-4 py-2 fw-bold">
+                                    <i class="fa-solid fa-check-circle me-2"></i> Save General &amp; Logo Settings
                                 </button>
                             </div>
                         </div>
@@ -512,13 +740,16 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
             <div class="col-12 col-lg-4">
                 <div class="card-ar mb-4">
                     <h6 class="fw-bold text-white mb-3 pb-2 border-bottom border-secondary border-opacity-25">
-                        <i class="fa-solid fa-circle-info text-info me-2"></i> Settings Overview
+                        <i class="fa-solid fa-circle-info text-info me-2"></i> Settings &amp; Logo Helpers
                     </h6>
                     <p class="text-muted small mb-3">
-                        These configuration values are globally accessible throughout the website via the pure PHP helper function:
+                        These configuration values and logos are globally accessible anywhere across the codebase via helper functions:
                     </p>
-                    <div class="p-2 rounded bg-dark border border-secondary font-monospace text-warning small mb-3">
+                    <div class="p-2 rounded bg-dark border border-secondary font-monospace text-warning small mb-2">
                         &lt;?= get_setting('site_name') ?&gt;
+                    </div>
+                    <div class="p-2 rounded bg-dark border border-secondary font-monospace text-info small mb-3">
+                        &lt;?= upload_url(get_setting('site_logo')) ?&gt;
                     </div>
                     <ul class="list-unstyled mb-0 small text-muted">
                         <li class="d-flex justify-content-between py-2 border-bottom border-dark">
@@ -531,21 +762,21 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
                         </li>
                         <li class="d-flex justify-content-between py-2 border-bottom border-dark">
                             <span>Uploads Directory:</span>
-                            <span class="text-success font-monospace">/uploads/</span>
+                            <span class="text-success font-monospace">/uploads/settings/</span>
                         </li>
                         <li class="d-flex justify-content-between py-2">
-                            <span>Security Engine:</span>
-                            <span class="text-info">CSRF + PDO Guard</span>
+                            <span>Image Format Engine:</span>
+                            <span class="text-warning">AVIF / WebP Auto-Optimize</span>
                         </li>
                     </ul>
                 </div>
 
                 <div class="card-ar">
                     <h6 class="fw-bold text-white mb-3 pb-2 border-bottom border-secondary border-opacity-25">
-                        <i class="fa-solid fa-life-ring text-danger me-2"></i> Need Help?
+                        <i class="fa-solid fa-lightbulb text-warning me-2"></i> AVIF Optimization Tip
                     </h6>
                     <p class="text-muted small mb-0">
-                        Changes made here take effect immediately across both the public frontend website and notification systems.
+                        Uploaded PNG and JPEG logos are automatically converted to next-generation AVIF/WebP formats with alpha transparency preserved, providing 50%+ faster page load times.
                     </p>
                 </div>
             </div>
@@ -554,3 +785,53 @@ require_once ADMIN_PATH . '/includes/sidebar.php';
 
     <?php require_once ADMIN_PATH . '/includes/footer.php'; ?>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    function setupImagePreview(inputId, previewId, placeholderId, removeBtnId, removeFlagInputId) {
+        const fileInput    = document.getElementById(inputId);
+        const previewImg   = document.getElementById(previewId);
+        const placeholder  = document.getElementById(placeholderId);
+        const removeBtn    = document.getElementById(removeBtnId);
+        const removeFlag   = document.getElementById(removeFlagInputId);
+
+        if (!fileInput || !previewImg) return;
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('Selected image exceeds 5MB limit.');
+                    this.value = '';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    previewImg.src = evt.target.result;
+                    previewImg.classList.remove('d-none');
+                    if (placeholder) placeholder.classList.add('d-none');
+                    if (removeBtn) removeBtn.classList.remove('d-none');
+                    if (removeFlag) removeFlag.value = '0';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        if (removeBtn) {
+            removeBtn.addEventListener('click', function() {
+                fileInput.value = '';
+                previewImg.src = '';
+                previewImg.classList.add('d-none');
+                if (placeholder) placeholder.classList.remove('d-none');
+                removeBtn.classList.add('d-none');
+                if (removeFlag) removeFlag.value = '1';
+            });
+        }
+    }
+
+    setupImagePreview('siteLogoInput', 'logoMainPreview', 'logoMainPlaceholder', 'btnRemoveLogoMain', 'removeLogoInput');
+    setupImagePreview('siteLogoDarkInput', 'logoDarkPreview', 'logoDarkPlaceholder', 'btnRemoveLogoDark', 'removeLogoDarkInput');
+    setupImagePreview('siteFaviconInput', 'faviconPreview', 'faviconPlaceholder', 'btnRemoveFavicon', 'removeFaviconInput');
+});
+</script>

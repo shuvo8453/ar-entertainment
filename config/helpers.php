@@ -304,7 +304,7 @@ function truncate_text(string $text, int $limit = 150, string $ellipsis = '...')
 function upload_image(
     array $file,
     string $folder = 'blogs',
-    array $allowed_types = ['image/jpeg', 'image/png', 'image/webp'],
+    array $allowed_types = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'],
     int $max_size = 5242880,
     int $max_dimension = 1200,
     int $quality = 82
@@ -326,18 +326,21 @@ function upload_image(
     finfo_close($finfo);
 
     if (!in_array($mime, $allowed_types, true)) {
-        return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Invalid image format. Allowed: JPG, PNG, WebP.'];
+        return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Invalid image format (' . htmlspecialchars($mime) . '). Allowed: JPG, PNG, WebP, AVIF, SVG.'];
     }
 
-    // Strict extension check (blocks .jfif, .bmp, .gif, .exe, etc.)
+    // Strict extension check
     $orig_ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    $valid_exts = ['jpg', 'jpeg', 'png', 'webp'];
+    $valid_exts = ['jpg', 'jpeg', 'png', 'webp', 'avif'];
     if (in_array('image/svg+xml', $allowed_types, true)) {
         $valid_exts[] = 'svg';
     }
+    if (in_array('image/x-icon', $allowed_types, true) || in_array('image/vnd.microsoft.icon', $allowed_types, true)) {
+        $valid_exts[] = 'ico';
+    }
 
     if (!in_array($orig_ext, $valid_exts, true)) {
-        return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Invalid file extension (.' . htmlspecialchars($orig_ext) . '). Only .jpg, .jpeg, .png, and .webp files are allowed.'];
+        return ['success' => false, 'path' => '', 'filename' => '', 'error' => 'Invalid file extension (.' . htmlspecialchars($orig_ext) . '). Only allowed image formats can be uploaded.'];
     }
 
     $target_dir = UPLOADS_PATH . DIRECTORY_SEPARATOR . trim($folder, '/\\');
