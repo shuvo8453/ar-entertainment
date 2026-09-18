@@ -119,11 +119,11 @@ flowchart LR
 * [x] Logo upload and sort ordering for clients, partners, awards, and affiliations with dynamic type filter pills, live SVG/PNG preview, and auto-optimization.
 
 #### Phase 4.6: Reviews & Testimonials Manager (`admin/reviews/`)
-- **Status:** `[NEXT UP 🎯]`
-* [ ] Manage client feedback, star ratings (e.g. 5.0), and featured flags.
+- **Status:** `[DONE ✅]`
+* [x] Manage client feedback, star ratings (e.g. 5.0), platform sources (Google, GoodFirms, Clutch, Direct), client avatar uploads, and featured sort ordering.
 
 #### Phase 4.7: Inquiries / Leads Inbox (`admin/inquiries/`)
-- **Status:** `[PENDING ⏳]`
+- **Status:** `[NEXT UP 🎯]`
 * [ ] View submissions (Contact, Quote, Careers, Survey), mark read/unread, filter by form type, CSV export.
 
 #### Phase 4.8: Global Site Settings Manager (`admin/settings/`)
