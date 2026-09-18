@@ -44,10 +44,10 @@ Following a comprehensive audit of the 150+ static pages, the content strategy i
 flowchart LR
     P1["Phase 1:\nDatabase & Config\n[COMPLETED ✅]"] --> P2["Phase 2:\nFrontend Templating\n[COMPLETED ✅]"]
     P1 --> P3["Phase 3:\nAdmin Foundation\n[COMPLETED ✅]"]
-    P3 --> P4["Phase 4:\nAdmin CRUDs\n[NEXT UP 🎯]"]
-    P2 --> P5["Phase 5:\nDynamic Frontend\n[PENDING ⏳]"]
-    P4 --> P5
-    P5 --> P6["Phase 6:\nData Migration\n[PENDING ⏳]"]
+    P3 --> P4["Phase 4:\nAdmin CRUDs\n[COMPLETED ✅]"]
+    P4 --> P5["Phase 5:\nContent & Seeding\n[NEXT UP 🎯]"]
+    P2 --> P6["Phase 6:\nDynamic Frontend\n[PENDING ⏳]"]
+    P5 --> P6
     P6 --> P7["Phase 7:\nForms & Testing\n[PENDING ⏳]"]
 ```
 
@@ -128,61 +128,65 @@ flowchart LR
 
 #### Phase 4.8: Global Site Settings Manager (`admin/settings/`)
 - **Status:** `[DONE ✅]`
-* [x] Live tabbed editor for General brand info, Contact & Studio address, Social & Video links, GA4 ID, Meta Pixel ID, and custom header/footer scripts.
+* [x] Live tabbed editor for General brand info, Brand Logos, Dark Logo, Favicon (with AVIF auto-conversion), Contact & Studio address, Social & Video links, GA4 ID, Meta Pixel ID, and custom header/footer scripts.
 
 ---
 
-### Phase 5: Dynamic Frontend Integration
+### Phase 5: Content Extraction, Paraphrasing & Database Seeding
+
+- **Overall Status:** `[IN PROGRESS 🔄]`
+
+#### Phase 5.1: Core Brand Identity & Homepage Seeding
+- **Status:** `[PENDING ⏳]`
+* [ ] Seed core AR Entertainment showreel and featured portfolio showcase projects into `portfolio`.
+* [ ] Seed top AR Entertainment client brand logos, partner badges, and affiliations into `brands`.
+* [ ] Seed authentic 5-star client ratings and verified testimonials into `reviews`.
+* [ ] Seed founder (Azizul Hoque Shiplu) and key production leadership profiles into `team_members`.
+
+#### Phase 5.2: Services Catalogue & Structured FAQ Migration
+- **Status:** `[PENDING ⏳]`
+* [ ] Parse, paraphrase, and rebrand 42+ service offerings from static HTML into MySQL `services` with structured JSON FAQ datasets and icons.
+* [ ] Ensure 100% clean copy eliminating all legacy "Libanza Films" references with original AR Entertainment value propositions.
+
+#### Phase 5.3: 64 Bangladesh District Filming Guides Ingestion
+- **Status:** `[PENDING ⏳]`
+* [ ] Ingest all 64 district filming location guides with geographic features, permits info, and logistics into `service_areas`.
+
+#### Phase 5.4: Blog Articles Rewriting & Media Ingestion
+- **Status:** `[PENDING ⏳]`
+* [ ] Extract, thoroughly rewrite, and ingest 85+ blog articles into MySQL `blogs` with customized AR Entertainment perspectives.
+* [ ] Generate/attach optimized featured images for all blog posts.
+
+---
+
+### Phase 6: Dynamic Frontend Integration
 
 - **Overall Status:** `[PENDING ⏳]`
 
-#### Phase 5.1: Dynamic Homepage (`index.php`)
+#### Phase 6.1: Dynamic Homepage (`index.php`)
 - **Status:** `[PENDING ⏳]`
-* [ ] Convert `index.php` to dynamically fetch latest portfolio videos, featured services, client logos, testimonials, and recent blog posts.
+* [ ] Convert `index.php` to dynamically fetch latest portfolio videos, featured services, client logos carousel, testimonials slider, and recent blog posts from MySQL.
 
-#### Phase 5.2: Dynamic Blog System (`blog.php` & `blog-single.php`)
+#### Phase 6.2: Dynamic Blog System (`blog.php` & `blog-single.php`)
 - **Status:** `[PENDING ⏳]`
 * [ ] Build dynamic `blog.php` listing with category filter, search bar, and clean pagination (`/blog?page=2`).
-* [ ] Build dynamic `blog-single.php` with article body, author info, related posts, and auto-generated Schema JSON-LD.
+* [ ] Build dynamic `blog-single.php` with article body, author bio, related posts, and auto-generated Schema JSON-LD.
 
-#### Phase 5.3: Dynamic Services Catalogue & Single Service Views (`services.php` & `service-single.php`)
+#### Phase 6.3: Dynamic Services Catalogue & Single Service Views (`services.php` & `service-single.php`)
 - **Status:** `[PENDING ⏳]`
-* [ ] Build dynamic `services.php` & `service-single.php` with interactive FAQ accordions.
+* [ ] Build dynamic `services.php` & `service-single.php` with interactive FAQ accordions and inquiry CTA.
 
-#### Phase 5.4: Dynamic Video Portfolio Showcase (`portfolio.php`)
+#### Phase 6.4: Dynamic Video Portfolio Showcase (`portfolio.php`)
 - **Status:** `[PENDING ⏳]`
-* [ ] Build dynamic `portfolio.php` with real-time category filter tabs.
+* [ ] Build dynamic `portfolio.php` with real-time category filter tabs and live video player modal.
 
-#### Phase 5.5: Dynamic Service Areas / District Guides (`service-area.php`)
+#### Phase 6.5: Dynamic Service Areas / District Guides (`service-area.php`)
 - **Status:** `[PENDING ⏳]`
-* [ ] Build dynamic `service-area.php` for all 64 district pages.
+* [ ] Build dynamic `service-area.php` for all 64 district pages with local filming specs and contact triggers.
 
-#### Phase 5.6: Supporting Brand Pages (`about-us.php`, `meet-the-team.php`, `reviews.php`, `contact-us.php`)
+#### Phase 6.6: Supporting Brand Pages & Dynamic Feeds (`about-us.php`, `meet-the-team.php`, `reviews.php`, `contact-us.php`, `sitemap.xml`)
 - **Status:** `[PENDING ⏳]`
-* [ ] Build `about-us.php`, `meet-the-team.php`, `reviews.php`, `contact-us.php`.
-
----
-
-### Phase 6: Data Rewriting, Migration & SEO Continuity
-
-- **Overall Status:** `[PENDING ⏳]`
-
-#### Phase 6.1: Content Migration Automation Script (`database/migrate_content.php`)
-- **Status:** `[PENDING ⏳]`
-* [ ] Build automated parser script (`database/migrate_content.php`).
-
-#### Phase 6.2: Blog Articles Rewriting & Media Ingestion
-- **Status:** `[PENDING ⏳]`
-* [ ] Extract and rewrite all 85+ blog articles with fresh phrasing, customized for AR Entertainment.
-* [ ] Generate and attach new AI featured images for all blog posts.
-
-#### Phase 6.3: Services & District Data Ingestion
-- **Status:** `[PENDING ⏳]`
-* [ ] Migrate 42+ service descriptions and FAQ datasets into MySQL.
-* [ ] Migrate 64 district filming guides into MySQL.
-
-#### Phase 6.4: Dynamic XML Sitemap & RSS Feed Generation
-- **Status:** `[PENDING ⏳]`
+* [ ] Build dynamic `about-us.php`, `meet-the-team.php`, `reviews.php`, and `contact-us.php`.
 * [ ] Generate dynamic, automated `sitemap.xml` and RSS feeds from database records.
 
 ---
