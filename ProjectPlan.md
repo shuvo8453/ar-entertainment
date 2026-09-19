@@ -132,30 +132,54 @@ flowchart LR
 
 ---
 
+## 🔄 Multi-Environment Synchronization & Git Seeding Architecture
+
+To ensure seamless collaboration across **Home PC**, **Office PC**, and the **Live cPanel Hosting** without database merge conflicts or desync issues:
+
+1. **Source of Truth in Git:**
+   - All PHP code, templates, admin modules, seed data structures, and optimized lightweight `.avif` upload assets (`uploads/`) are committed and tracked in the Git repository.
+   - Admin upload handlers automatically delete replaced files via `@unlink()`, ensuring `uploads/` directories stay clean and free of orphaned files.
+
+2. **Code-Driven, Idempotent Database Seeders:**
+   - Content extraction, rewriting, and seeding are driven by automated, idempotent migration scripts (`database/migrate_content.php` or dedicated seeders in `database/seeds/`).
+   - All seed scripts use `INSERT ... ON DUPLICATE KEY UPDATE` keyed on unique identifiers (`slug`, `setting_key`, or unique names).
+   - Running the seed/sync runner (`php database/migrate_content.php` or `php scratch/seed_all_modules.php`) on any machine instantly populates or syncs the local/live database with the repository's assets in seconds.
+
+3. **Standard Cross-PC Workflow:**
+   - **Work on Machine A (Office/Home):** Extract/create content or assets → scripts write to DB & save `.avif` to `uploads/` → `git add .` → `git commit` → `git push origin master`.
+   - **Switch to Machine B (Home/Office/Live):** `git pull origin master` → run `php database/migrate_content.php` (or sync runner) → local/live database is immediately 100% identical and synchronized.
+
+---
+
 ### Phase 5: Content Extraction, Paraphrasing & Database Seeding
 
 - **Overall Status:** `[IN PROGRESS 🔄]`
+- **Execution Strategy:** Code-driven automated migration scripts with `.avif` media generation and idempotent MySQL upserts.
 
 #### Phase 5.1: Core Brand Identity & Homepage Seeding
 - **Status:** `[PENDING ⏳]`
-* [ ] Seed core AR Entertainment showreel and featured portfolio showcase projects into `portfolio`.
-* [ ] Seed top AR Entertainment client brand logos, partner badges, and affiliations into `brands`.
-* [ ] Seed authentic 5-star client ratings and verified testimonials into `reviews`.
-* [ ] Seed founder (Azizul Hoque Shiplu) and key production leadership profiles into `team_members`.
+* [ ] Create idempotent seeder for core AR Entertainment showreel and featured portfolio showcase projects into `portfolio`.
+* [ ] Create idempotent seeder for top AR Entertainment client brand logos, partner badges, and affiliations into `brands` (with `.avif` media).
+* [ ] Create idempotent seeder for authentic 5-star client ratings and verified testimonials into `reviews`.
+* [ ] Create idempotent seeder for founder (Azizul Hoque Shiplu) and key production leadership profiles into `team_members`.
 
 #### Phase 5.2: Services Catalogue & Structured FAQ Migration
 - **Status:** `[PENDING ⏳]`
-* [ ] Parse, paraphrase, and rebrand 42+ service offerings from static HTML into MySQL `services` with structured JSON FAQ datasets and icons.
+* [ ] Build automated parser/seeder to extract, paraphrase, and rebrand 42+ service offerings from static HTML into MySQL `services` with structured JSON FAQ datasets and icons.
 * [ ] Ensure 100% clean copy eliminating all legacy "Libanza Films" references with original AR Entertainment value propositions.
 
 #### Phase 5.3: 64 Bangladesh District Filming Guides Ingestion
 - **Status:** `[PENDING ⏳]`
-* [ ] Ingest all 64 district filming location guides with geographic features, permits info, and logistics into `service_areas`.
+* [ ] Build automated parser/seeder to ingest all 64 district filming location guides with geographic features, permits info, and logistics into `service_areas`.
 
 #### Phase 5.4: Blog Articles Rewriting & Media Ingestion
 - **Status:** `[PENDING ⏳]`
-* [ ] Extract, thoroughly rewrite, and ingest 85+ blog articles into MySQL `blogs` with customized AR Entertainment perspectives.
-* [ ] Generate/attach optimized featured images for all blog posts.
+* [ ] Build automated extractor & rewriting pipeline to ingest 85+ blog articles into MySQL `blogs` with customized AR Entertainment perspectives.
+* [ ] Generate/attach optimized `.avif` featured images for all blog posts.
+
+#### Phase 5.5: Unified Migration & Sync Runner
+- **Status:** `[PENDING ⏳]`
+* [ ] Build unified CLI runner [`database/migrate_content.php`](file:///c:/xampp/htdocs/ar-entertainment/database/migrate_content.php) to execute all Phase 5 seeders sequentially with progress logging and status reporting.
 
 ---
 
