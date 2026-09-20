@@ -157,12 +157,12 @@ To ensure seamless collaboration across **Home PC**, **Office PC**, and the **Li
 - **Execution Strategy:** Code-driven automated migration scripts with `.avif` media generation and idempotent MySQL upserts.
 
 #### Phase 5.1: Core Brand Identity & Homepage Seeding
-- **Status:** `[PENDING ⏳]`
+- **Status:** `[DONE ✅]`
 - **Batch Size:** Single Comprehensive Batch
-* [ ] Create idempotent seeder for core AR Entertainment showreel and featured portfolio showcase projects into `portfolio`.
-* [ ] Create idempotent seeder for top AR Entertainment client brand logos, partner badges, and affiliations into `brands` (with `.avif` media).
-* [ ] Create idempotent seeder for authentic 5-star client ratings and verified testimonials into `reviews`.
-* [ ] Create idempotent seeder for founder (Azizul Hoque Shiplu) and key production leadership profiles into `team_members`.
+* [x] Create idempotent seeder for core AR Entertainment showreel and featured portfolio showcase projects into `portfolio`.
+* [x] Create idempotent seeder for top AR Entertainment client brand logos, partner badges, and affiliations into `brands` (with `.avif` media).
+* [x] Create idempotent seeder for authentic 5-star client ratings and verified testimonials into `reviews`.
+* [x] Create idempotent seeder for founder (Azizul Hoque Shiplu) and key production leadership profiles into `team_members`.
 
 #### Phase 5.2: Services Catalogue & Structured FAQ Migration (42+ Services)
 - **Status:** `[PENDING ⏳]`
