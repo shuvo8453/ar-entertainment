@@ -1,7 +1,10 @@
 # 🎬 Project Plan: AR Entertainment (`arentertainment.bd`)
 
-> **Automated Status Tracking Notice:**  
-> This file is the single source of truth for the project lifecycle. Whenever any phase, feature, or task is worked on and completed in subsequent sessions, its status and checklist in this document **must be automatically updated** from `[PENDING ⏳]` to `[IN PROGRESS 🔄]` or `[COMPLETED ✅]`.
+> **Automated Status Tracking Notice (Mandatory for all AI & Developers):**  
+> This file is the single source of truth for the project lifecycle. When reading or working on this plan:
+> 1. Always identify the immediate active phase or batch marked as `[NEXT UP 🎯]` and update it to `[IN PROGRESS 🔄]` when work begins.
+> 2. When completed, immediately mark it as `[DONE ✅]` / `[COMPLETED ✅]` and update the very next pending phase/batch to `[NEXT UP 🎯]`.
+> 3. Keep all checklists and status tags synchronized at all times across all sessions.
 
 ---
 
@@ -165,7 +168,7 @@ To ensure seamless collaboration across **Home PC**, **Office PC**, and the **Li
 * [x] Create idempotent seeder for founder (Azizul Hoque Shiplu) and key production leadership profiles into `team_members`.
 
 #### Phase 5.2: Services Catalogue & Structured FAQ Migration (42+ Services)
-- **Status:** `[PENDING ⏳]`
+- **Status:** `[NEXT UP 🎯]`
 - **Batch Sizing:** 8 Services per batch (~6 Batches total)
 * [ ] **Batch 5.2.1:** Services 1–8 (Core TVCs, OVCs, Commercials, 2D/3D Animation)
 * [ ] **Batch 5.2.2:** Services 9–16 (AI Video, VFX, Virtual Production, Jingle & Audio)
