@@ -158,24 +158,53 @@ To ensure seamless collaboration across **Home PC**, **Office PC**, and the **Li
 
 #### Phase 5.1: Core Brand Identity & Homepage Seeding
 - **Status:** `[PENDING ⏳]`
+- **Batch Size:** Single Comprehensive Batch
 * [ ] Create idempotent seeder for core AR Entertainment showreel and featured portfolio showcase projects into `portfolio`.
 * [ ] Create idempotent seeder for top AR Entertainment client brand logos, partner badges, and affiliations into `brands` (with `.avif` media).
 * [ ] Create idempotent seeder for authentic 5-star client ratings and verified testimonials into `reviews`.
 * [ ] Create idempotent seeder for founder (Azizul Hoque Shiplu) and key production leadership profiles into `team_members`.
 
-#### Phase 5.2: Services Catalogue & Structured FAQ Migration
+#### Phase 5.2: Services Catalogue & Structured FAQ Migration (42+ Services)
 - **Status:** `[PENDING ⏳]`
-* [ ] Build automated parser/seeder to extract, paraphrase, and rebrand 42+ service offerings from static HTML into MySQL `services` with structured JSON FAQ datasets and icons.
-* [ ] Ensure 100% clean copy eliminating all legacy "Libanza Films" references with original AR Entertainment value propositions.
+- **Batch Sizing:** 8 Services per batch (~6 Batches total)
+* [ ] **Batch 5.2.1:** Services 1–8 (Core TVCs, OVCs, Commercials, 2D/3D Animation)
+* [ ] **Batch 5.2.2:** Services 9–16 (AI Video, VFX, Virtual Production, Jingle & Audio)
+* [ ] **Batch 5.2.3:** Services 17–24 (Documentary, Line Production, Fixer Services, Drone/Aerial)
+* [ ] **Batch 5.2.4:** Services 25–32 (Corporate Films, Brand Stories, Product DVCs, Event Coverage)
+* [ ] **Batch 5.2.5:** Services 33–40 (Social Media Video, Explainer Videos, Training Avatars, OTT Content)
+* [ ] **Batch 5.2.6:** Services 41–42+ (Specialized & Additional Industry Services)
 
 #### Phase 5.3: 64 Bangladesh District Filming Guides Ingestion
 - **Status:** `[PENDING ⏳]`
-* [ ] Build automated parser/seeder to ingest all 64 district filming location guides with geographic features, permits info, and logistics into `service_areas`.
+- **Batch Sizing:** 10 Districts per batch (7 Batches total)
+* [ ] **Batch 5.3.1:** Districts 1–10 (Dhaka Division: Dhaka, Gazipur, Narayanganj, Tangail, etc.)
+* [ ] **Batch 5.3.2:** Districts 11–20 (Chattogram Division: Chattogram, Cox's Bazar, Bandarban, Rangamati, etc.)
+* [ ] **Batch 5.3.3:** Districts 21–30 (Sylhet & Mymensingh: Sylhet, Moulvibazar, Sreemangal, Mymensingh, etc.)
+* [ ] **Batch 5.3.4:** Districts 31–40 (Rajshahi Division: Rajshahi, Bogura, Pabna, Natore, etc.)
+* [ ] **Batch 5.3.5:** Districts 41–50 (Rangpur Division: Rangpur, Dinajpur, Kurigram, Panchagarh, etc.)
+* [ ] **Batch 5.3.6:** Districts 51–60 (Khulna & Barishal: Khulna, Sundarbans, Jashore, Barishal, Bhola, etc.)
+* [ ] **Batch 5.3.7:** Districts 61–64 (Remaining Districts & Island Locations)
 
-#### Phase 5.4: Blog Articles Rewriting & Media Ingestion
+#### Phase 5.4: 85+ Blog Articles Rewriting & Media Ingestion
 - **Status:** `[PENDING ⏳]`
-* [ ] Build automated extractor & rewriting pipeline to ingest 85+ blog articles into MySQL `blogs` with customized AR Entertainment perspectives.
-* [ ] Generate/attach optimized `.avif` featured images for all blog posts.
+- **Batch Sizing:** 5 Articles per batch (17 Batches total)
+* [ ] **Batch 5.4.1:** Blog Articles 1–5
+* [ ] **Batch 5.4.2:** Blog Articles 6–10
+* [ ] **Batch 5.4.3:** Blog Articles 11–15
+* [ ] **Batch 5.4.4:** Blog Articles 16–20
+* [ ] **Batch 5.4.5:** Blog Articles 21–25
+* [ ] **Batch 5.4.6:** Blog Articles 26–30
+* [ ] **Batch 5.4.7:** Blog Articles 31–35
+* [ ] **Batch 5.4.8:** Blog Articles 36–40
+* [ ] **Batch 5.4.9:** Blog Articles 41–45
+* [ ] **Batch 5.4.10:** Blog Articles 46–50
+* [ ] **Batch 5.4.11:** Blog Articles 51–55
+* [ ] **Batch 5.4.12:** Blog Articles 56–60
+* [ ] **Batch 5.4.13:** Blog Articles 61–65
+* [ ] **Batch 5.4.14:** Blog Articles 66–70
+* [ ] **Batch 5.4.15:** Blog Articles 71–75
+* [ ] **Batch 5.4.16:** Blog Articles 76–80
+* [ ] **Batch 5.4.17:** Blog Articles 81–85+
 
 #### Phase 5.5: Unified Migration & Sync Runner
 - **Status:** `[PENDING ⏳]`
