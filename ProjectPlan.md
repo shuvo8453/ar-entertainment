@@ -184,13 +184,13 @@ To ensure seamless collaboration across **Home PC**, **Office PC**, and the **Li
 - **Status:** `[IN PROGRESS 🔄]`
 - **Asset Policy:** Recreate 100% original regional filming visuals & location graphics for each district.
 - **Batch Sizing:** 10 Districts per batch (7 Batches total)
-* [ ] **Batch 5.3.1:** Districts 1–10 (Dhaka Division: Dhaka, Gazipur, Narayanganj, Tangail, etc.) `[NEXT UP 🎯]`
-* [ ] **Batch 5.3.2:** Districts 11–20 (Chattogram Division: Chattogram, Cox's Bazar, Bandarban, Rangamati, etc.)
-* [ ] **Batch 5.3.3:** Districts 21–30 (Sylhet & Mymensingh: Sylhet, Moulvibazar, Sreemangal, Mymensingh, etc.)
-* [ ] **Batch 5.3.4:** Districts 31–40 (Rajshahi Division: Rajshahi, Bogura, Pabna, Natore, etc.)
-* [ ] **Batch 5.3.5:** Districts 41–50 (Rangpur Division: Rangpur, Dinajpur, Kurigram, Panchagarh, etc.)
-* [ ] **Batch 5.3.6:** Districts 51–60 (Khulna & Barishal: Khulna, Sundarbans, Jashore, Barishal, Bhola, etc.)
-* [ ] **Batch 5.3.7:** Districts 61–64 (Remaining Districts & Island Locations)
+* [x] **Batch 5.3.1:** Districts 1–10 (Dhaka Division: Dhaka, Gazipur, Narayanganj, Tangail, Manikganj, Munshiganj, Narsingdi, Faridpur, Gopalganj, Madaripur) `[DONE ✅: 100% Original Assets Recreated]`
+* [x] **Batch 5.3.2:** Districts 11–21 (Chattogram Division: Chattogram, Cox's Bazar, Bandarban, Rangamati, Khagrachari, Feni, Noakhali, Lakshmipur, Chandpur, Cumilla, Brahmanbaria) `[DONE ✅: 100% Original Assets Recreated]`
+* [ ] **Batch 5.3.3:** Districts 22–31 (Sylhet & Mymensingh: Sylhet, Maulvibazar, Sunamganj, Habiganj, Mymensingh, Jamalpur, Netrokona, Sherpur, Kishoreganj, Rajbari, Shariatpur) `[NEXT UP 🎯]`
+* [ ] **Batch 5.3.4:** Districts 32–39 (Rajshahi Division: Rajshahi, Bogura, Pabna, Natore, Naogaon, Nawabganj, Joypurhat, Sirajganj)
+* [ ] **Batch 5.3.5:** Districts 40–47 (Rangpur Division: Rangpur, Dinajpur, Kurigram, Lalmonirhat, Nilphamari, Gaibandha, Panchagarh, Thakurgaon)
+* [ ] **Batch 5.3.6:** Districts 48–57 (Khulna Division: Khulna, Bagerhat, Satkhira, Jashore, Jhenaidah, Magura, Narail, Kushtia, Chuadanga, Meherpur)
+* [ ] **Batch 5.3.7:** Districts 58–64 (Barishal Division: Barishal, Barguna, Bhola, Jhalokati, Patuakhali, Pirojpur)
 
 #### Phase 5.4: 85+ Blog Articles Rewriting & Media Ingestion
 - **Status:** `[PENDING ⏳]`
