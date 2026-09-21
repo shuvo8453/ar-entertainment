@@ -200,8 +200,8 @@ To ensure seamless collaboration across **Home PC**, **Office PC**, and the **Li
 * [x] **Batch 5.4.2:** Blog Articles 6–10 (ChatGPT Scripting, 7-Step Video SEO, OVC Power, Production Process, Quality Video Ads) `[DONE ✅: 100% Original Assets Recreated]`
 * [x] **Batch 5.4.3:** Blog Articles 11–15 (Professional Business Video, Advertising Films Tips, Shooting Support in BD, Corporate Video Guide, AI Content Service) `[DONE ✅: 100% Original Assets Recreated]`
 * [x] **Batch 5.4.4:** Blog Articles 16–20 (Earn Money with AI, Best Production Houses, Real Estate Video, International Shoot, Story Development with AI) `[DONE ✅: 100% Original Assets Recreated]`
-* [ ] **Batch 5.4.5:** Blog Articles 21–25 (AI Image Generation Guide, Filming Cost BD, NGO Documentary Filming, Corporate AV Cost, OVC Cost Guide) `[NEXT UP 🎯]`
-* [ ] **Batch 5.4.6:** Blog Articles 26–30
+* [x] **Batch 5.4.5:** Blog Articles 21–25 (AI Image Generation Guide, Filming Cost BD, NGO Documentary Filming, Corporate AV Cost, OVC Cost Guide) `[DONE ✅: 100% Original Assets Recreated]`
+* [ ] **Batch 5.4.6:** Blog Articles 26–30 (Why OVCs Fail, OVC Duration Guide, Enterprise AI Video Guide, AI Music & Jingles, AI Video for FMCG) `[NEXT UP 🎯]`
 * [ ] **Batch 5.4.7:** Blog Articles 31–35
 * [ ] **Batch 5.4.8:** Blog Articles 36–40
 * [ ] **Batch 5.4.9:** Blog Articles 41–45
