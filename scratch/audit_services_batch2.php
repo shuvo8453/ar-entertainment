@@ -39,7 +39,7 @@ foreach ($services as $s) {
     // Check JSON FAQs
     $faqs = json_decode($s['faqs_json'] ?? '[]', true);
     if (!is_array($faqs) || empty($faqs)) {
-        if ($s['sort_order'] <= 24 && !in_array($id, [1, 2])) {
+        if ($s['sort_order'] <= 32 && !in_array($id, [1, 2])) {
             $errors[] = "Service #{$id} ({$slug}): Invalid or empty faqs_json";
         }
     } else {
