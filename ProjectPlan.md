@@ -197,8 +197,8 @@ To ensure seamless collaboration across **Home PC**, **Office PC**, and the **Li
 - **Asset Policy:** Generate 100% original high-resolution featured thumbnails; thoroughly rewrite body copy.
 - **Batch Sizing:** 5 Articles per batch (17 Batches total)
 * [x] **Batch 5.4.1:** Blog Articles 1–5 (Mobile Video, OTT Phenomenon, Budget Optimization, TVC Process, How to Make a Documentary) `[DONE ✅: 100% Original Assets Recreated]`
-* [ ] **Batch 5.4.2:** Blog Articles 6–10 `[NEXT UP 🎯]`
-* [ ] **Batch 5.4.3:** Blog Articles 11–15
+* [x] **Batch 5.4.2:** Blog Articles 6–10 (ChatGPT Scripting, 7-Step Video SEO, OVC Power, Production Process, Quality Video Ads) `[DONE ✅: 100% Original Assets Recreated]`
+* [ ] **Batch 5.4.3:** Blog Articles 11–15 (Professional Business Video, Advertising Films Tips, Shooting Support in BD, Corporate Video Guide, AI Content Service) `[NEXT UP 🎯]`
 * [ ] **Batch 5.4.4:** Blog Articles 16–20
 * [ ] **Batch 5.4.5:** Blog Articles 21–25
 * [ ] **Batch 5.4.6:** Blog Articles 26–30
