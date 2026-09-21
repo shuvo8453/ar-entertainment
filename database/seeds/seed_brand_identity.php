@@ -51,6 +51,17 @@ function seed_save_as_avif(string $source_path, string $target_subfolder, string
         return '';
     }
 
+    // Direct copy fallback if GD library is not enabled
+    if (!function_exists('imagecreatefromstring')) {
+        $ext = pathinfo($source_path, PATHINFO_EXTENSION);
+        $target_rel = $target_subfolder . '/' . $base_filename . '.' . ($ext ?: 'png');
+        $target_file = $target_dir . DIRECTORY_SEPARATOR . $base_filename . '.' . ($ext ?: 'png');
+        if (!file_exists($target_file)) {
+            @copy($source_path, $target_file);
+        }
+        return file_exists($target_file) ? $target_rel : '';
+    }
+
     $raw = @file_get_contents($source_path);
     if ($raw === false) {
         return '';
@@ -108,6 +119,16 @@ function seed_save_youtube_avif(string $youtube_url, string $slug): string
         }
     }
 
+    if (!function_exists('imagecreatefromstring')) {
+        if ($img_data !== false) {
+            $target_rel = 'portfolio/' . $slug . '.jpg';
+            $target_file = $target_dir . DIRECTORY_SEPARATOR . $slug . '.jpg';
+            @file_put_contents($target_file, $img_data);
+            return $target_rel;
+        }
+        return '';
+    }
+
     if ($img_data !== false) {
         $img = @imagecreatefromstring($img_data);
         if ($img) {
@@ -126,33 +147,37 @@ function seed_save_youtube_avif(string $youtube_url, string $slug): string
     }
 
     // Fallback stylish GD canvas if offline
-    $w = 640;
-    $h = 360;
-    $fallback = imagecreatetruecolor($w, $h);
-    $bg = imagecolorallocate($fallback, 15, 23, 42); // slate dark
-    $accent = imagecolorallocate($fallback, 225, 29, 72); // crimson
-    $text_col = imagecolorallocate($fallback, 248, 250, 252);
-    imagefilledrectangle($fallback, 0, 0, $w, $h, $bg);
-    imagefilledellipse($fallback, (int)($w/2), (int)($h/2), 80, 80, $accent);
-    // Draw play triangle
-    $points = [
-        (int)($w/2 - 12), (int)($h/2 - 18),
-        (int)($w/2 - 12), (int)($h/2 + 18),
-        (int)($w/2 + 18), (int)($h/2)
-    ];
-    imagefilledpolygon($fallback, $points, $text_col);
-    imagestring($fallback, 4, 30, $h - 40, "AR ENTERTAINMENT SHOWCASE", $text_col);
+    if (function_exists('imagecreatetruecolor')) {
+        $w = 640;
+        $h = 360;
+        $fallback = imagecreatetruecolor($w, $h);
+        $bg = imagecolorallocate($fallback, 15, 23, 42); // slate dark
+        $accent = imagecolorallocate($fallback, 225, 29, 72); // crimson
+        $text_col = imagecolorallocate($fallback, 248, 250, 252);
+        imagefilledrectangle($fallback, 0, 0, $w, $h, $bg);
+        imagefilledellipse($fallback, (int)($w/2), (int)($h/2), 80, 80, $accent);
+        // Draw play triangle
+        $points = [
+            (int)($w/2 - 12), (int)($h/2 - 18),
+            (int)($w/2 - 12), (int)($h/2 + 18),
+            (int)($w/2 + 18), (int)($h/2)
+        ];
+        imagefilledpolygon($fallback, $points, $text_col);
+        imagestring($fallback, 4, 30, $h - 40, "AR ENTERTAINMENT SHOWCASE", $text_col);
 
-    if (function_exists('imageavif')) {
-        @imageavif($fallback, $target_file, 80);
-    } else {
-        $target_rel = 'portfolio/' . $slug . '.webp';
-        $target_file = $target_dir . DIRECTORY_SEPARATOR . $slug . '.webp';
-        @imagewebp($fallback, $target_file, 80);
+        if (function_exists('imageavif')) {
+            @imageavif($fallback, $target_file, 80);
+        } else {
+            $target_rel = 'portfolio/' . $slug . '.webp';
+            $target_file = $target_dir . DIRECTORY_SEPARATOR . $slug . '.webp';
+            @imagewebp($fallback, $target_file, 80);
+        }
+        imagedestroy($fallback);
+
+        return $target_rel;
     }
-    imagedestroy($fallback);
 
-    return $target_rel;
+    return '';
 }
 
 /**
@@ -165,6 +190,16 @@ function seed_create_avatar_avif(string $name, string $slug): string
     $target_file = $target_dir . DIRECTORY_SEPARATOR . $slug . '.avif';
 
     if (file_exists($target_file) && filesize($target_file) > 100) {
+        return $target_rel;
+    }
+
+    if (!function_exists('imagecreatetruecolor')) {
+        $words = explode(' ', trim($name));
+        $initials = strtoupper(substr($words[0] ?? 'A', 0, 1) . substr($words[1] ?? 'R', 0, 1));
+        $target_rel = 'reviews/' . $slug . '.svg';
+        $target_file = $target_dir . DIRECTORY_SEPARATOR . $slug . '.svg';
+        $svg = '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><rect width="120" height="120" fill="#1e293b"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#f8fafc" font-size="42" font-family="sans-serif">' . htmlspecialchars($initials) . '</text></svg>';
+        @file_put_contents($target_file, $svg);
         return $target_rel;
     }
 
@@ -356,17 +391,14 @@ $brands_data = [
     ['name' => 'Bangladesh SEZ Limited', 'type' => 'partner', 'file' => 'bangladesh-sez-limited.png', 'url' => 'https://bsezl.com.bd', 'sort' => 27],
 ];
 
-$stmt_brand = $db->prepare("
-    INSERT INTO brands (name, logo, website_url, brand_type, sort_order, status, created_at, updated_at)
-    VALUES (?, ?, ?, ?, ?, 'active', NOW(), NOW())
-    ON DUPLICATE KEY UPDATE 
-        logo=VALUES(logo),
-        website_url=VALUES(website_url),
-        brand_type=VALUES(brand_type),
-        sort_order=VALUES(sort_order),
-        status='active',
-        updated_at=NOW()
-");
+// Clean up legacy fallback PNGs if AVIF exists
+$png_files = glob(str_replace('\\', '/', UPLOADS_PATH) . '/brands/*.png');
+foreach ($png_files as $pf) {
+    $avif_eq = preg_replace('/\.png$/', '.avif', $pf);
+    if (file_exists($avif_eq) && filesize($avif_eq) > 100) {
+        @unlink($pf);
+    }
+}
 
 $brand_count = 0;
 foreach ($brands_data as $b) {
@@ -374,20 +406,30 @@ foreach ($brands_data as $b) {
     $slug = slugify($b['name']);
     $avif_path = seed_save_as_avif($src_file, 'brands', $slug);
     if (empty($avif_path)) {
-        // Fallback to static relative path if needed
         $avif_path = 'images/clients/' . $b['file'];
     }
 
-    $stmt_brand->execute([
-        $b['name'],
-        $avif_path,
-        $b['url'],
-        $b['type'],
-        $b['sort']
-    ]);
+    $chk = $db->prepare("SELECT id FROM brands WHERE name = ? LIMIT 1");
+    $chk->execute([$b['name']]);
+    $existing_id = $chk->fetchColumn();
+
+    if ($existing_id) {
+        $stmt_update = $db->prepare("UPDATE brands SET logo=?, website_url=?, brand_type=?, sort_order=?, status='active', updated_at=NOW() WHERE id=?");
+        $stmt_update->execute([$avif_path, $b['url'], $b['type'], $b['sort'], $existing_id]);
+    } else {
+        $stmt_insert = $db->prepare("INSERT INTO brands (name, logo, website_url, brand_type, sort_order, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, 'active', NOW(), NOW())");
+        $stmt_insert->execute([$b['name'], $avif_path, $b['url'], $b['type'], $b['sort']]);
+    }
     $brand_count++;
 }
 echo "   ✅ Seeded {$brand_count} Brand Logos (Clients & Partners) with AVIF conversion.\n";
+
+// Remove any duplicate brands created during previous runs
+$db->exec("
+    DELETE b1 FROM brands b1
+    INNER JOIN brands b2 
+    WHERE b1.id > b2.id AND b1.name = b2.name
+");
 
 // =========================================================================
 // 4. SEED VERIFIED CLIENT REVIEWS & TESTIMONIALS
@@ -497,38 +539,30 @@ $reviews_data = [
     ]
 ];
 
-$stmt_review = $db->prepare("
-    INSERT INTO reviews (client_name, client_company, client_designation, client_photo, review_text, rating, project_name, source, sort_order, status, created_at, updated_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'active', NOW(), NOW())
-    ON DUPLICATE KEY UPDATE 
-        client_company=VALUES(client_company),
-        client_designation=VALUES(client_designation),
-        client_photo=VALUES(client_photo),
-        review_text=VALUES(review_text),
-        rating=VALUES(rating),
-        project_name=VALUES(project_name),
-        source=VALUES(source),
-        sort_order=VALUES(sort_order),
-        status='active',
-        updated_at=NOW()
-");
-
 foreach ($reviews_data as $rev) {
     $slug = slugify($rev['client_name']);
     $avatar_path = seed_create_avatar_avif($rev['client_name'], $slug);
-    $stmt_review->execute([
-        $rev['client_name'],
-        $rev['client_company'],
-        $rev['client_designation'],
-        $avatar_path,
-        $rev['review_text'],
-        $rev['rating'],
-        $rev['project_name'],
-        $rev['source'],
-        $rev['sort_order']
-    ]);
+    
+    $chk = $db->prepare("SELECT id FROM reviews WHERE client_name = ? AND project_name = ? LIMIT 1");
+    $chk->execute([$rev['client_name'], $rev['project_name']]);
+    $existing_id = $chk->fetchColumn();
+
+    if ($existing_id) {
+        $stmt_update = $db->prepare("UPDATE reviews SET client_company=?, client_designation=?, client_photo=?, review_text=?, rating=?, source=?, sort_order=?, status='active', updated_at=NOW() WHERE id=?");
+        $stmt_update->execute([$rev['client_company'], $rev['client_designation'], $avatar_path, $rev['review_text'], $rev['rating'], $rev['source'], $rev['sort_order'], $existing_id]);
+    } else {
+        $stmt_insert = $db->prepare("INSERT INTO reviews (client_name, client_company, client_designation, client_photo, review_text, rating, project_name, source, sort_order, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'active', NOW(), NOW())");
+        $stmt_insert->execute([$rev['client_name'], $rev['client_company'], $rev['client_designation'], $avatar_path, $rev['review_text'], $rev['rating'], $rev['project_name'], $rev['source'], $rev['sort_order']]);
+    }
     echo "   ⭐ Review: {$rev['client_name']} ({$rev['client_company']}) - {$rev['rating']}★ [{$rev['source']}]\n";
 }
+
+// Remove any duplicate reviews created during previous runs
+$db->exec("
+    DELETE r1 FROM reviews r1
+    INNER JOIN reviews r2 
+    WHERE r1.id > r2.id AND r1.client_name = r2.client_name AND r1.project_name = r2.project_name
+");
 
 // =========================================================================
 // 5. SEED SHOWREEL & FEATURED PORTFOLIO PROJECTS
