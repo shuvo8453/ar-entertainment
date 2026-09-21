@@ -193,11 +193,11 @@ To ensure seamless collaboration across **Home PC**, **Office PC**, and the **Li
 * [x] **Batch 5.3.7:** Districts 59–64 (Barishal Division: Barishal, Barguna, Bhola, Jhalokati, Patuakhali, Pirojpur) `[DONE ✅: 100% Original Assets Recreated]`
 
 #### Phase 5.4: 85+ Blog Articles Rewriting & Media Ingestion
-- **Status:** `[NEXT UP 🎯]`
+- **Status:** `[IN PROGRESS 🔄]`
 - **Asset Policy:** Generate 100% original high-resolution featured thumbnails; thoroughly rewrite body copy.
 - **Batch Sizing:** 5 Articles per batch (17 Batches total)
-* [ ] **Batch 5.4.1:** Blog Articles 1–5 `[NEXT UP 🎯]`
-* [ ] **Batch 5.4.2:** Blog Articles 6–10
+* [x] **Batch 5.4.1:** Blog Articles 1–5 (Mobile Video, OTT Phenomenon, Budget Optimization, TVC Process, How to Make a Documentary) `[DONE ✅: 100% Original Assets Recreated]`
+* [ ] **Batch 5.4.2:** Blog Articles 6–10 `[NEXT UP 🎯]`
 * [ ] **Batch 5.4.3:** Blog Articles 11–15
 * [ ] **Batch 5.4.4:** Blog Articles 16–20
 * [ ] **Batch 5.4.5:** Blog Articles 21–25
