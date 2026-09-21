@@ -75,7 +75,7 @@ $popular_icons = [
 ];
 
 // Handle Update Submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     if (!verify_csrf()) {
         $errors[] = 'Security verification failed (CSRF token expired). Please try again.';
     } else {
