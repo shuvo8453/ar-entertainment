@@ -18,26 +18,28 @@
   - Admin Panel: `http://ar-entertainment.test/admin` (or `http://localhost/ar-entertainment/admin`)
 - **Database:** `ar-entertainment` (MySQL 3306 on Laragon, user: `root`, pass: `""`)
 - **Technology Stack:** Pure Modular PHP 8.3 + PDO MySQL + Custom Bootstrap 5 Admin Panel
-- **Rebranding Directive:** Zero tolerance for the legacy brand name ("Libanza Films"). 100% of codebase, templates, database records, metadata, and schemas strictly use **AR Entertainment**.
+- **Rebranding & Legal Protection Directive:**
+  - **Zero Tolerance for Legacy Brand:** Zero tolerance for the legacy brand name ("Libanza Films"). 100% of codebase, templates, database records, metadata, and schemas strictly use **AR Entertainment**.
+  - **Zero Copyright Liability & Complete Image Recreation:** Under NO circumstances may any proprietary photography, graphics, artwork, or banners from Libanza Films be reused or carried over. To eliminate any legal liability or copyright infringement claims, **100% of visual assets across all sections (Services, Blogs, Service Areas, AI Hubs, Banners) must be completely recreated from scratch** (via custom generation or licensed graphics) as exclusive intellectual property of AR Entertainment.
 
 ---
 
 ## 🔍 2. Content Inventory & Reusability Matrix
 
-Following a comprehensive audit of the 150+ static pages, the content strategy is partitioned as follows:
+Following a comprehensive audit of the 150+ static pages, the content and asset strategy is partitioned as follows:
 
-| Content Type                                 |   Total Items    | Strategy & Status         | Copyright / Action Plan                                                                           |
-| :------------------------------------------- | :--------------: | :------------------------ | :------------------------------------------------------------------------------------------------ |
-| **Blog Articles (`blog/`)**                  |     **85+**      | 🟢 **Reusable (Rewrite)** | Extract topics/outlines, rewrite body copy uniquely for AR Entertainment, recreate AI thumbnails. |
-| **Services & FAQs (`services/`)**            |     **42+**      | 🟢 **Reusable (Rebrand)** | Industry standard service definitions & FAQs. Rebrand headlines, intros & pricing.                |
-| **District Service Areas (`service-area/`)** |      **64**      | 🟢 **Reusable (Rebrand)** | Local SEO landing pages for all 64 districts in Bangladesh. Update to AR Entertainment.           |
-| **AI & Global Hub Pages (`ai/`)**            |      **22**      | 🟢 **Reusable (Rebrand)** | Global production hub pages (USA, UK, UAE, Canada, etc.). Rebrand copy.                           |
-| **Legal & Policy Pages**                     |      **5+**      | 🟢 **Reusable (Update)**  | Privacy Policy, Why Choose Us, Survey framework. Update brand details.                            |
-| **Portfolio Videos (`portfolio/`)**          | **6 Categories** | 🔴 **Replace Fresh**      | Leave old client videos behind. Add AR Entertainment's own showreel embeds via Admin.             |
-| **Team Profiles (`meet-the-team/`)**         |      **4+**      | 🔴 **Replace Fresh**      | Upload actual AR Entertainment directors, producers, and crew via Admin.                          |
-| **Client Brands & Awards (`brands/`)**       |     **15+**      | 🔴 **Replace Fresh**      | Upload real AR Entertainment client logos and partner badges via Admin.                           |
-| **Client Reviews (`reviews/`)**              |     **10+**      | 🔴 **Replace Fresh**      | Start clean; manage authentic AR Entertainment reviews via Admin.                                 |
-| **Inquiries / Leads Inbox**                  |     &mdash;      | 🔴 **Start Fresh**        | Zero unread leads; receive live submissions through active forms.                                 |
+| Content Type                                 |   Total Items    | Strategy & Status            | Copyright & Legal Action Plan                                                                               |
+| :------------------------------------------- | :--------------: | :--------------------------- | :---------------------------------------------------------------------------------------------------------- |
+| **Blog Articles (`blog/`)**                  |     **85+**      | 🔴 **Recreate Fresh**        | Extract outlines; thoroughly rewrite body copy for AR Entertainment; generate 100% new original thumbnails. |
+| **Services & FAQs (`services/`)**            |     **42+**      | 🔴 **Recreate Fresh Assets** | Industry standard service definitions & FAQs. Rewrite copy completely; **recreate all images from scratch**. |
+| **District Service Areas (`service-area/`)** |      **64**      | 🔴 **Recreate Fresh Assets** | Local filming logistics. Rewrite text for AR Entertainment; **recreate all regional photos/illustrations**.  |
+| **AI & Global Hub Pages (`ai/`)**            |      **22**      | 🔴 **Recreate Fresh Assets** | Rebrand copy; **generate brand-new original AI cinema visual assets**.                                       |
+| **Legal & Policy Pages**                     |      **5+**      | 🟢 **Update Brand Copy**     | Privacy Policy, Terms, Survey framework. Update brand and legal entity details.                            |
+| **Portfolio Videos (`portfolio/`)**          | **6 Categories** | 🔴 **Replace Fresh**         | Leave old client videos behind. Add AR Entertainment's own showreel & video embeds via Admin.               |
+| **Team Profiles (`meet-the-team/`)**         |      **4+**      | 🔴 **Replace Fresh**         | Upload actual AR Entertainment directors, executive producers, and crew via Admin.                         |
+| **Client Brands & Awards (`brands/`)**       |     **15+**      | 🔴 **Verified Public Marks** | Upload real AR Entertainment client logos and verified partner/award badges.                                |
+| **Client Reviews (`reviews/`)**              |     **10+**      | 🔴 **Replace Fresh**         | Start clean; manage authentic AR Entertainment reviews via Admin.                                           |
+| **Inquiries / Leads Inbox**                  |     &mdash;      | 🔴 **Start Fresh**           | Zero unread leads; receive live submissions through active forms.                                           |
 
 ---
 
@@ -157,7 +159,7 @@ To ensure seamless collaboration across **Home PC**, **Office PC**, and the **Li
 ### Phase 5: Content Extraction, Paraphrasing & Database Seeding
 
 - **Overall Status:** `[IN PROGRESS 🔄]`
-- **Execution Strategy:** Code-driven automated migration scripts with `.avif` media generation and idempotent MySQL upserts.
+- **Execution Strategy:** Code-driven automated migration scripts with **100% brand-new original `.avif` visual asset generation (zero legacy image reuse to prevent copyright liability)** and idempotent MySQL upserts.
 
 #### Phase 5.1: Core Brand Identity & Homepage Seeding
 - **Status:** `[DONE ✅]`
@@ -168,17 +170,19 @@ To ensure seamless collaboration across **Home PC**, **Office PC**, and the **Li
 * [x] Create idempotent seeder for founder (Azizul Hoque Shiplu) and key production leadership profiles into `team_members`.
 
 #### Phase 5.2: Services Catalogue & Structured FAQ Migration (42+ Services)
-- **Status:** `[NEXT UP 🎯]`
+- **Status:** `[IN PROGRESS 🔄]`
+- **Asset Policy:** Recreate 100% original visual assets & illustrations for each service; rewrite copy with 0% legacy brand references.
 - **Batch Sizing:** 8 Services per batch (~6 Batches total)
-* [ ] **Batch 5.2.1:** Services 1–8 (Core TVCs, OVCs, Commercials, 2D/3D Animation)
-* [ ] **Batch 5.2.2:** Services 9–16 (AI Video, VFX, Virtual Production, Jingle & Audio)
-* [ ] **Batch 5.2.3:** Services 17–24 (Documentary, Line Production, Fixer Services, Drone/Aerial)
-* [ ] **Batch 5.2.4:** Services 25–32 (Corporate Films, Brand Stories, Product DVCs, Event Coverage)
-* [ ] **Batch 5.2.5:** Services 33–40 (Social Media Video, Explainer Videos, Training Avatars, OTT Content)
-* [ ] **Batch 5.2.6:** Services 41–42+ (Specialized & Additional Industry Services)
+* [x] **Batch 5.2.1:** Services 1–8 (Core TVCs, OVCs, Commercials, 2D/3D Animation) `[DONE ✅: 100% Original Assets Recreated]`
+* [ ] **Batch 5.2.2:** Services 9–16 (AI Video, VFX, Virtual Production, Jingle & Audio) `[NEXT UP 🎯]`
+* [ ] **Batch 5.2.3:** Services 17–24 (Documentary, Line Production, Fixer Services, Drone/Aerial) `[PENDING ⏳]`
+* [ ] **Batch 5.2.4:** Services 25–32 (Corporate Films, Brand Stories, Product DVCs, Event Coverage) `[PENDING ⏳]`
+* [ ] **Batch 5.2.5:** Services 33–40 (Social Media Video, Explainer Videos, Training Avatars, OTT Content) `[PENDING ⏳]`
+* [ ] **Batch 5.2.6:** Services 41–42+ (Specialized & Additional Industry Services) `[PENDING ⏳]`
 
 #### Phase 5.3: 64 Bangladesh District Filming Guides Ingestion
 - **Status:** `[PENDING ⏳]`
+- **Asset Policy:** Recreate 100% original regional filming visuals & location graphics for each district.
 - **Batch Sizing:** 10 Districts per batch (7 Batches total)
 * [ ] **Batch 5.3.1:** Districts 1–10 (Dhaka Division: Dhaka, Gazipur, Narayanganj, Tangail, etc.)
 * [ ] **Batch 5.3.2:** Districts 11–20 (Chattogram Division: Chattogram, Cox's Bazar, Bandarban, Rangamati, etc.)
@@ -190,6 +194,7 @@ To ensure seamless collaboration across **Home PC**, **Office PC**, and the **Li
 
 #### Phase 5.4: 85+ Blog Articles Rewriting & Media Ingestion
 - **Status:** `[PENDING ⏳]`
+- **Asset Policy:** Generate 100% original high-resolution featured thumbnails; thoroughly rewrite body copy.
 - **Batch Sizing:** 5 Articles per batch (17 Batches total)
 * [ ] **Batch 5.4.1:** Blog Articles 1–5
 * [ ] **Batch 5.4.2:** Blog Articles 6–10
