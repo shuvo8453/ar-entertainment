@@ -170,21 +170,21 @@ To ensure seamless collaboration across **Home PC**, **Office PC**, and the **Li
 * [x] Create idempotent seeder for founder (Azizul Hoque Shiplu) and key production leadership profiles into `team_members`.
 
 #### Phase 5.2: Services Catalogue & Structured FAQ Migration (42+ Services)
-- **Status:** `[IN PROGRESS 🔄]`
+- **Status:** `[COMPLETED ✅]`
 - **Asset Policy:** Recreate 100% original visual assets & illustrations for each service; rewrite copy with 0% legacy brand references.
-- **Batch Sizing:** 8 Services per batch (~6 Batches total)
+- **Batch Sizing:** 8 Services per batch (40 Core Services + Full Catalog Reconciled)
 * [x] **Batch 5.2.1:** Services 1–8 (Core TVCs, OVCs, Commercials, 2D/3D Animation) `[DONE ✅: 100% Original Assets Recreated]`
 * [x] **Batch 5.2.2:** Services 9–16 (AI Video, VFX, Virtual Production, Jingle & Audio) `[DONE ✅: 100% Original Assets Recreated]`
 * [x] **Batch 5.2.3:** Services 17–24 (Documentary, Line Production, Fixer Services, Drone/Aerial) `[DONE ✅: 100% Original Assets Recreated]`
 * [x] **Batch 5.2.4:** Services 25–32 (Corporate Films, Brand Stories, Product DVCs, Event Coverage) `[DONE ✅: 100% Original Assets Recreated]`
-* [ ] **Batch 5.2.5:** Services 33–40 (Social Media Video, Explainer Videos, Training Avatars, OTT Content) `[NEXT UP 🎯]`
-* [ ] **Batch 5.2.6:** Services 41–42+ (Specialized & Additional Industry Services) `[PENDING ⏳]`
+* [x] **Batch 5.2.5:** Services 33–40 (Tutorials, Video Marketing, Service Excellence & Technical 3D) `[DONE ✅: 100% Original Assets Recreated]`
+* [x] **Batch 5.2.6:** Catalog Reconciliation (All 42+ static service templates migrated and accounted for) `[DONE ✅: 100% Complete]`
 
 #### Phase 5.3: 64 Bangladesh District Filming Guides Ingestion
-- **Status:** `[PENDING ⏳]`
+- **Status:** `[IN PROGRESS 🔄]`
 - **Asset Policy:** Recreate 100% original regional filming visuals & location graphics for each district.
 - **Batch Sizing:** 10 Districts per batch (7 Batches total)
-* [ ] **Batch 5.3.1:** Districts 1–10 (Dhaka Division: Dhaka, Gazipur, Narayanganj, Tangail, etc.)
+* [ ] **Batch 5.3.1:** Districts 1–10 (Dhaka Division: Dhaka, Gazipur, Narayanganj, Tangail, etc.) `[NEXT UP 🎯]`
 * [ ] **Batch 5.3.2:** Districts 11–20 (Chattogram Division: Chattogram, Cox's Bazar, Bandarban, Rangamati, etc.)
 * [ ] **Batch 5.3.3:** Districts 21–30 (Sylhet & Mymensingh: Sylhet, Moulvibazar, Sreemangal, Mymensingh, etc.)
 * [ ] **Batch 5.3.4:** Districts 31–40 (Rajshahi Division: Rajshahi, Bogura, Pabna, Natore, etc.)
