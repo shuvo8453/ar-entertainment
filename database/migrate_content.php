@@ -40,6 +40,7 @@ $seed_scripts = [
     'Districts Batch 2 (11–21)'=> __DIR__ . '/seeds/seed_service_areas_batch2.php',
     'Districts Batch 3 (22–32)'=> __DIR__ . '/seeds/seed_service_areas_batch3.php',
     'Districts Batch 4 (33–40)'=> __DIR__ . '/seeds/seed_service_areas_batch4.php',
+    'Districts Batch 5 (41–48)'=> __DIR__ . '/seeds/seed_service_areas_batch5.php',
     'Sample Inquiries & Leads' => __DIR__ . '/../scratch/seed_inquiries.php',
 ];
 
