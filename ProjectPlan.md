@@ -175,8 +175,8 @@ To ensure seamless collaboration across **Home PC**, **Office PC**, and the **Li
 - **Batch Sizing:** 8 Services per batch (~6 Batches total)
 * [x] **Batch 5.2.1:** Services 1–8 (Core TVCs, OVCs, Commercials, 2D/3D Animation) `[DONE ✅: 100% Original Assets Recreated]`
 * [x] **Batch 5.2.2:** Services 9–16 (AI Video, VFX, Virtual Production, Jingle & Audio) `[DONE ✅: 100% Original Assets Recreated]`
-* [ ] **Batch 5.2.3:** Services 17–24 (Documentary, Line Production, Fixer Services, Drone/Aerial) `[NEXT UP 🎯]`
-* [ ] **Batch 5.2.4:** Services 25–32 (Corporate Films, Brand Stories, Product DVCs, Event Coverage) `[PENDING ⏳]`
+* [x] **Batch 5.2.3:** Services 17–24 (Documentary, Line Production, Fixer Services, Drone/Aerial) `[DONE ✅: 100% Original Assets Recreated]`
+* [ ] **Batch 5.2.4:** Services 25–32 (Corporate Films, Brand Stories, Product DVCs, Event Coverage) `[NEXT UP 🎯]`
 * [ ] **Batch 5.2.5:** Services 33–40 (Social Media Video, Explainer Videos, Training Avatars, OTT Content) `[PENDING ⏳]`
 * [ ] **Batch 5.2.6:** Services 41–42+ (Specialized & Additional Industry Services) `[PENDING ⏳]`
 
