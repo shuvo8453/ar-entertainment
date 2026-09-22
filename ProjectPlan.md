@@ -204,8 +204,8 @@ To ensure seamless collaboration across **Home PC**, **Office PC**, and the **Li
 * [x] **Batch 5.4.6:** Blog Articles 26–30 (Why OVCs Fail, OVC Duration Guide, Enterprise AI Video Guide, AI Music & Jingles, AI Video for FMCG) `[DONE ✅: 100% Original Assets Recreated]`
 * [x] **Batch 5.4.7:** Blog Articles 31–35 (AI Video for SaaS, AI Video for Real Estate, Bangladesh Film Locations, AI Video for NGOs, Top 10 Dhaka Film Locations) `[DONE ✅: 100% Original Assets Recreated]`
 * [x] **Batch 5.4.8:** Blog Articles 36–40 (Garment & Textile Video, Video for Banks & Fintech, Pharma Video Production, Cox's Bazar Filming Guide, AI Training Video Guide) `[DONE ✅: 100% Original Assets Recreated]`
-* [ ] **Batch 5.4.9:** Blog Articles 41–45 (Buying House Video, Company Culture Videos, Corporate AV vs Video vs Doc, Corporate AV Scriptwriting, Drone Filming Permits) `[NEXT UP 🎯]`
-* [ ] **Batch 5.4.10:** Blog Articles 46–50
+* [x] **Batch 5.4.9:** Blog Articles 41–45 (Buying House Video, Company Culture Videos, Corporate AV vs Video vs Doc, Corporate AV Scriptwriting, Drone Filming Permits) `[DONE ✅: 100% Original Assets Recreated]`
+* [ ] **Batch 5.4.10:** Blog Articles 46–50 (FMCG Creative Testing, Do You Need a Fixer, Facebook vs YouTube OVC, Fixer vs Production Co, Filming Permits Guide) `[NEXT UP 🎯]`
 * [ ] **Batch 5.4.11:** Blog Articles 51–55
 * [ ] **Batch 5.4.12:** Blog Articles 56–60
 * [ ] **Batch 5.4.13:** Blog Articles 61–65
