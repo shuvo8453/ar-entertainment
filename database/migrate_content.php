@@ -59,6 +59,7 @@ $seed_scripts = [
     'Blog Articles Batch 14 (66–70)' => __DIR__ . '/seeds/seed_blogs_batch14.php',
     'Blog Articles Batch 15 (71–75)' => __DIR__ . '/seeds/seed_blogs_batch15.php',
     'Blog Articles Batch 16 (76–80)' => __DIR__ . '/seeds/seed_blogs_batch16.php',
+    'Blog Articles Batch 17 (81–88)' => __DIR__ . '/seeds/seed_blogs_batch17.php',
     'Sample Inquiries & Leads' => __DIR__ . '/../scratch/seed_inquiries.php',
 ];
 
