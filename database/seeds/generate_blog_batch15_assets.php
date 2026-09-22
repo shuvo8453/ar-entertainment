@@ -1,13 +1,13 @@
 <?php
 /**
- * AR Entertainment - 100% Original Asset Generator & Database Migrator for Blog Batch 5.4.14 (Articles 66–70)
+ * AR Entertainment - 100% Original Asset Generator & Database Migrator for Blog Batch 5.4.15 (Articles 71–75)
  * 
  * Generates and embeds 5 brand-new, copyright-safe, clean cinema-grade featured visual assets:
- * 66. ai-content-disclosure-best-practices: AI Transparency & Content Disclosure Visual
- * 67. ai-image-generation-guide-and-best-tools: AI Neural Image Generation & Prompt Craft Visual
- * 68. ai-video-dubbing-bangla-english-arabic: Multilingual AI Video Dubbing & Regional Register Visual
- * 69. ai-video-for-government-training: Public Sector AI Training & Compliance Video Visual
- * 70. ai-video-for-performance-marketing: AI Performance Video Ads & Multivariate Testing Visual
+ * 71. ai-video-localisation-and-dubbing: AI Video Localisation & Multilingual Dubbing Visual (Generated AI Soundstage)
+ * 72. ai-video-production-cost-comparison-bangladesh-2026: AI Video Production Cost Comparison Visual (Generated AI Suite)
+ * 73. ai-video-production-ngos-development-organisations: AI Video for NGOs & Development Organizations Visual (Generated AI Documentary)
+ * 74. brand-film-production-textile-exporters-bangladesh: Brand Films for Textile & Garment Exporters Visual (RMG Factory Plate)
+ * 75. how-many-ovc-versions-does-a-campaign-really-need: OVC Multivariate Versions & Hook Matrix Visual (Multi-OVC Shoot Plate)
  * 
  * Features:
  * - 100% Clean AR Entertainment Branding & 0% Legacy Logos
@@ -22,7 +22,7 @@ require_once __DIR__ . '/../../config/db.php';
 require_once __DIR__ . '/../../config/helpers.php';
 
 echo "========================================================\n";
-echo "🛡️ AR ENTERTAINMENT - RECREATING 100% ORIGINAL BLOG ASSETS (BATCH 5.4.14: ARTICLES 66–70)\n";
+echo "🛡️ AR ENTERTAINMENT - RECREATING 100% ORIGINAL BLOG ASSETS (BATCH 5.4.15: ARTICLES 71–75)\n";
 echo "========================================================\n\n";
 
 $db = db();
@@ -94,18 +94,18 @@ if (!function_exists('create_clean_blog_avif_asset')) {
 
         // Apply cinematic dark tint overlay across the image for rich contrast
         imagealphablending($dst_img, true);
-        $tint = imagecolorallocatealpha($dst_img, 15, 23, 42, 50); // Navy dark tint
+        $tint = imagecolorallocatealpha($dst_img, 15, 23, 42, 60); // Navy dark tint
         imagefilledrectangle($dst_img, 0, 0, $dst_w, $dst_h, $tint);
 
         // Render stylish AR Entertainment Center-Left Brand Card Pill
-        $card_w = 780;
-        $card_h = 230;
+        $card_w = 820;
+        $card_h = 240;
         $card_x = 60;
-        $card_y = (int)(($dst_h - $card_h) / 2 - 30);
+        $card_y = (int)(($dst_h - $card_h) / 2 - 20);
 
         // Outer glow / card background
-        $card_bg = imagecolorallocatealpha($dst_img, 15, 23, 42, 35); // Glassmorphic dark slate
-        $card_border = imagecolorallocatealpha($dst_img, 245, 158, 11, 60); // Gold amber border
+        $card_bg = imagecolorallocatealpha($dst_img, 15, 23, 42, 45); // Glassmorphic dark slate
+        $card_border = imagecolorallocatealpha($dst_img, 245, 158, 11, 80); // Gold amber border
         imagefilledrectangle($dst_img, $card_x, $card_y, $card_x + $card_w, $card_y + $card_h, $card_bg);
         imagerectangle($dst_img, $card_x, $card_y, $card_x + $card_w, $card_y + $card_h, $card_border);
 
@@ -135,7 +135,7 @@ if (!function_exists('create_clean_blog_avif_asset')) {
         }
 
         // Apply dark cinema lower third footer branding strip
-        $footer_bg = imagecolorallocatealpha($dst_img, 10, 15, 28, 25);
+        $footer_bg = imagecolorallocatealpha($dst_img, 10, 15, 28, 30);
         imagefilledrectangle($dst_img, 0, $dst_h - 85, $dst_w, $dst_h, $footer_bg);
 
         $amber = imagecolorallocate($dst_img, 245, 158, 11);
@@ -150,87 +150,71 @@ if (!function_exists('create_clean_blog_avif_asset')) {
     }
 }
 
-// 5 Blog Articles Configuration for Batch 5.4.14 with CLEAN, LOGO-FREE Source Images
-$blogs_config_batch14 = [
+$brain_dir = 'C:/Users/Shuvo/.gemini/antigravity-ide/brain/ec7e8596-3e1f-4c60-9cbe-371c916b611c';
+
+$blog_assets = [
     [
-        'slug' => 'ai-content-disclosure-best-practices',
-        'title' => 'AI Content Disclosure Best Practices: 2026 Enterprise Guide',
-        'category_name' => 'AI VIDEO PRODUCTION',
-        'source_img' => __DIR__ . '/../../images/the-future-of-programming-with-artificial-intelligence.jpg',
-        'target_slug' => 'ar-ai-content-disclosure-best-practices',
-        'badge_title' => 'AI Content Disclosure Best Practices',
-        'badge_subtitle' => 'Global Transparency, Watermarking & C2PA Provenance'
+        'slug'            => 'ai-video-localisation-and-dubbing',
+        'title'           => 'AI Video Localisation & Dubbing: Complete 2026 Guide',
+        'category'        => 'AI Video Production',
+        'badge_title'     => 'AI Video Localisation & Dubbing',
+        'badge_subtitle'  => 'Enterprise Multilingual Voice Cloning & Lip-Sync (2026)',
+        'filename_slug'   => 'ar-ai-video-localisation-and-dubbing',
+        'source_img'      => $brain_dir . '/ar_ai_video_localisation_dubbing_1790073859373.jpg'
     ],
     [
-        'slug' => 'ai-image-generation-guide-and-best-tools',
-        'title' => 'AI Image Generation Guide & Best Tools (2026)',
-        'category_name' => 'AI VIDEO PRODUCTION',
-        'source_img' => __DIR__ . '/../../images/ai-image-tools-2026.webp',
-        'target_slug' => 'ar-ai-image-generation-guide-and-best-tools',
-        'badge_title' => 'AI Image Generation Guide (2026)',
-        'badge_subtitle' => 'Tools, Prompt Architecture, Pre-Viz & Visual Workflows'
+        'slug'            => 'ai-video-production-cost-comparison-bangladesh-2026',
+        'title'           => 'AI Video Production Cost Comparison: Bangladesh 2026',
+        'category'        => 'AI Video Production',
+        'badge_title'     => 'AI Video Production Cost Comparison 2026',
+        'badge_subtitle'  => 'Bangladesh vs US, UK & Europe Production Budgets',
+        'filename_slug'   => 'ar-ai-video-production-cost-comparison-bangladesh-2026',
+        'source_img'      => $brain_dir . '/ar_ai_video_cost_comparison_1790073876641.jpg'
     ],
     [
-        'slug' => 'ai-video-dubbing-bangla-english-arabic',
-        'title' => 'AI Video Dubbing: Bangla, English & Arabic Guide (2026)',
-        'category_name' => 'AI VIDEO PRODUCTION',
-        'source_img' => __DIR__ . '/../../images/ai-voiceover-bangla-service-libanza-films.webp',
-        'target_slug' => 'ar-ai-video-dubbing-bangla-english-arabic',
-        'badge_title' => 'AI Video Dubbing: Bangla, English & Arabic',
-        'badge_subtitle' => 'Lip-Sync Precision, Dialect Registers & GCC-South Asia Reach'
+        'slug'            => 'ai-video-production-ngos-development-organisations',
+        'title'           => 'AI Video Production for NGOs & Development Organisations',
+        'category'        => 'AI Video Production',
+        'badge_title'     => 'AI Video for NGOs & Development Bodies',
+        'badge_subtitle'  => 'Donor Reporting, Training & Field Communication',
+        'filename_slug'   => 'ar-ai-video-production-ngos-development-organisations',
+        'source_img'      => $brain_dir . '/ar_ai_ngo_development_video_1790073895910.jpg'
     ],
     [
-        'slug' => 'ai-video-for-government-training',
-        'title' => 'AI Video for Government & Public Sector Training (2026)',
-        'category_name' => 'AI VIDEO PRODUCTION',
-        'source_img' => __DIR__ . '/../../images/benefits-of-creating-training-videos.webp',
-        'target_slug' => 'ar-ai-video-for-government-training',
-        'badge_title' => 'AI Video for Government Training',
-        'badge_subtitle' => 'Public Sector Compliance, Avatar Onboarding & Capacity'
+        'slug'            => 'brand-film-production-textile-exporters-bangladesh',
+        'title'           => 'Brand Film Production for Textile & Garment Exporters in Bangladesh',
+        'category'        => 'Corporate Brand Films',
+        'badge_title'     => 'Brand Films for Textile Exporters',
+        'badge_subtitle'  => 'RMG Buyer Pitch & Global Brand Positioning in BD',
+        'filename_slug'   => 'ar-brand-film-production-textile-exporters-bangladesh',
+        'source_img'      => ROOT_PATH . '/images/rmg-garment-textile-og.webp'
     ],
     [
-        'slug' => 'ai-video-for-performance-marketing',
-        'title' => 'AI Video for Performance Marketing: Scaling Paid Ads & ROAS',
-        'category_name' => 'AI VIDEO PRODUCTION',
-        'source_img' => __DIR__ . '/../../images/video-ad-performance.jpg',
-        'target_slug' => 'ar-ai-video-for-performance-marketing',
-        'badge_title' => 'AI Video for Performance Marketing',
-        'badge_subtitle' => 'Multivariate Ad Testing, Dynamic Hooks & Lower CPA'
-    ]
+        'slug'            => 'how-many-ovc-versions-does-a-campaign-really-need',
+        'title'           => 'How Many OVC Versions Does an Ad Campaign Really Need? (2026 Guide)',
+        'category'        => 'OVC & Digital Ads',
+        'badge_title'     => 'How Many OVC Versions Does a Campaign Need?',
+        'badge_subtitle'  => 'Multi-Hook Testing & Creative Fatigue Strategy',
+        'filename_slug'   => 'ar-how-many-ovc-versions-does-a-campaign-really-need',
+        'source_img'      => ROOT_PATH . '/images/one-shoot-multiple-ovc-versions.webp'
+    ],
 ];
 
-$update_stmt = $db->prepare("
-    UPDATE blogs
-    SET thumbnail = :thumbnail,
-        og_image = :og_image,
-        updated_at = NOW()
-    WHERE slug = :slug
-");
-
-$processed = 0;
-
-foreach ($blogs_config_batch14 as $cfg) {
-    echo "▶ Generating Clean Blog Asset: {$cfg['title']} ({$cfg['slug']})\n";
-
-    // Generate clean 1200x630 AVIF Asset with 100% AR Entertainment styling
-    $avif_rel = create_clean_blog_avif_asset(
-        $cfg['source_img'],
-        $cfg['target_slug'],
-        $cfg['category_name'],
-        $cfg['badge_title'],
-        $cfg['badge_subtitle']
+foreach ($blog_assets as $item) {
+    echo "▶ Generating Clean Blog Asset: {$item['title']} ({$item['slug']})\n";
+    echo "  ↳ Using Source Plate: {$item['source_img']} (" . (file_exists($item['source_img']) ? filesize($item['source_img']) . ' bytes' : 'NOT FOUND') . ")\n";
+    $rel_path = create_clean_blog_avif_asset(
+        $item['source_img'],
+        $item['filename_slug'],
+        $item['category'],
+        $item['badge_title'],
+        $item['badge_subtitle']
     );
 
-    echo "  ↳ Saved: {$avif_rel}\n";
-
-    // Update database record if article exists
-    $update_stmt->execute([
-        ':thumbnail' => $avif_rel,
-        ':og_image' => $avif_rel,
-        ':slug' => $cfg['slug']
-    ]);
-
-    $processed++;
+    // Update database if row exists
+    $update_stmt = $db->prepare("UPDATE blogs SET thumbnail = ?, og_image = ? WHERE slug = ?");
+    $update_stmt->execute([$rel_path, $rel_path, $item['slug']]);
+    echo "  ↳ Saved: {$rel_path}\n";
 }
 
-echo "\n✨ Successfully generated {$processed} clean, unbranded .avif blog visual assets for Batch 5.4.14!\n";
+echo "\n✨ Successfully generated 5 clean, unbranded .avif blog visual assets for Batch 5.4.15!\n\n";
