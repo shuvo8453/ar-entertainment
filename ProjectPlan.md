@@ -225,8 +225,8 @@ To ensure seamless collaboration across **Home PC**, **Office PC**, and the **Li
 - **Overall Status:** `[PENDING ⏳]`
 
 #### Phase 6.1: Dynamic Homepage (`index.php`)
-- **Status:** `[PENDING ⏳]`
-* [ ] Convert `index.php` to dynamically fetch latest portfolio videos, featured services, client logos carousel, testimonials slider, and recent blog posts from MySQL.
+- **Status:** `[DONE ✅]`
+* [x] Convert `index.php` to dynamically fetch latest portfolio videos, featured services, client logos carousel, testimonials slider, and recent blog posts from MySQL. `[DONE ✅: 100% Dynamic MySQL Integration, 0% Legacy Branding, 63/63 Verified Assets]`
 
 #### Phase 6.2: Dynamic Blog System (`blog.php` & `blog-single.php`)
 - **Status:** `[PENDING ⏳]`

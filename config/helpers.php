@@ -121,14 +121,18 @@ function upload_url(string $path = ''): string
     if (empty($path)) {
         return ASSETS_URL . '/images/placeholder.webp';
     }
-    // If it's already an absolute URL or starts with images/
+    // If it's already an absolute URL
     if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
         return $path;
     }
-    if (str_starts_with($path, 'images/')) {
-        return BASE_URL . '/' . $path;
+    $cleanPath = ltrim($path, '/');
+    if (str_starts_with($cleanPath, 'uploads/')) {
+        $cleanPath = substr($cleanPath, 8);
     }
-    return UPLOADS_URL . '/' . ltrim($path, '/');
+    if (str_starts_with($cleanPath, 'images/')) {
+        return BASE_URL . '/' . $cleanPath;
+    }
+    return UPLOADS_URL . '/' . $cleanPath;
 }
 
 /**
