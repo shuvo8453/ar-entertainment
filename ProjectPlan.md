@@ -207,14 +207,14 @@ To ensure seamless collaboration across **Home PC**, **Office PC**, and the **Li
 * [x] **Batch 5.4.9:** Blog Articles 41–45 (Buying House Video, Company Culture Videos, Corporate AV vs Video vs Doc, Corporate AV Scriptwriting, Drone Filming Permits) `[DONE ✅: 100% Original Assets Recreated]`
 * [x] **Batch 5.4.10:** Blog Articles 46–50 (FMCG Creative Testing, Do You Need a Fixer, Facebook vs YouTube OVC, Fixer vs Production Co, Filming Permits Guide) `[DONE ✅: 100% Original Assets Recreated]`
 * [x] **Batch 5.4.11:** Blog Articles 51–55 (Filming for UK Diaspora, Filming Safety & Security, Garment Buyer Video Checklist, Global Brands Corporate AV, AI in FMCG OVCs) `[DONE ✅: 100% Original Assets Recreated]`
-* [ ] **Batch 5.4.12:** Blog Articles 56–60 (Professional Video for Business, Human-in-the-Loop AI, International Filming Guidelines, International Production Support, International Shoot Guide) `[NEXT UP 🎯]`
+* [x] **Batch 5.4.12:** Blog Articles 56–60 (Professional Video for Business, Human-in-the-Loop AI, International Filming Guidelines, International Production Support, AI Commercial Safety) `[DONE ✅: 100% Original Assets Recreated]`
+* [ ] **Batch 5.4.13:** Blog Articles 61–65 (Music Video Costs, Outsource AI Video, OVC vs TVC, AI & EU AI Act, AI & UK Ad Standards) `[NEXT UP 🎯]`
   - Target Slugs:
-    1. `how-to-make-a-professional-video-for-your-business`
-    2. `human-in-the-loop-ai-content-explained`
-    3. `international-filming-guidelines-for-video-production-houses-shooting-in-bangladesh`
-    4. `international-production-support-bangladesh-guide`
-    5. `international-shoot-in-bangladesh-filming-guide`
-* [ ] **Batch 5.4.13:** Blog Articles 61–65
+    1. `music-video-production-bangladesh-cost`
+    2. `outsource-ai-video-production-bangladesh`
+    3. `ovc-vs-tvc-in-bangladesh`
+    4. `ai-content-and-eu-ai-act`
+    5. `ai-content-and-uk-advertising-standards`
 * [ ] **Batch 5.4.14:** Blog Articles 66–70
 * [ ] **Batch 5.4.15:** Blog Articles 71–75
 * [ ] **Batch 5.4.16:** Blog Articles 76–80
