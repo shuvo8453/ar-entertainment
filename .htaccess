@@ -31,7 +31,19 @@ AddDefaultCharset UTF-8
     RewriteRule ^meet-the-team/meet-the-team/(.*)$ meet-the-team/$1 [R=301,L]
 
     # -----------------------------------------------------------------
-    # 3.3. Real Physical Files Pass-Through
+    # 3.3. Dynamic Blog System Routing
+    # -----------------------------------------------------------------
+    # Legacy .html single blog redirect: /blog/{slug}.html -> /blog/{slug}
+    RewriteRule ^blog/([a-zA-Z0-9_-]+)\.html$ blog/$1 [R=301,L]
+
+    # Main Blog Listing: /blog or /blog/ -> blog.php
+    RewriteRule ^blog/?$ blog.php [L,QSA]
+
+    # Single Blog Article: /blog/{slug} -> blog-single.php?slug=$1
+    RewriteRule ^blog/([a-zA-Z0-9_-]+)/?$ blog-single.php?slug=$1 [L,QSA]
+
+    # -----------------------------------------------------------------
+    # 3.4. Real Physical Files Pass-Through
     # -----------------------------------------------------------------
     RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule ^ - [L]

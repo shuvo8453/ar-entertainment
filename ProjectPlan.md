@@ -229,12 +229,12 @@ To ensure seamless collaboration across **Home PC**, **Office PC**, and the **Li
 * [x] Convert `index.php` to dynamically fetch latest portfolio videos, featured services, client logos carousel, testimonials slider, and recent blog posts from MySQL. `[DONE ✅: 100% Dynamic MySQL Integration, 0% Legacy Branding, 63/63 Verified Assets]`
 
 #### Phase 6.2: Dynamic Blog System (`blog.php` & `blog-single.php`)
-- **Status:** `[PENDING ⏳]`
-* [ ] Build dynamic `blog.php` listing with category filter, search bar, and clean pagination (`/blog?page=2`).
-* [ ] Build dynamic `blog-single.php` with article body, author bio, related posts, and auto-generated Schema JSON-LD.
+- **Status:** `[DONE ✅]`
+* [x] Build dynamic `blog.php` listing with category filter, search bar, and clean pagination (`/blog?page=2`). `[DONE ✅: Dynamic real-time category pills with post counts, keyword search, 9 items/page pagination, responsive cards with AVIF thumbnails and reading time]`
+* [x] Build dynamic `blog-single.php` with article body, author bio, related posts, and auto-generated Schema JSON-LD. `[DONE ✅: Clean slug routing via .htaccess, view counter tracking, author bio for Azizul Hoque Shiplu, social sharing bar, sidebar widgets, 3 related articles, and BlogPosting + BreadcrumbList JSON-LD]`
 
 #### Phase 6.3: Dynamic Services Catalogue & Single Service Views (`services.php` & `service-single.php`)
-- **Status:** `[PENDING ⏳]`
+- **Status:** `[NEXT UP 🎯]`
 * [ ] Build dynamic `services.php` & `service-single.php` with interactive FAQ accordions and inquiry CTA.
 
 #### Phase 6.4: Dynamic Video Portfolio Showcase (`portfolio.php`)

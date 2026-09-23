@@ -250,3 +250,52 @@ header.header-area .container-fluid {
     color: #e50914 !important;
     font-size: 16px !important;
 }
+
+/* ========================================================================= */
+/* Modern Floating Return-To-Top Button (Global Across All Pages)            */
+/* ========================================================================= */
+#return-to-top {
+    position: fixed !important;
+    bottom: 30px !important;
+    right: 30px !important;
+    width: 48px !important;
+    height: 48px !important;
+    background: linear-gradient(135deg, #e50914 0%, #b20710 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border-radius: 50% !important;
+    box-shadow: 0 8px 24px rgba(229, 9, 20, 0.45), 0 2px 6px rgba(0, 0, 0, 0.6) !important;
+    cursor: pointer !important;
+    display: none;
+    z-index: 9999 !important;
+    text-align: center !important;
+    line-height: 46px !important;
+    padding: 0 !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#return-to-top:hover {
+    background: linear-gradient(135deg, #ff2430 0%, #e50914 100%) !important;
+    transform: translateY(-4px) scale(1.08) !important;
+    box-shadow: 0 12px 30px rgba(229, 9, 20, 0.65), 0 4px 10px rgba(0, 0, 0, 0.7) !important;
+    border-color: rgba(255, 255, 255, 0.45) !important;
+}
+
+#return-to-top i {
+    color: #ffffff !important;
+    font-size: 16px !important;
+    position: static !important;
+    top: auto !important;
+    line-height: 46px !important;
+    display: inline-block !important;
+    transition: transform 0.2s ease !important;
+}
+
+#return-to-top:hover i {
+    animation: none !important;
+    transform: translateY(-2px) !important;
+}
+
+#return-to-top img {
+    display: none !important;
+}
+

@@ -153,10 +153,10 @@ $footer_logo_url = !empty($logo_dark_path)
         </div>
     </footer>
 
-    <!-- Return to Top Floating Button -->
+    <!-- Return to Top Floating Button (Global Across All Pages) -->
     <div class="scroll-to-top">
-        <span id="return-to-top" style="display: none; cursor: pointer;">
-            <i class="fa-solid fa-chevron-up" style="font-size: 18px; line-height: 44px; color: #fff;"></i>
+        <span id="return-to-top" title="Back to Top" aria-label="Back to Top" style="display: none; cursor: pointer;">
+            <i class="fa-solid fa-chevron-up"></i>
         </span>
     </div>
 </div>
