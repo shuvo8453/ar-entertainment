@@ -33,6 +33,9 @@ $meta_canonical   = !empty($canonical_url) ? $canonical_url : (function_exists('
 $meta_og_type     = $og_type ?? 'website';
 $meta_og_image    = !empty($og_image) ? upload_url($og_image) : site_url('images/og.webp');
 
+$logo_path        = get_setting('site_logo');
+$site_logo_url    = !empty($logo_path) ? upload_url($logo_path) : site_url('images/arentertainment-logo.svg');
+
 // Tracking IDs
 $ga4_id           = get_setting('ga4_id', 'G-LYXSSGVBJF');
 $meta_pixel_id    = get_setting('meta_pixel_id', '969321647479793');
@@ -186,7 +189,7 @@ $social_links = array_filter([
                 "foundingDate": "<?= htmlspecialchars($founding_year) ?>",
                 "logo": {
                     "@type": "ImageObject",
-                    "url": "<?= site_url('images/arentertainment-logo.svg') ?>",
+                    "url": "<?= htmlspecialchars($site_logo_url) ?>",
                     "width": 320,
                     "height": 80
                 },

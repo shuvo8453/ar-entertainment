@@ -37,5 +37,5 @@
     <text x="165" y="48" font-family="'Plus Jakarta Sans', 'Raleway', 'Helvetica Neue', sans-serif" font-size="21" font-weight="800" fill="#E5E5E5" letter-spacing="4">ENTERTAINMENT</text>
     
     <!-- Tagline -->
-    <text x="82" y="66" font-family="'Roboto', 'Segoe UI', sans-serif" font-size="9.5" font-weight="600" fill="url(#goldGrad)" letter-spacing="2.8">FILM &bull; TVC &bull; FIXER &bull; AI PRODUCTION</text>
+    <text x="82" y="66" font-family="'Roboto', 'Segoe UI', sans-serif" font-size="9.5" font-weight="600" fill="url(#goldGrad)" letter-spacing="2.8">FILM &#8226; TVC &#8226; FIXER &#8226; AI PRODUCTION</text>
 </svg>

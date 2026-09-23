@@ -24,6 +24,12 @@ $social_twitter  = get_setting('social_twitter', 'https://x.com/AREntertainBD');
 $social_youtube  = get_setting('social_youtube', 'https://www.youtube.com/@AREntertainmentBD');
 
 $footer_scripts  = get_setting('footer_scripts', '');
+
+$logo_dark_path  = get_setting('site_logo_dark');
+$logo_path       = get_setting('site_logo');
+$footer_logo_url = !empty($logo_dark_path)
+    ? upload_url($logo_dark_path)
+    : (!empty($logo_path) ? upload_url($logo_path) : site_url('images/arentertainment-logo.svg'));
 ?>
     </main>
     <!-- Main Content Area Ends -->
@@ -37,7 +43,7 @@ $footer_scripts  = get_setting('footer_scripts', '');
                     <div class="col-12 col-lg-3 mb-5 mb-lg-0">
                         <div class="footer-widget text-center text-lg-left pl-lg-3">
                             <a href="<?= site_url() ?>" class="d-inline-block mb-3">
-                                <img src="<?= site_url('images/arentertainment-logo.svg') ?>" alt="<?= htmlspecialchars($site_name) ?> Logo" width="220" height="58" style="height: auto; max-height: 56px; width: auto; object-fit: contain;">
+                                <img src="<?= htmlspecialchars($footer_logo_url) ?>" alt="<?= htmlspecialchars($site_name) ?> Logo" width="220" height="58" style="height: auto; max-height: 56px; width: auto; object-fit: contain;">
                             </a>
                             <p class="footer-summary" style="color: #9ca3af; font-size: 14px; line-height: 1.6;">
                                 Premier video production house &amp; international film fixer in Bangladesh. High-end TVC, OVC, corporate films, documentaries, and AI-driven content.

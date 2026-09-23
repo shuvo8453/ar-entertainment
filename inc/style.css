@@ -49,3 +49,204 @@ html, body {
     display: none !important;
     pointer-events: none !important;
 }
+
+/* ==========================================================================
+   Modern Cinematic Navbar & Header Styling Overhaul (AR Entertainment)
+   ========================================================================== */
+
+/* 1. Header Bar: Dark Frosted Glass & Gradient Overlay */
+header.header-area {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    z-index: 99999 !important;
+    background: linear-gradient(180deg, rgba(8, 9, 14, 0.96) 0%, rgba(8, 9, 14, 0.84) 60%, rgba(8, 9, 14, 0.38) 100%) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5) !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    transition: all 0.3s ease !important;
+}
+
+header.header-area .container-fluid {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+}
+
+@media (min-width: 1200px) {
+    header.header-area .container-fluid {
+        padding-left: 42px !important;
+        padding-right: 42px !important;
+    }
+}
+
+/* 2. Site Logo: Clean Alignment & Centering */
+.site-logo {
+    position: relative !important;
+    top: 0 !important;
+    padding-left: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+}
+
+.site-logo a {
+    display: inline-flex !important;
+    align-items: center !important;
+    text-decoration: none !important;
+    transition: transform 0.25s ease, opacity 0.25s ease !important;
+}
+
+.site-logo a:hover {
+    transform: scale(1.02) !important;
+    opacity: 0.95 !important;
+}
+
+.site-logo img {
+    height: 60px !important;
+    max-height: 64px !important;
+    width: auto !important;
+    max-width: 340px !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6)) !important;
+}
+
+@media (max-width: 991px) {
+    .site-logo img {
+        height: 48px !important;
+        max-height: 52px !important;
+        max-width: 250px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .site-logo img {
+        height: 42px !important;
+        max-height: 46px !important;
+        max-width: 200px !important;
+    }
+}
+
+/* 3. Navigation Links: Typography & Hover Effects */
+.top-navigation .navbar-light .navbar-nav > li {
+    margin: 0 3px !important;
+    position: relative !important;
+}
+
+.top-navigation .navbar-light .navbar-nav > li > a {
+    color: rgba(255, 255, 255, 0.92) !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 14.5px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px !important;
+    padding: 8px 14px !important;
+    text-transform: capitalize !important;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6) !important;
+    transition: all 0.25s ease !important;
+    position: relative !important;
+}
+
+.top-navigation .navbar-light .navbar-nav > li > a:hover,
+.top-navigation .navbar-light .navbar-nav > li.active > a {
+    color: #ffffff !important;
+    text-shadow: 0 0 12px rgba(229, 9, 20, 0.8) !important;
+}
+
+.top-navigation .navbar-light .navbar-nav > li.active > a:before,
+.top-navigation .navbar-light .navbar-nav > li > a:hover:before {
+    background: #e50914 !important;
+    height: 2px !important;
+    box-shadow: 0 0 10px #e50914 !important;
+    border-radius: 2px !important;
+}
+
+/* 4. Dropdown Menus: Glassmorphic Floating Panel */
+.navbar-nav .dropdown-menu {
+    background: rgba(11, 12, 18, 0.97) !important;
+    backdrop-filter: blur(18px) !important;
+    -webkit-backdrop-filter: blur(18px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75) !important;
+    padding: 10px 0 !important;
+    margin-top: 10px !important;
+}
+
+.navbar-nav .dropdown-menu a {
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
+    padding: 9px 20px !important;
+    transition: all 0.2s ease !important;
+}
+
+.navbar-nav .dropdown-menu a:hover {
+    background: rgba(229, 9, 20, 0.14) !important;
+    color: #ffffff !important;
+    padding-left: 24px !important;
+}
+
+/* 5. Right Action CTA: Enquire Button */
+.top-btn a {
+    background: linear-gradient(135deg, #e50914 0%, #b80710 100%) !important;
+    color: #ffffff !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    letter-spacing: 0.8px !important;
+    padding: 10px 22px !important;
+    border-radius: 6px !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 4px 16px rgba(229, 9, 20, 0.45) !important;
+    transition: all 0.25s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+}
+
+.top-btn a:hover {
+    background: linear-gradient(135deg, #ff1a26 0%, #cf0a13 100%) !important;
+    box-shadow: 0 6px 24px rgba(229, 9, 20, 0.7) !important;
+    transform: translateY(-1px) !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+/* 6. Phone CTA Link */
+.head-cta .con-btn {
+    border-left: 1px solid rgba(255, 255, 255, 0.14) !important;
+    padding-left: 18px !important;
+}
+
+.head-cta .con-btn span {
+    font-size: 9.5px !important;
+    letter-spacing: 1.2px !important;
+    color: #9ca3af !important;
+    font-weight: 700 !important;
+    margin-bottom: 2px !important;
+}
+
+.head-cta .con-btn a {
+    color: #ffffff !important;
+    font-size: 14.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.3px !important;
+    text-decoration: none !important;
+    transition: color 0.2s ease !important;
+}
+
+.head-cta .con-btn a:hover {
+    color: #e50914 !important;
+    text-decoration: none !important;
+}
+
+.head-cta .con-btn a i {
+    color: #e50914 !important;
+    font-size: 16px !important;
+}

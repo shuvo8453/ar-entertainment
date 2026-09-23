@@ -11,18 +11,22 @@ require_once dirname(__DIR__) . '/config/config.php';
 require_once dirname(__DIR__) . '/config/helpers.php';
 
 $current_nav_page = $current_page ?? '';
+$site_name        = get_setting('site_name', SITE_NAME);
 $contact_phone    = get_setting('contact_phone', CONTACT_PHONE);
 $clean_phone      = preg_replace('/[^\d+]/', '', $contact_phone);
+
+$logo_path        = get_setting('site_logo');
+$site_logo_url    = !empty($logo_path) ? upload_url($logo_path) : site_url('images/arentertainment-logo.svg');
 ?>
 <div class="dvLayout d-flex flex-column">
     <!-- Main Header Area -->
     <header class="header-area">
-        <div class="container-fluid">
+        <div class="container-fluid px-3 px-sm-4 px-xl-5">
             <div class="d-flex justify-content-between align-items-center">
                 <!-- Site Brand Logo -->
                 <div class="site-logo">
-                    <a href="<?= site_url() ?>" aria-label="AR Entertainment Home">
-                        <img src="<?= site_url('images/arentertainment-logo.svg') ?>" alt="AR Entertainment Logo" width="180" height="48" style="height: auto; max-height: 52px; width: auto; object-fit: contain;">
+                    <a href="<?= site_url() ?>" aria-label="<?= htmlspecialchars($site_name) ?> Home">
+                        <img src="<?= htmlspecialchars($site_logo_url) ?>" alt="<?= htmlspecialchars($site_name) ?> Logo" width="290" height="60" style="height: auto; max-height: 64px; width: auto; max-width: 340px; object-fit: contain;">
                     </a>
                 </div>
 
