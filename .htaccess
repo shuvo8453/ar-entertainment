@@ -43,7 +43,19 @@ AddDefaultCharset UTF-8
     RewriteRule ^blog/([a-zA-Z0-9_-]+)/?$ blog-single.php?slug=$1 [L,QSA]
 
     # -----------------------------------------------------------------
-    # 3.4. Real Physical Files Pass-Through
+    # 3.4. Dynamic Services System Routing
+    # -----------------------------------------------------------------
+    # Legacy .html single service redirect: /services/{slug}.html -> /services/{slug}
+    RewriteRule ^services/([a-zA-Z0-9_-]+)\.html$ services/$1 [R=301,L]
+
+    # Main Services Listing: /services or /services/ -> services.php
+    RewriteRule ^services/?$ services.php [L,QSA]
+
+    # Single Service: /services/{slug} -> service-single.php?slug=$1
+    RewriteRule ^services/([a-zA-Z0-9_-]+)/?$ service-single.php?slug=$1 [L,QSA]
+
+    # -----------------------------------------------------------------
+    # 3.5. Real Physical Files Pass-Through
     # -----------------------------------------------------------------
     RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule ^ - [L]
