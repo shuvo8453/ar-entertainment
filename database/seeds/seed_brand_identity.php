@@ -247,13 +247,14 @@ if (empty($current_fav)) {
 }
 
 $current_logo = get_setting('site_logo');
-if (empty($current_logo)) {
+if (empty($current_logo) || $current_logo === 'images/arentertainment-logo.svg') {
+    $chosen_logo = 'images/arentertainment-brand-logo.svg';
     $logo_files = glob(UPLOADS_PATH . DIRECTORY_SEPARATOR . 'settings' . DIRECTORY_SEPARATOR . 'logo*.avif');
     if (!empty($logo_files)) {
         $chosen_logo = 'settings/' . basename($logo_files[0]);
-        update_setting('site_logo', $chosen_logo, 'general');
-        echo "   ✅ Synced site_logo -> {$chosen_logo}\n";
     }
+    update_setting('site_logo', $chosen_logo, 'general');
+    echo "   ✅ Synced site_logo -> {$chosen_logo}\n";
 } else {
     echo "   ⏩ site_logo already configured ({$current_logo})\n";
 }

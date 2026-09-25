@@ -27,9 +27,13 @@ $footer_scripts  = get_setting('footer_scripts', '');
 
 $logo_dark_path  = get_setting('site_logo_dark');
 $logo_path       = get_setting('site_logo');
-$footer_logo_url = !empty($logo_dark_path)
-    ? upload_url($logo_dark_path)
-    : (!empty($logo_path) ? upload_url($logo_path) : site_url('images/arentertainment-logo.svg'));
+if (!empty($logo_dark_path)) {
+    $footer_logo_url = upload_url($logo_dark_path);
+} elseif (!empty($logo_path) && $logo_path !== 'images/arentertainment-logo.svg') {
+    $footer_logo_url = upload_url($logo_path);
+} else {
+    $footer_logo_url = site_url('images/arentertainment-brand-logo.svg');
+}
 ?>
     </main>
     <!-- Main Content Area Ends -->

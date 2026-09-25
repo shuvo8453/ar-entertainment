@@ -19,6 +19,7 @@ ON DUPLICATE KEY UPDATE `name` = VALUES(`name`);
 -- 2. Core Site Settings (AR Entertainment)
 INSERT INTO `site_settings` (`setting_key`, `setting_value`, `setting_group`) VALUES
 ('site_name', 'AR Entertainment', 'general'),
+('site_logo', 'images/arentertainment-brand-logo.svg', 'general'),
 ('legal_name', 'AR Entertainment Ltd.', 'general'),
 ('site_title', 'AR Entertainment | Video Production & Film Fixer Services in Bangladesh', 'seo'),
 ('site_tagline', 'Video Production & Film Fixer Services in Bangladesh', 'general'),

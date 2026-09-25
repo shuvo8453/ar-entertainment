@@ -34,7 +34,11 @@ $meta_og_type     = $og_type ?? 'website';
 $meta_og_image    = !empty($og_image) ? upload_url($og_image) : site_url('images/og.webp');
 
 $logo_path        = get_setting('site_logo');
-$site_logo_url    = !empty($logo_path) ? upload_url($logo_path) : site_url('images/arentertainment-logo.svg');
+if (empty($logo_path) || $logo_path === 'images/arentertainment-logo.svg') {
+    $site_logo_url = site_url('images/arentertainment-brand-logo.svg');
+} else {
+    $site_logo_url = upload_url($logo_path);
+}
 
 // Tracking IDs
 $ga4_id           = get_setting('ga4_id', 'G-LYXSSGVBJF');
@@ -111,7 +115,7 @@ $social_links = array_filter([
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Main Project Stylesheet -->
-    <link rel="stylesheet" href="<?= asset_url('style.css') ?>" type="text/css">
+    <link rel="stylesheet" href="<?= asset_url('style.css') ?>?v=<?= file_exists(ROOT_PATH . '/inc/style.css') ? filemtime(ROOT_PATH . '/inc/style.css') : '2.0' ?>" type="text/css">
 
     <!-- jQuery (Deferred) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>

@@ -16,7 +16,11 @@ $contact_phone    = get_setting('contact_phone', CONTACT_PHONE);
 $clean_phone      = preg_replace('/[^\d+]/', '', $contact_phone);
 
 $logo_path        = get_setting('site_logo');
-$site_logo_url    = !empty($logo_path) ? upload_url($logo_path) : site_url('images/arentertainment-logo.svg');
+if (empty($logo_path) || $logo_path === 'images/arentertainment-logo.svg') {
+    $site_logo_url = site_url('images/arentertainment-brand-logo.svg');
+} else {
+    $site_logo_url = upload_url($logo_path);
+}
 ?>
 <div class="dvLayout d-flex flex-column">
     <!-- Main Header Area -->
