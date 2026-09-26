@@ -65,7 +65,20 @@ AddDefaultCharset UTF-8
     RewriteRule ^portfolio/?$ portfolio.php [L,QSA]
 
     # -----------------------------------------------------------------
-    # 3.6. Real Physical Files Pass-Through
+    # 3.6. Dynamic Service Areas System Routing (64 Districts)
+    # -----------------------------------------------------------------
+    # Legacy .html service area redirects: /service-area.html -> /service-area
+    RewriteRule ^service-area\.html$ service-area [R=301,L]
+    RewriteRule ^service-area/([a-zA-Z0-9_-]+)\.html$ service-area/$1 [R=301,L]
+
+    # Main Service Area Hub: /service-area or /service-area/ -> service-area.php
+    RewriteRule ^service-area/?$ service-area.php [L,QSA]
+
+    # Single District Guide: /service-area/{slug} -> service-area.php?slug=$1
+    RewriteRule ^service-area/([a-zA-Z0-9_-]+)/?$ service-area.php?slug=$1 [L,QSA]
+
+    # -----------------------------------------------------------------
+    # 3.7. Real Physical Files Pass-Through
     # -----------------------------------------------------------------
     RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule ^ - [L]

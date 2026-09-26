@@ -497,3 +497,44 @@ header.header-area .container-fluid {
     display: none !important;
 }
 
+/* ========================================================================= */
+/* Modern Clean Inline Breadcrumb Navigation                                 */
+/* ========================================================================= */
+.breadcrumb, nav[aria-label="breadcrumb"] .breadcrumb {
+    position: static !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 0 14px 0 !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    list-style: none !important;
+}
+
+.breadcrumb .breadcrumb-item,
+nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item {
+    display: inline-flex !important;
+    align-items: center !important;
+    font-size: 13px !important;
+}
+
+.breadcrumb .breadcrumb-item + .breadcrumb-item::before,
+nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+    content: "/" !important;
+    color: rgba(255, 255, 255, 0.4) !important;
+    padding: 0 8px !important;
+    display: inline-block !important;
+}
+
+.breadcrumb .breadcrumb-item a,
+nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a {
+    color: rgba(255, 255, 255, 0.6) !important;
+    text-decoration: none !important;
+    transition: color 0.2s ease !important;
+}
+
+.breadcrumb .breadcrumb-item a:hover,
+nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a:hover {
+    color: #e50914 !important;
+}
+

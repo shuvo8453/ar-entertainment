@@ -26,7 +26,7 @@ $founder_title    = get_setting('founder_title', 'Founder and Film Director');
 $founding_year    = get_setting('founding_year', '2018');
 
 // Current Page Specific Overrides
-$meta_title       = !empty($page_title) ? $page_title . ' | ' . $site_name : $default_title;
+$meta_title       = !empty($page_title) ? (str_contains($page_title, $site_name) ? $page_title : $page_title . ' | ' . $site_name) : $default_title;
 $meta_desc        = !empty($page_description) ? $page_description : $site_desc;
 $meta_keywords    = !empty($page_keywords) ? $page_keywords : $site_keywords;
 $meta_canonical   = !empty($canonical_url) ? $canonical_url : (function_exists('site_url') ? site_url($_SERVER['REQUEST_URI'] ?? '') : '');
