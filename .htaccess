@@ -55,7 +55,17 @@ AddDefaultCharset UTF-8
     RewriteRule ^services/([a-zA-Z0-9_-]+)/?$ service-single.php?slug=$1 [L,QSA]
 
     # -----------------------------------------------------------------
-    # 3.5. Real Physical Files Pass-Through
+    # 3.5. Dynamic Portfolio System Routing
+    # -----------------------------------------------------------------
+    # Legacy .html portfolio redirects
+    RewriteRule ^portfolio\.html$ portfolio [R=301,L]
+    RewriteRule ^portfolio/([a-zA-Z0-9_-]+)\.html$ portfolio?category=$1 [R=301,L]
+
+    # Main Portfolio Listing: /portfolio or /portfolio/ -> portfolio.php
+    RewriteRule ^portfolio/?$ portfolio.php [L,QSA]
+
+    # -----------------------------------------------------------------
+    # 3.6. Real Physical Files Pass-Through
     # -----------------------------------------------------------------
     RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule ^ - [L]

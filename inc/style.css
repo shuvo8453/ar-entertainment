@@ -54,6 +54,13 @@ html, body {
    Modern Cinematic Navbar & Header Styling Overhaul (AR Entertainment)
    ========================================================================== */
 
+/* Global Anti-Overflow Protection */
+html, body, .dvLayout {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+}
+
 /* 1. Header Bar: Dark Frosted Glass & Gradient Overlay */
 header.header-area {
     position: fixed !important;
@@ -61,26 +68,35 @@ header.header-area {
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
     z-index: 99999 !important;
     background: linear-gradient(180deg, rgba(8, 9, 14, 0.96) 0%, rgba(8, 9, 14, 0.84) 60%, rgba(8, 9, 14, 0.38) 100%) !important;
     backdrop-filter: blur(16px) !important;
     -webkit-backdrop-filter: blur(16px) !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
     box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5) !important;
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
     transition: all 0.3s ease !important;
 }
 
 header.header-area .container-fluid {
-    padding-left: 24px !important;
-    padding-right: 24px !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1441px) {
+    header.header-area {
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
     header.header-area .container-fluid {
-        padding-left: 42px !important;
-        padding-right: 42px !important;
+        padding-left: 32px !important;
+        padding-right: 32px !important;
     }
 }
 
@@ -108,47 +124,92 @@ header.header-area .container-fluid {
 }
 
 .site-logo img {
-    height: 60px !important;
-    max-height: 64px !important;
+    height: 44px !important;
+    max-height: 48px !important;
     width: auto !important;
-    max-width: 340px !important;
+    max-width: 220px !important;
     object-fit: contain !important;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6)) !important;
+    transition: all 0.25s ease !important;
+}
+
+@media (min-width: 1441px) {
+    .site-logo img {
+        height: 54px !important;
+        max-height: 58px !important;
+        max-width: 280px !important;
+    }
 }
 
 @media (max-width: 991px) {
     .site-logo img {
-        height: 48px !important;
-        max-height: 52px !important;
-        max-width: 250px !important;
+        height: 42px !important;
+        max-height: 46px !important;
+        max-width: 210px !important;
     }
 }
 
 @media (max-width: 768px) {
     .site-logo img {
-        height: 42px !important;
-        max-height: 46px !important;
-        max-width: 200px !important;
+        height: 38px !important;
+        max-height: 42px !important;
+        max-width: 180px !important;
     }
 }
 
-/* 3. Navigation Links: Typography & Hover Effects */
+/* 3. Navigation Links: Typography, Centered Multi-line & Hover Effects */
+.top-navigation {
+    flex-shrink: 1 !important;
+    min-width: 0 !important;
+}
+
+.top-navigation .custom-menu {
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.top-navigation .navbar-light .navbar-nav {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+}
+
 .top-navigation .navbar-light .navbar-nav > li {
-    margin: 0 3px !important;
+    margin: 0 2px !important;
     position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 .top-navigation .navbar-light .navbar-nav > li > a {
     color: rgba(255, 255, 255, 0.92) !important;
     font-family: 'Plus Jakarta Sans', sans-serif !important;
-    font-size: 14.5px !important;
+    font-size: 13px !important;
     font-weight: 600 !important;
-    letter-spacing: 0.3px !important;
-    padding: 8px 14px !important;
+    letter-spacing: 0.15px !important;
+    padding: 6px 8px !important;
     text-transform: capitalize !important;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6) !important;
     transition: all 0.25s ease !important;
     position: relative !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    line-height: 1.2 !important;
+    box-sizing: border-box !important;
+}
+
+@media (min-width: 1441px) {
+    .top-navigation .navbar-light .navbar-nav > li {
+        margin: 0 4px !important;
+    }
+    .top-navigation .navbar-light .navbar-nav > li > a {
+        font-size: 14.5px !important;
+        padding: 8px 12px !important;
+        letter-spacing: 0.3px !important;
+    }
 }
 
 .top-navigation .navbar-light .navbar-nav > li > a:hover,
@@ -165,16 +226,86 @@ header.header-area .container-fluid {
     border-radius: 2px !important;
 }
 
-/* 4. Dropdown Menus: Glassmorphic Floating Panel */
+/* Dropdown link padding to give the chevron arrow clean breathing room */
+.top-navigation .navbar-light .navbar-nav > li.dropdown > a {
+    padding-right: 18px !important;
+}
+
+@media (min-width: 1441px) {
+    .top-navigation .navbar-light .navbar-nav > li.dropdown > a {
+        padding-right: 22px !important;
+    }
+}
+
+/* 4. Dropdown Menus: Glassmorphic Floating Panel & Hover Bridge */
+.top-navigation .navbar-light .navbar-nav > li.dropdown {
+    padding-bottom: 14px !important;
+    margin-bottom: -14px !important;
+}
+
+@media (min-width: 1200px) {
+    .top-navigation .navbar-nav > li.dropdown > .dropdown-menu {
+        display: block !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        transform: translateY(8px) !important;
+        transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.22s ease !important;
+    }
+
+    .top-navigation .navbar-nav > li.dropdown:hover > .dropdown-menu,
+    .top-navigation .navbar-nav > li.dropdown > .dropdown-menu:hover,
+    .top-navigation .navbar-nav > li.dropdown.current > .dropdown-menu,
+    .top-navigation .navbar-nav > li.dropdown.show > .dropdown-menu {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        transform: translateY(0) !important;
+    }
+
+    /* Nested Sub-Menu Support */
+    .top-navigation .navbar-nav .dropdown-menu > li.dropdown > .dropdown-menu {
+        display: block !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        transform: translateX(8px) !important;
+        transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s ease !important;
+    }
+
+    .top-navigation .navbar-nav .dropdown-menu > li.dropdown:hover > .dropdown-menu,
+    .top-navigation .navbar-nav .dropdown-menu > li.dropdown > .dropdown-menu:hover {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        transform: translateX(0) !important;
+    }
+}
+
 .navbar-nav .dropdown-menu {
-    background: rgba(11, 12, 18, 0.97) !important;
-    backdrop-filter: blur(18px) !important;
-    -webkit-backdrop-filter: blur(18px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: rgba(11, 12, 18, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
     border-radius: 8px !important;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8) !important;
     padding: 10px 0 !important;
     margin-top: 10px !important;
+    position: absolute !important;
+    z-index: 100000 !important;
+}
+
+/* Invisible Hover Bridges: Seamlessly connect the nav item to the dropdown across the gap */
+.navbar-nav .dropdown-menu::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -26px !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 26px !important;
+    background: transparent !important;
+    pointer-events: auto !important;
+    z-index: 999999 !important;
 }
 
 .navbar-nav .dropdown-menu a {
@@ -183,6 +314,7 @@ header.header-area .container-fluid {
     font-weight: 500 !important;
     padding: 9px 20px !important;
     transition: all 0.2s ease !important;
+    text-align: left !important;
 }
 
 .navbar-nav .dropdown-menu a:hover {
@@ -191,15 +323,45 @@ header.header-area .container-fluid {
     padding-left: 24px !important;
 }
 
-/* 5. Right Action CTA: Enquire Button */
+.navbar-nav .dropdown-menu .dropdown-menu {
+    top: 0 !important;
+    left: 100% !important;
+    margin-top: -6px !important;
+    margin-left: 2px !important;
+}
+
+.navbar-nav .dropdown-menu .dropdown-menu::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -26px !important;
+    width: 26px !important;
+    bottom: 0 !important;
+    height: 100% !important;
+    background: transparent !important;
+    pointer-events: auto !important;
+    z-index: 999999 !important;
+}
+
+/* 5. Right Action CTA: Enquire Button & Phone */
+.right-side {
+    flex-shrink: 0 !important;
+}
+
+.head-cta {
+    display: flex !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+}
+
 .top-btn a {
     background: linear-gradient(135deg, #e50914 0%, #b80710 100%) !important;
     color: #ffffff !important;
     font-family: 'Plus Jakarta Sans', sans-serif !important;
     font-weight: 700 !important;
-    font-size: 13px !important;
-    letter-spacing: 0.8px !important;
-    padding: 10px 22px !important;
+    font-size: 12px !important;
+    letter-spacing: 0.6px !important;
+    padding: 8px 14px !important;
     border-radius: 6px !important;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
     box-shadow: 0 4px 16px rgba(229, 9, 20, 0.45) !important;
@@ -208,6 +370,16 @@ header.header-area .container-fluid {
     align-items: center !important;
     text-transform: uppercase !important;
     text-decoration: none !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+}
+
+@media (min-width: 1441px) {
+    .top-btn a {
+        font-size: 13px !important;
+        padding: 10px 20px !important;
+        letter-spacing: 0.8px !important;
+    }
 }
 
 .top-btn a:hover {
@@ -221,24 +393,44 @@ header.header-area .container-fluid {
 /* 6. Phone CTA Link */
 .head-cta .con-btn {
     border-left: 1px solid rgba(255, 255, 255, 0.14) !important;
-    padding-left: 18px !important;
+    padding-left: 12px !important;
+    margin-left: 10px !important;
+    flex-shrink: 0 !important;
+}
+
+@media (min-width: 1441px) {
+    .head-cta .con-btn {
+        padding-left: 18px !important;
+        margin-left: 16px !important;
+    }
 }
 
 .head-cta .con-btn span {
-    font-size: 9.5px !important;
-    letter-spacing: 1.2px !important;
+    font-size: 9px !important;
+    letter-spacing: 1px !important;
     color: #9ca3af !important;
     font-weight: 700 !important;
     margin-bottom: 2px !important;
+    white-space: nowrap !important;
 }
 
 .head-cta .con-btn a {
     color: #ffffff !important;
-    font-size: 14.5px !important;
+    font-size: 13px !important;
     font-weight: 700 !important;
-    letter-spacing: 0.3px !important;
+    letter-spacing: 0.2px !important;
     text-decoration: none !important;
     transition: color 0.2s ease !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+@media (min-width: 1441px) {
+    .head-cta .con-btn a {
+        font-size: 14.5px !important;
+        letter-spacing: 0.3px !important;
+    }
 }
 
 .head-cta .con-btn a:hover {
@@ -248,7 +440,13 @@ header.header-area .container-fluid {
 
 .head-cta .con-btn a i {
     color: #e50914 !important;
-    font-size: 16px !important;
+    font-size: 14px !important;
+}
+
+@media (min-width: 1441px) {
+    .head-cta .con-btn a i {
+        font-size: 16px !important;
+    }
 }
 
 /* ========================================================================= */

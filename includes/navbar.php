@@ -25,12 +25,12 @@ if (empty($logo_path) || $logo_path === 'images/arentertainment-logo.svg') {
 <div class="dvLayout d-flex flex-column">
     <!-- Main Header Area -->
     <header class="header-area">
-        <div class="container-fluid px-3 px-sm-4 px-xl-5">
-            <div class="d-flex justify-content-between align-items-center">
+        <div class="container-fluid px-2 px-sm-3 px-xl-3">
+            <div class="d-flex justify-content-between align-items-center flex-nowrap">
                 <!-- Site Brand Logo -->
-                <div class="site-logo">
+                <div class="site-logo flex-shrink-0">
                     <a href="<?= site_url() ?>" aria-label="<?= htmlspecialchars($site_name) ?> Home">
-                        <img src="<?= htmlspecialchars($site_logo_url) ?>" alt="<?= htmlspecialchars($site_name) ?> Logo" width="290" height="60" style="height: auto; max-height: 64px; width: auto; max-width: 340px; object-fit: contain;">
+                        <img src="<?= htmlspecialchars($site_logo_url) ?>" alt="<?= htmlspecialchars($site_name) ?> Logo" width="280" height="58" class="header-brand-img">
                     </a>
                 </div>
 
@@ -131,17 +131,17 @@ if (empty($logo_path) || $logo_path === 'images/arentertainment-logo.svg') {
                 </div>
 
                 <!-- Right Side Actions & Contact CTA -->
-                <div class="right-side d-flex align-items-center justify-content-end">
+                <div class="right-side d-flex align-items-center justify-content-end flex-shrink-0">
                     <div class="head-cta d-flex align-items-center">
-                        <div class="top-btn d-none d-sm-block ml-3">
+                        <div class="top-btn d-none d-sm-block ml-2 ml-lg-3">
                             <a href="<?= site_url('contact-us') ?>">
                                 ENQUIRE <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
                             </a>
                         </div>
-                        <div class="con-btn d-flex flex-column ml-3 ml-md-4">
-                            <span class="d-flex text-uppercase" style="font-size: 11px; letter-spacing: 1px; color: #a0a0a0;">Call Us</span>
+                        <div class="con-btn d-flex flex-column ml-2 ml-lg-3">
+                            <span class="d-flex text-uppercase" style="font-size: 10px; letter-spacing: 1px; color: #a0a0a0;">Call Us</span>
                             <a href="tel:<?= htmlspecialchars($clean_phone) ?>" class="d-flex align-items-center" style="font-weight: 700; color: #fff;">
-                                <i class="fa fa-phone-square mr-2" style="color: #e50914;"></i>
+                                <i class="fa fa-phone-square mr-1 mr-md-2" style="color: #e50914;"></i>
                                 <?= htmlspecialchars($contact_phone) ?>
                             </a>
                         </div>
